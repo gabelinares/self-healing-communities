@@ -122,7 +122,7 @@
   #wayfinding .ph.p2{bottom:7%;left:6%;transform:rotate(3deg) scale(.94)}#wayfinding .ph.p2.show{transform:rotate(3deg) scale(1)}
   #wayfinding .ph.p3{top:7%;right:4%;transform:rotate(5deg) scale(.94)}#wayfinding .ph.p3.show{transform:rotate(5deg) scale(1)}
   #wayfinding .ph.p4{bottom:9%;right:6%;transform:rotate(-3deg) scale(.94)}#wayfinding .ph.p4.show{transform:rotate(-3deg) scale(1)}
-  #wayfinding .copy{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;max-width:760px;width:90%;z-index:5;pointer-events:none;padding:48px}
+  #wayfinding .copy{position:absolute;top:63%;left:50%;transform:translate(-50%,-50%);text-align:center;max-width:760px;width:90%;z-index:5;pointer-events:none;padding:0 48px}
   #wayfinding .copy .eyebrow{margin-bottom:18px}
   #wayfinding .copy .lede{margin:20px auto 0}
   #wayfinding .corners{position:absolute;inset:26px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
@@ -130,19 +130,17 @@
   #wayfinding .wf-hint{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);z-index:6;color:var(--ink-soft);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;gap:9px;align-items:center;opacity:0;transition:opacity .6s;pointer-events:none;text-align:center}
   #wayfinding .wf-hint.show{opacity:1}
   #wayfinding .wf-hint .d{width:8px;height:8px;border-radius:50%;background:var(--emerald-bright);box-shadow:0 0 12px var(--emerald-bright);animation:pulse 2s infinite}
-  /* story placeholder modal */
-  .story-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
-  .story-modal.open{display:flex}
-  .story-modal .backdrop{position:absolute;inset:0;background:rgba(6,81,60,.5);backdrop-filter:blur(5px)}
-  .story-card{position:relative;z-index:2;background:var(--cream);border-radius:22px;max-width:460px;width:100%;padding:42px 38px;box-shadow:0 50px 100px -30px rgba(15,42,34,.55);text-align:left;transform:translateY(10px);transition:transform .3s}
-  .story-modal.open .story-card{transform:none}
-  .story-card .savatar{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--emerald-bright),var(--emerald));margin-bottom:22px}
-  .story-card .seyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep);font-weight:600;margin-bottom:12px}
-  .story-card h3{font-family:'Fraunces',serif;font-weight:400;font-size:27px;line-height:1.14;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
-  .story-card p{font-size:15px;line-height:1.6;color:var(--ink-soft)}
-  .story-card .stag{margin-top:22px;display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald-deep);background:rgba(0,145,105,.1);padding:7px 13px;border-radius:999px}
-  .story-card .sclose{position:absolute;top:14px;right:16px;width:34px;height:34px;border:0;background:rgba(15,42,34,.06);border-radius:50%;font-size:20px;color:var(--ink-soft);cursor:pointer;line-height:1;transition:background .2s}
-  .story-card .sclose:hover{background:rgba(15,42,34,.12)}
+  /* story placeholder popover — springs from the clicked dot */
+  .story-pop{position:absolute;width:300px;max-width:80vw;margin-left:-150px;z-index:20;pointer-events:none}
+  .story-pop .pcard{position:relative;background:var(--cream);border-radius:16px;padding:22px 22px 20px;box-shadow:0 30px 70px -22px rgba(15,42,34,.55),0 4px 14px -6px rgba(15,42,34,.3);text-align:left;opacity:0;transform:scale(.78) translateY(-12px);transform-origin:50% 0;transition:opacity .2s ease,transform .34s cubic-bezier(.2,.9,.3,1.35);pointer-events:none}
+  .story-pop.open .pcard{opacity:1;transform:none;pointer-events:auto}
+  .story-pop .pcard::before{content:"";position:absolute;top:-7px;left:50%;margin-left:-7px;width:14px;height:14px;background:var(--cream);transform:rotate(45deg);box-shadow:-3px -3px 8px -5px rgba(15,42,34,.25)}
+  .story-pop .pavatar{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--emerald-bright),var(--emerald));margin-bottom:14px}
+  .story-pop .peyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep);font-weight:600;margin-bottom:9px}
+  .story-pop h4{font-family:'Fraunces',serif;font-weight:400;font-size:20px;line-height:1.18;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
+  .story-pop p{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
+  .story-pop .ptag{margin-top:15px;display:inline-block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald-deep);background:rgba(0,145,105,.1);padding:6px 11px;border-radius:999px}
+  .story-pop .pclose{position:absolute;top:9px;right:11px;border:0;background:none;font-size:18px;color:var(--ink-soft);cursor:pointer;line-height:1}
 
   /* ============================================================
      3 · HOW — drag to compare
@@ -292,22 +290,19 @@
         <div class="r">Restored · flowing</div>
       </div>
       <div class="wf-hint" id="wfHint"><span class="d"></span>Click a glowing dot to open a community story</div>
+      <div class="story-pop" id="storyPop" aria-hidden="true">
+        <div class="pcard" role="dialog" aria-modal="false">
+          <button class="pclose" data-close aria-label="Close">&times;</button>
+          <div class="pavatar"></div>
+          <div class="peyebrow">Community story</div>
+          <h4 id="storyTitle">A story from a community</h4>
+          <p id="storyBody">This is where a real community story will live.</p>
+          <span class="ptag">Placeholder · coming soon</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- story placeholder modal -->
-<div class="story-modal" id="storyModal" aria-hidden="true">
-  <div class="backdrop" data-close></div>
-  <div class="story-card" role="dialog" aria-modal="true">
-    <button class="sclose" data-close aria-label="Close">&times;</button>
-    <div class="savatar"></div>
-    <div class="seyebrow">Community story</div>
-    <h3 id="storyTitle">A story from a community</h3>
-    <p id="storyBody">This is where a real community story will live.</p>
-    <span class="stag">Placeholder · stories coming soon</span>
-  </div>
-</div>
 
 <!-- ===================== 3 · HOW — drag to compare ===================== -->
 <section class="how" id="how">
@@ -417,7 +412,7 @@
   ];
   const STORY_BODY="A real community story will live here: the place, the people, and the change they made together. We're collecting these now.";
   let particles=[],storyN=[],storyScreen=[],wfW=0,wfH=0,wfDpr=1;
-  function flowY(t){return wfH*0.40+Math.pow(t,2)*wfH*0.34;}  /* flat over the words, then descends to the right — not a bell curve */
+  function flowY(t){return wfH*0.22+Math.pow(t,2)*wfH*0.15;}  /* sits above the text; flat then descends to the right — not a bell curve */
   function sizeWf(){
     wfDpr=window.devicePixelRatio||1;const r=cvs.getBoundingClientRect();
     wfW=cvs.width=r.width*wfDpr;wfH=cvs.height=r.height*wfDpr;
@@ -429,7 +424,7 @@
     if(!inView(wfSection))return;
     const p=progressOf(wfSection),t=Date.now()*0.001;ctx.clearRect(0,0,wfW,wfH);
     particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p);const wave=Math.sin(pt.phase+p*5)*12*wfDpr*p;const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.34+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
-    const fcx=wfW/2,fcy=wfH*0.46,fr=Math.min(wfW,wfH)*0.5,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.62)');fg.addColorStop(0.5,'rgba(244,236,220,0.2)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
+    const fcx=wfW/2,fcy=wfH*0.63,fr=Math.min(wfW,wfH)*0.5,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.62)');fg.addColorStop(0.5,'rgba(244,236,220,0.2)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
     /* clickable story dots — larger, brighter, pulsing once converged */
     storyScreen=[];
     storyN.forEach((s,i)=>{const x=s.cx+(s.tx-s.cx)*easeOut(p),y=s.cy+(s.ty-s.cy)*easeOut(p);const rad=(6+5*p)*wfDpr,pulse=1+Math.sin(t*2+s.phase)*0.12;
@@ -440,15 +435,23 @@
     if(wfHint) wfHint.classList.toggle('show',p>0.55);
   }
   sizeWf();window.addEventListener('resize',sizeWf);
-  /* story dots — hover cursor + click opens a placeholder card */
+  /* story dots — hover cursor + click springs a popover from the dot */
   (function(){
-    const modal=document.getElementById('storyModal'),title=document.getElementById('storyTitle'),body=document.getElementById('storyBody');
-    if(!modal)return;
+    const pop=document.getElementById('storyPop'),title=document.getElementById('storyTitle'),body=document.getElementById('storyBody');
+    const sticky=document.querySelector('#wayfinding .sticky');
+    if(!pop)return;
     function hit(e){const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let f=null;storyScreen.forEach(s=>{if(Math.hypot(mx-s.x,my-s.y)<=s.r)f=s;});return f;}
+    function closePop(){pop.classList.remove('open');pop.setAttribute('aria-hidden','true');}
+    function openPop(s){
+      title.textContent=STORIES[s.i].title;body.textContent=STORY_BODY;
+      const w=sticky.clientWidth,x=Math.max(160,Math.min(w-160,s.x));
+      pop.style.left=x+'px';pop.style.top=(s.y+18)+'px';
+      pop.classList.add('open');pop.setAttribute('aria-hidden','false');
+    }
     cvs.addEventListener('mousemove',e=>{cvs.style.cursor=hit(e)?'pointer':'default';});
-    cvs.addEventListener('click',e=>{const s=hit(e);if(!s)return;title.textContent=STORIES[s.i].title;body.textContent=STORY_BODY;modal.classList.add('open');modal.setAttribute('aria-hidden','false');});
-    modal.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}});
+    cvs.addEventListener('click',e=>{const s=hit(e);if(s)openPop(s);else closePop();});
+    pop.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',closePop));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop();});
   })();
 
   /* HOW — drag to compare */
