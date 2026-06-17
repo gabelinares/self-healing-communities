@@ -226,7 +226,7 @@
         <div class="book" id="why-book">
           <span class="edge left"></span><span class="edge right"></span>
           <div class="book-base">
-            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/eyes.jpg')"></div></div>
+            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/face.png');background-position:center 30%"></div></div>
             <div class="page page-right"><div class="photo-face" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=85')"></div></div>
           </div>
           <div class="leaves" id="why-leaves">
@@ -423,13 +423,16 @@
   function tickWf(){
     if(!inView(wfSection))return;
     const p=progressOf(wfSection),t=Date.now()*0.001;ctx.clearRect(0,0,wfW,wfH);
-    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p);const wave=Math.sin(pt.phase+p*5)*12*wfDpr*p;const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.34+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
+    const flow=t*0.55;  /* continuous gentle current so the river is always slightly moving */
+    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p)+Math.sin(flow+pt.phase)*7*wfDpr*p;const wave=Math.sin(pt.phase+flow*1.6)*9*wfDpr*(0.35+p*0.65);const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.34+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
     const fcx=wfW/2,fcy=wfH*0.63,fr=Math.min(wfW,wfH)*0.5,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.62)');fg.addColorStop(0.5,'rgba(244,236,220,0.2)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
     /* clickable story dots — larger, brighter, pulsing once converged */
     storyScreen=[];
-    storyN.forEach((s,i)=>{const x=s.cx+(s.tx-s.cx)*easeOut(p),y=s.cy+(s.ty-s.cy)*easeOut(p);const rad=(6+5*p)*wfDpr,pulse=1+Math.sin(t*2+s.phase)*0.12;
-      if(p>0.35){ctx.beginPath();ctx.arc(x,y,rad*2.4*pulse,0,7);ctx.strokeStyle='rgba(0,219,182,'+(0.25*p)+')';ctx.lineWidth=1.4*wfDpr;ctx.stroke();}
-      ctx.beginPath();ctx.arc(x,y,rad*pulse,0,7);ctx.fillStyle='rgba(0,219,182,'+(0.5+0.45*p)+')';ctx.shadowColor='rgba(0,219,182,0.8)';ctx.shadowBlur=16*p;ctx.fill();ctx.shadowBlur=0;
+    storyN.forEach((s,i)=>{const x=s.cx+(s.tx-s.cx)*easeOut(p)+Math.sin(flow+s.phase)*7*wfDpr*p,y=s.cy+(s.ty-s.cy)*easeOut(p)+Math.sin(s.phase+flow*1.6)*9*wfDpr*(0.35+p*0.65);const rad=(7+5*p)*wfDpr,pulse=1+Math.sin(t*2.2+s.phase)*0.14;
+      /* gold — a distinct accent against the emerald/terracotta river */
+      if(p>0.3){ctx.beginPath();ctx.arc(x,y,rad*2.5*pulse,0,7);ctx.strokeStyle='rgba(245,184,72,'+(0.3*p)+')';ctx.lineWidth=1.4*wfDpr;ctx.stroke();}
+      ctx.beginPath();ctx.arc(x,y,rad*pulse,0,7);ctx.fillStyle='rgba(245,184,72,'+(0.55+0.4*p)+')';ctx.shadowColor='rgba(245,184,72,0.9)';ctx.shadowBlur=18*p+5;ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,rad*0.4*pulse,0,7);ctx.fillStyle='rgba(255,247,228,'+(0.65+0.3*p)+')';ctx.fill();ctx.shadowBlur=0;
       storyScreen.push({x:x/wfDpr,y:y/wfDpr,r:Math.max(18,rad*2/wfDpr),i});
     });
     if(wfHint) wfHint.classList.toggle('show',p>0.55);
