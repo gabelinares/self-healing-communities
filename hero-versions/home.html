@@ -61,85 +61,54 @@
   @media (max-width:860px){.nav-links a:not(.cta){display:none}}
 
   /* ============================================================
-     1 · INTRO — cinematic full-face hero
+     OPENING — the book is the cover (eyes + intro) and turns into the cascades
      ============================================================ */
-  #hero{position:relative;height:calc(100vh - 60px);min-height:600px;overflow:hidden;background:var(--emerald-deep);border-radius:0 0 clamp(28px,4vw,56px) clamp(28px,4vw,56px)}
-  #hero .photo{position:absolute;inset:0;background:url('assets/eyes.jpg') center 38%/cover;will-change:transform}
-  #hero .veil{position:absolute;inset:0;background:
-    linear-gradient(90deg, rgba(6,81,60,.92) 0%, rgba(6,81,60,.74) 30%, rgba(6,81,60,.18) 58%, rgba(6,81,60,0) 78%),
-    linear-gradient(0deg, rgba(6,81,60,.55) 0%, rgba(6,81,60,0) 36%)}
-  #hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.7}
-  #hero .inner{position:relative;z-index:3;height:100%;max-width:1280px;margin:0 auto;padding:0 32px;display:flex;flex-direction:column;justify-content:center;will-change:transform}
-  #hero .badge{display:inline-flex;align-items:center;gap:11px;color:var(--cream);font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-bottom:26px}
-  #hero .badge img{height:30px}
-  #hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(40px,5.6vw,80px);line-height:1.03;letter-spacing:-.02em;color:var(--cream);max-width:16ch;font-variation-settings:'WONK' 0,'SOFT' 0;text-wrap:balance}
-  #hero h1 em{font-style:italic;color:var(--emerald-bright);font-weight:300}
-  #hero .sub{margin-top:24px;font-size:19px;line-height:1.55;color:rgba(251,246,234,.86);max-width:44ch}
-  #hero .actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
-  #hero .meta{position:absolute;left:32px;right:32px;bottom:26px;z-index:3;display:flex;justify-content:space-between;align-items:center;color:rgba(251,246,234,.7);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-  #hero .meta .credit{color:rgba(251,246,234,.5)}
-  #hero .scrollcue{display:inline-flex;align-items:center;gap:10px}
-  #hero .scrollcue .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald-bright);animation:pulse 2s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  @media (max-width:760px){
-    #hero .photo{background-position:center 30%}
-    #hero .veil{background:linear-gradient(0deg, rgba(6,81,60,.96) 8%, rgba(6,81,60,.5) 52%, rgba(6,81,60,.2) 100%)}
-    #hero .inner{justify-content:flex-end;padding-bottom:120px}
-  }
-
-  /* ============================================================
-     2 · WHY — the book (a leaf turns into each idea)
-     ============================================================ */
-  .lc-intro{background:var(--cream);padding:clamp(70px,9vw,112px) 0 clamp(72px,11vw,140px);text-align:center;border-top:1px solid var(--rule-soft)}
-  .lc-intro .inner{max-width:760px;margin:0 auto}
-  .lc-intro .h2{margin-top:14px}
-  .lc-intro .lede{margin:20px auto 0;text-align:center}
-  #why .scroll-area{height:340vh;position:relative;background:var(--cream)}
-  #why .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--cream)}
-  #why .layout{position:absolute;inset:0;display:flex;align-items:stretch}
-  #why .left{flex:1.05 1 0;min-width:0;position:relative;padding:9vh 5vw 12vh;display:flex;flex-direction:column;justify-content:center;gap:18px;background:var(--cream)}
-  #why .left::after{content:"";position:absolute;top:8vh;bottom:8vh;right:0;width:1px;background:var(--rule)}
-  #why .left .h1{font-size:clamp(30px,3.1vw,48px)}
-  #why .left .lc-kicker{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,1.7vw,22px);color:var(--ink-soft);margin-top:12px}
-  #why .stages{flex:none;display:flex;flex-direction:column;padding:0}
-  #why .stage-item{position:relative;padding:15px 0 15px 28px;border-left:2px solid transparent;transition:all .4s ease;opacity:.32}
-  #why .stage-item.active{opacity:1;border-color:var(--emerald)}
-  #why .stage-item h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.4vw,30px);line-height:1.12;letter-spacing:-.01em}
-  #why .stage-item p{margin-top:8px;font-size:14.5px;color:var(--ink-soft);max-width:44ch;line-height:1.5}
-  #why .footer-row{position:absolute;left:5vw;right:5vw;bottom:6vh;display:flex;justify-content:space-between;align-items:center;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
-  #why .chapter-label{display:flex;align-items:baseline;gap:14px}
-  #why .chapter-label .num{font-family:'Fraunces',serif;font-style:italic;font-size:66px;line-height:1;color:var(--emerald);font-weight:300}
-  #why .chapter-label .of{font-size:12px;letter-spacing:.2em;text-transform:uppercase}
-  #why .right{flex:1 1 0;min-width:0;position:relative;overflow:hidden;background:var(--emerald-deep);display:flex;align-items:center;justify-content:center;padding:4vh 3vw;border-radius:clamp(28px,4vw,56px) 0 0 clamp(28px,4vw,56px)}
-  #why .right::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 110%,rgba(0,0,0,.45),transparent 60%),radial-gradient(ellipse at 50% 50%,rgba(0,219,182,.06),transparent 70%);pointer-events:none}
-  #why .book{position:relative;width:min(100%,68vh,640px);aspect-ratio:4/3;perspective:2600px;transform-style:preserve-3d;flex-shrink:0}
-  #why .book::after{content:"";position:absolute;left:6%;right:6%;bottom:-22px;height:24px;background:radial-gradient(ellipse at center,rgba(0,0,0,.55),transparent 70%);filter:blur(10px);z-index:0}
-  #why .book .edge{position:absolute;top:1.5%;bottom:1.5%;width:7px;background:repeating-linear-gradient(180deg,#EFE2CB 0 1.5px,#D8C8A6 1.5px 3px);z-index:1;border-radius:1px;box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
-  #why .book .edge.left{left:-7px;border-radius:2px 0 0 2px}
-  #why .book .edge.right{right:-7px;border-radius:0 2px 2px 0}
-  #why .book-base{position:absolute;inset:0;display:flex;z-index:2;box-shadow:0 30px 60px -20px rgba(0,0,0,.55);border-radius:2px;overflow:hidden}
-  #why .book-base .page{flex:1;position:relative;background:linear-gradient(180deg,#F8EFDC 0%,#EFE2CB 100%)}
-  #why .book-base .page.page-left{box-shadow:inset -28px 0 36px -16px rgba(0,0,0,.22)}
-  #why .book-base .page.page-right{box-shadow:inset 28px 0 36px -16px rgba(0,0,0,.22)}
-  #why .book-base .page .end-mark{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:'Fraunces',serif;font-style:italic;color:var(--ink-soft);font-size:14px}
-  #why .spine{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.35) 100%);z-index:60;pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.4)}
+  #why{position:relative}
+  #why .scroll-area{height:360vh;position:relative}
+  #why .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(ellipse at 50% 24%,#FBF6EA 0%,#F4ECDC 52%,#E9D7BA 100%)}
+  #why .brandline{position:absolute;top:5vh;left:0;right:0;display:flex;justify-content:center;align-items:center;z-index:6}
+  #why .brandline img{height:26px;opacity:.92}
+  #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
+  #why .stage{display:flex;flex-direction:column;align-items:center;gap:30px;z-index:4}
+  #why .book{position:relative;width:min(90vw,960px,108vh);aspect-ratio:3/2;perspective:2800px;transform-style:preserve-3d;flex-shrink:0}
+  #why .book::after{content:"";position:absolute;left:5%;right:5%;bottom:-20px;height:26px;background:radial-gradient(ellipse at center,rgba(42,30,21,.42),transparent 70%);filter:blur(12px);z-index:0}
+  #why .book .edge{position:absolute;top:1.5%;bottom:1.5%;width:8px;background:repeating-linear-gradient(180deg,#EFE2CB 0 1.5px,#D8C8A6 1.5px 3px);z-index:1;border-radius:1px;box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
+  #why .book .edge.left{left:-8px;border-radius:2px 0 0 2px}
+  #why .book .edge.right{right:-8px;border-radius:0 2px 2px 0}
+  #why .book-base{position:absolute;inset:0;display:flex;z-index:2;box-shadow:0 44px 90px -34px rgba(42,30,21,.5);border-radius:3px;overflow:hidden}
+  #why .page{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%)}
+  #why .page.page-left{box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.26)}
+  #why .page.page-right{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.22)}
+  #why .photo-face{position:absolute;inset:0;background-size:cover;background-position:center 32%}
+  #why .spine{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:linear-gradient(90deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.3) 100%);z-index:60;pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.4)}
   #why .leaves{position:absolute;inset:0;transform-style:preserve-3d;z-index:5}
   #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
-  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center;border-radius:0 2px 2px 0;overflow:hidden}
-  #why .leaf .recto{box-shadow:inset 28px 0 36px -16px rgba(0,0,0,.18)}
-  #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.22) 0%,transparent 14%);pointer-events:none}
-  #why .leaf .verso{transform:rotateY(180deg);background:linear-gradient(180deg,#F8EFDC 0%,#EFE2CB 100%);box-shadow:inset -28px 0 36px -16px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:flex-start;padding:9% 11%;border-radius:2px 0 0 2px}
-  #why .leaf .verso .vcap{font-family:'Fraunces',serif;color:var(--ink)}
-  #why .leaf .verso .vcap .chof{font-family:'Inter';font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
-  #why .leaf .verso .vcap .chnum{font-style:italic;font-weight:300;font-size:80px;line-height:1;color:var(--emerald)}
-  #why .leaf .verso .vcap .chrule{width:48px;height:1px;background:var(--emerald);margin:18px 0 14px}
-  #why .leaf .verso .vcap .chtitle{font-weight:400;font-size:23px;line-height:1.2;letter-spacing:-.01em}
-  #why .leaf .verso .vcap .qmark{font-family:'Fraunces',serif;font-size:60px;line-height:.5;color:var(--emerald-soft);display:block;height:26px}
-  #why .leaf .verso .vcap .vquote{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(16px,1.85vw,21px);line-height:1.34;letter-spacing:-.01em;color:var(--ink);margin:8px 0 16px}
-  #why .leaf .verso .vcap .vattr{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
-  #why .caption{position:absolute;left:0;right:0;bottom:-42px;display:flex;justify-content:space-between;align-items:flex-end;color:var(--cream);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:7;padding:0 4%}
-  #why .caption em{font-family:'Fraunces',serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:18px;color:var(--emerald-bright)}
-  @media (max-width:820px){#why .right{display:none}#why .left::after{display:none}}
+  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 32%;overflow:hidden}
+  #why .leaf .recto{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.18)}
+  #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2) 0%,transparent 14%);pointer-events:none}
+  #why .leaf .verso{transform:rotateY(180deg);box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.18)}
+  /* text pages (cover intro + cascade text) */
+  #why .txtpage{background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%);display:flex;flex-direction:column;justify-content:center;padding:9% 11%}
+  #why .txtpage .eyebrow{margin-bottom:18px}
+  #why .cover-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(17px,2.05vw,27px);line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+  #why .cover-rule{width:54px;height:1px;background:var(--emerald);margin:20px 0 16px}
+  #why .cover-see{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,1.85vw,23px);color:var(--emerald);line-height:1.2}
+  #why .cas-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
+  #why .cas-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(17px,1.95vw,25px);line-height:1.16;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
+  #why .cas-quote{font-family:'Fraunces',serif;font-size:clamp(13px,1.45vw,17px);line-height:1.38;color:var(--ink-soft);margin-bottom:14px}
+  #why .cas-quote .qm{color:var(--emerald-soft);font-family:'Fraunces',serif;font-size:1.7em;line-height:0;vertical-align:-.35em;margin-right:3px}
+  #why .cas-attr{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
+  #why .turn-cue{position:absolute;bottom:5vh;left:0;right:0;display:flex;gap:10px;align-items:center;justify-content:center;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
+  #why .turn-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @media (max-width:720px){
+    #why .book{width:94vw}
+    #why .cover-title{font-size:15px}#why .cas-title{font-size:14.5px}#why .cas-quote{font-size:11.5px}#why .cover-see{font-size:15px}
+    #why .brandline,#why .progress{display:none}
+    #why .txtpage{padding:7% 8%}
+  }
 
   /* ============================================================
      WAYFINDING — scatter → flow (particle river)
@@ -158,6 +127,22 @@
   #wayfinding .copy .lede{margin:20px auto 0}
   #wayfinding .corners{position:absolute;inset:26px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
   #wayfinding .corners .r{text-align:right}
+  #wayfinding .wf-hint{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);z-index:6;color:var(--ink-soft);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;gap:9px;align-items:center;opacity:0;transition:opacity .6s;pointer-events:none;text-align:center}
+  #wayfinding .wf-hint.show{opacity:1}
+  #wayfinding .wf-hint .d{width:8px;height:8px;border-radius:50%;background:var(--emerald-bright);box-shadow:0 0 12px var(--emerald-bright);animation:pulse 2s infinite}
+  /* story placeholder modal */
+  .story-modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px}
+  .story-modal.open{display:flex}
+  .story-modal .backdrop{position:absolute;inset:0;background:rgba(6,81,60,.5);backdrop-filter:blur(5px)}
+  .story-card{position:relative;z-index:2;background:var(--cream);border-radius:22px;max-width:460px;width:100%;padding:42px 38px;box-shadow:0 50px 100px -30px rgba(15,42,34,.55);text-align:left;transform:translateY(10px);transition:transform .3s}
+  .story-modal.open .story-card{transform:none}
+  .story-card .savatar{width:54px;height:54px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--emerald-bright),var(--emerald));margin-bottom:22px}
+  .story-card .seyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep);font-weight:600;margin-bottom:12px}
+  .story-card h3{font-family:'Fraunces',serif;font-weight:400;font-size:27px;line-height:1.14;letter-spacing:-.01em;color:var(--ink);margin-bottom:14px}
+  .story-card p{font-size:15px;line-height:1.6;color:var(--ink-soft)}
+  .story-card .stag{margin-top:22px;display:inline-block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald-deep);background:rgba(0,145,105,.1);padding:7px 13px;border-radius:999px}
+  .story-card .sclose{position:absolute;top:14px;right:16px;width:34px;height:34px;border:0;background:rgba(15,42,34,.06);border-radius:50%;font-size:20px;color:var(--ink-soft);cursor:pointer;line-height:1;transition:background .2s}
+  .story-card .sclose:hover{background:rgba(15,42,34,.12)}
 
   /* ============================================================
      3 · HOW — drag to compare
@@ -234,94 +219,60 @@
   <div class="nav-preview" id="navPreview"><div class="pv" id="navPv"></div></div>
 </nav>
 
-<!-- ===================== 1 · INTRO ===================== -->
-<section id="hero" aria-label="The Self-Healing Communities Fund">
-  <div class="photo" id="heroPhoto"></div>
-  <div class="veil"></div>
-  <canvas id="heroCanvas"></canvas>
-  <div class="inner" id="heroInner">
-    <div class="badge">Self-Healing Communities Fund</div>
-    <h1>A community is a <em>living&nbsp;system.</em></h1>
-    <p class="sub">It grows stronger when families, communities, and funders participate more effectively in that living system, removing barriers and restoring the conditions that let health, resilience, and connection flow.</p>
-    <div class="actions">
-      <a class="btn" href="#why">See how it works <span class="arrow">→</span></a>
-      <a class="btn alt" href="#act">Get involved</a>
-    </div>
-  </div>
-  <div class="meta">
-    <span class="scrollcue"><span class="dot"></span>Scroll to begin the story</span>
-    <span class="credit">Photo · Mustafa ezz / Pexels</span>
-  </div>
-</section>
-
-<!-- ===================== 2 · WHY — the book ===================== -->
-<section id="why">
-  <div class="lc-intro">
-    <div class="inner">
-      <div class="eyebrow reveal">Why it matters</div>
-      <h2 class="h2 reveal">It begins with <em>seeing differently.</em></h2>
-      <p class="lede reveal">Decades of research, starting with the ACE Study, show how early experience sets off cascades across a whole life. When we understand what interrupts a community's healing, we can act to restore it.</p>
-    </div>
-  </div>
+<!-- ===================== OPENING — the book (cover → cascades) ===================== -->
+<section id="why" aria-label="The Self-Healing Communities Fund">
   <div class="scroll-area" data-tick="why">
     <div class="sticky">
-      <div class="layout">
-        <div class="left">
-          <div>
-            <p class="lc-kicker">Scroll to turn the book.</p>
+      <div class="progress" id="why-prog">Cover</div>
+      <div class="stage">
+        <div class="book" id="why-book">
+          <span class="edge left"></span><span class="edge right"></span>
+          <div class="book-base">
+            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/eyes.jpg')"></div></div>
+            <div class="page page-right"><div class="photo-face" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=85')"></div></div>
           </div>
-          <div class="stages" id="why-stages">
-            <div class="stage-item" data-i="0">
-              <h3>Experience sets off cascades.</h3>
-              <p>Early experiences ripple across a whole life, for better and for worse. The ACE Study made those connections impossible to ignore.</p>
+          <div class="leaves" id="why-leaves">
+            <div class="leaf" data-i="0">
+              <div class="face recto txtpage">
+                <div class="eyebrow">Self-Healing Communities Fund</div>
+                <div class="cover-title">We help communities, with public and philanthropic partners, restore the conditions where wellbeing can grow.</div>
+                <div class="cover-rule"></div>
+                <div class="cover-see">It begins with seeing differently.</div>
+              </div>
+              <div class="face verso txtpage">
+                <div class="cas-eyebrow">Page one</div>
+                <div class="cas-title">Experience sets off cascades.</div>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>For years no one asked what my childhood was like. The first time someone did, the rest of my health record finally made sense.</div>
+                <div class="cas-attr">Community member, rural clinic</div>
+              </div>
             </div>
-            <div class="stage-item" data-i="1">
-              <h3>Adversity carries forward.</h3>
-              <p>Left unaddressed, early adversity resurfaces later as poor health, and it passes from one generation to the next.</p>
+            <div class="leaf" data-i="1">
+              <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1400&q=85')"></div>
+              <div class="face verso txtpage">
+                <div class="cas-eyebrow">Page two</div>
+                <div class="cas-title">Adversity carries forward.</div>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>We kept paying for the same emergencies. No one had ever added up what it was costing the rest of us.</div>
+                <div class="cas-attr">County health director</div>
+              </div>
             </div>
-            <div class="stage-item" data-i="2">
-              <h3>We can change the conditions.</h3>
-              <p>When we see what interrupts a community's healing, we can restore the conditions that let each generation grow stronger than the last.</p>
+            <div class="leaf" data-i="2">
+              <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1400&q=85')"></div>
+              <div class="face verso txtpage">
+                <div class="cas-eyebrow">Page three</div>
+                <div class="cas-title">We can change the conditions.</div>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>We stopped waiting for kids to fall apart. We changed what was around them, and fewer of them ever got there.</div>
+                <div class="cas-attr">Family services coordinator</div>
+              </div>
             </div>
           </div>
-          <div class="footer-row">
-            <div class="chapter-label">
-              <span class="num" id="why-num">1</span>
-              <span class="of">Page <span id="why-of">1</span> of 3</span>
-            </div>
-            <a class="pagelink" href="#">Read the science <span class="arrow">→</span></a>
-          </div>
+          <div class="spine"></div>
         </div>
-
-        <div class="right">
-          <div class="book" id="why-book">
-            <span class="edge left"></span><span class="edge right"></span>
-            <div class="book-base">
-              <div class="page page-left"><div class="end-mark">— where a life begins —</div></div>
-              <div class="page page-right"><div class="end-mark">— the story is still being written —</div></div>
-            </div>
-            <div class="leaves" id="why-leaves">
-              <div class="leaf" data-i="0">
-                <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1400&q=85')"></div>
-                <div class="face verso"><div class="vcap"><div class="chof">Page One</div><span class="qmark">&ldquo;</span><blockquote class="vquote">For years no one asked what my childhood was like. The first time someone did, the rest of my health record finally made sense.</blockquote><div class="vattr">Community member, rural clinic</div></div></div>
-              </div>
-              <div class="leaf" data-i="1">
-                <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1400&q=85')"></div>
-                <div class="face verso"><div class="vcap"><div class="chof">Page Two</div><span class="qmark">&ldquo;</span><blockquote class="vquote">We kept paying for the same emergencies. No one had ever added up what it was costing the rest of us.</blockquote><div class="vattr">County health director</div></div></div>
-              </div>
-              <div class="leaf" data-i="2">
-                <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&q=85')"></div>
-                <div class="face verso"><div class="vcap"><div class="chof">Page Three</div><span class="qmark">&ldquo;</span><blockquote class="vquote">We stopped waiting for kids to fall apart. We changed what was around them, and fewer of them ever got there.</blockquote><div class="vattr">Family services coordinator</div></div></div>
-              </div>
-            </div>
-            <div class="spine"></div>
-          </div>
-          <div class="caption">
-            <div><em id="why-cap">Experience shapes a life</em><br><span style="opacity:.6">Now reading · Page <span id="why-cap-n">01</span></span></div>
-            <div style="text-align:right;opacity:.7">Self-Healing<br>Communities Fund</div>
-          </div>
+        <div class="cta-row">
+          <a class="btn" href="#how">See how it works <span class="arrow">→</span></a>
+          <a class="btn dark" href="#act">Get involved</a>
         </div>
       </div>
+      <div class="turn-cue"><span class="dot"></span>Scroll to turn the pages</div>
     </div>
   </div>
 </section>
@@ -331,10 +282,6 @@
   <div class="scroll-area" data-tick="wayfinding">
     <div class="sticky">
       <canvas id="wf-canvas"></canvas>
-      <div class="ph p1" style="background-image:url('https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=900&q=85')"></div>
-      <div class="ph p2" style="background-image:url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=900&q=85')"></div>
-      <div class="ph p3" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=900&q=85')"></div>
-      <div class="ph p4" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=85')"></div>
       <div class="copy">
         <div class="eyebrow">Like water finding its way</div>
         <h2 class="h2">We can't force a river to flow. We can <em>restore what lets it.</em></h2>
@@ -344,9 +291,23 @@
         <div>Blocked · barriers</div>
         <div class="r">Restored · flowing</div>
       </div>
+      <div class="wf-hint" id="wfHint"><span class="d"></span>Click a glowing dot to open a community story</div>
     </div>
   </div>
 </section>
+
+<!-- story placeholder modal -->
+<div class="story-modal" id="storyModal" aria-hidden="true">
+  <div class="backdrop" data-close></div>
+  <div class="story-card" role="dialog" aria-modal="true">
+    <button class="sclose" data-close aria-label="Close">&times;</button>
+    <div class="savatar"></div>
+    <div class="seyebrow">Community story</div>
+    <h3 id="storyTitle">A story from a community</h3>
+    <p id="storyBody">This is where a real community story will live.</p>
+    <span class="stag">Placeholder · stories coming soon</span>
+  </div>
+</div>
 
 <!-- ===================== 3 · HOW — drag to compare ===================== -->
 <section class="how" id="how">
@@ -432,51 +393,63 @@
   function lerp(a,b,t){return a+(b-a)*t}
   function easeOut(t){return 1-Math.pow(1-t,3)}
 
-  /* hero — parallax photo + ambient drifting dots (the gather-around motif) */
-  const heroEl=document.getElementById('hero'),heroPhoto=document.getElementById('heroPhoto'),heroInner=document.getElementById('heroInner');
-  const hc=document.getElementById('heroCanvas'),hctx=hc.getContext('2d');
-  let hdots=[],hw=0,hh=0;
-  function sizeHero(){const r=hc.getBoundingClientRect();hw=hc.width=r.width*devicePixelRatio;hh=hc.height=r.height*devicePixelRatio;hdots=[];const n=Math.floor(hw*hh/26000);for(let i=0;i<n;i++)hdots.push({x:Math.random()*hw,y:Math.random()*hh,r:(Math.random()*2+0.6)*devicePixelRatio,sp:Math.random()*0.3+0.05,ph:Math.random()*Math.PI*2});}
-  function tickHero(){
-    if(heroEl.getBoundingClientRect().bottom<0)return;
-    if(!reduce){const t=window.scrollY;heroPhoto.style.transform='translateY('+(t*0.18).toFixed(1)+'px) scale(1.06)';heroInner.style.transform='translateY('+(t*0.32).toFixed(1)+'px)';heroInner.style.opacity=Math.max(0,1-t/520);}
-    hctx.clearRect(0,0,hw,hh);
-    for(const d of hdots){d.ph+=0.01;const x=d.x+Math.cos(d.ph)*8*devicePixelRatio;const y=d.y+Math.sin(d.ph*0.8)*8*devicePixelRatio;hctx.beginPath();hctx.arc(x,y,d.r,0,Math.PI*2);hctx.fillStyle='rgba(0,219,182,'+(0.10+Math.sin(d.ph)*0.06+0.10)+')';hctx.fill();}
-  }
-  sizeHero();window.addEventListener('resize',sizeHero);
-
-  /* WHY — book leaves flip, one page per idea */
+  /* OPENING book — at rest shows the cover (eyes + intro); scroll turns into the cascades */
   const whySection=document.querySelector('#why .scroll-area');
   const whyLeaves=document.querySelectorAll('#why .leaf');
-  const whyItems=document.querySelectorAll('#why .stage-item');
-  const whyNum=document.getElementById('why-num'),whyOf=document.getElementById('why-of'),whyCap=document.getElementById('why-cap'),whyCapN=document.getElementById('why-cap-n');
-  const whyCaptions=['Experience sets off cascades','Adversity carries forward','We change the conditions'];
+  const whyProg=document.getElementById('why-prog');
   let whySmooth=0;
   function tickWhy(){
     if(!inView(whySection))return;
     whySmooth=lerp(whySmooth,progressOf(whySection),0.15);
     const p=whySmooth,total=whyLeaves.length,turns=total;let flipped=0;
     whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,p*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';if(local<0.5)leaf.style.zIndex=50-i;else{leaf.style.zIndex=100+i;flipped++;}});
-    /* the visible left-hand page is the last leaf that has turned, so the active idea matches it (no off-by-one) */
-    const idx=Math.max(0,Math.min(flipped-1,total-1));
-    whyItems.forEach((it,i)=>it.classList.toggle('active',i===idx));
-    whyNum.textContent=idx+1;whyOf.textContent=idx+1;whyCap.textContent=whyCaptions[idx];whyCapN.textContent=String(idx+1).padStart(2,'0');
+    if(whyProg) whyProg.textContent = flipped===0 ? 'Cover' : ('Page '+flipped+' of '+total);
   }
 
-  /* WAYFINDING — particles scatter (terracotta) → converge to flowing emerald line */
+  /* WAYFINDING — scatter → flow, with clickable community-story dots */
   const wfSection=document.querySelector('#wayfinding .scroll-area'),cvs=document.getElementById('wf-canvas'),ctx=cvs.getContext('2d');
-  let particles=[],wfW=0,wfH=0;
-  function sizeWf(){const r=cvs.getBoundingClientRect();wfW=cvs.width=r.width*devicePixelRatio;wfH=cvs.height=r.height*devicePixelRatio;initParticles();}
-  function initParticles(){particles=[];const count=Math.floor(wfW*wfH/5000);for(let i=0;i<count;i++)particles.push({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:0,ty:0,phase:Math.random()*Math.PI*2,r:Math.random()*2.2+0.9});particles.forEach(p=>{const t=Math.random();p.tx=t*wfW;p.ty=wfH*0.52+Math.sin(t*Math.PI*3.2)*wfH*0.30+(Math.random()*80-40)*devicePixelRatio;});}
-  const wfPhotos=document.querySelectorAll('#wayfinding .ph');
+  const wfHint=document.getElementById('wfHint');
+  const STORIES=[
+    {t:0.20,title:'Where neighbors became the safety net'},
+    {t:0.42,title:'A clinic that started asking different questions'},
+    {t:0.64,title:'The block that planned for its kids'},
+    {t:0.84,title:'Elders back at the center'}
+  ];
+  const STORY_BODY="A real community story will live here: the place, the people, and the change they made together. We're collecting these now.";
+  let particles=[],storyN=[],storyScreen=[],wfW=0,wfH=0,wfDpr=1;
+  function flowY(t){return wfH*0.40+Math.pow(t,2)*wfH*0.34;}  /* flat over the words, then descends to the right — not a bell curve */
+  function sizeWf(){
+    wfDpr=window.devicePixelRatio||1;const r=cvs.getBoundingClientRect();
+    wfW=cvs.width=r.width*wfDpr;wfH=cvs.height=r.height*wfDpr;
+    particles=[];const count=Math.floor(wfW*wfH/5000);
+    for(let i=0;i<count;i++){const t=Math.random();particles.push({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:t*wfW,ty:flowY(t)+(Math.random()*70-35)*wfDpr,phase:Math.random()*Math.PI*2,r:Math.random()*2.2+0.9});}
+    storyN=STORIES.map((s,i)=>({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:s.t*wfW,ty:flowY(s.t),phase:i*1.7}));
+  }
   function tickWf(){
     if(!inView(wfSection))return;
-    const p=progressOf(wfSection);ctx.clearRect(0,0,wfW,wfH);
-    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p);const wave=Math.sin(pt.phase+p*6)*16*devicePixelRatio*p;const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.40+p*0.52;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*devicePixelRatio*(1+p*0.7),0,Math.PI*2);ctx.fill();});
-    const fcx=wfW/2,fcy=wfH/2,fr=Math.min(wfW,wfH)*0.46,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.58)');fg.addColorStop(0.45,'rgba(244,236,220,0.22)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
-    [0.25,0.45,0.65,0.85].forEach((th,idx)=>wfPhotos[idx].classList.toggle('show',p>th));
+    const p=progressOf(wfSection),t=Date.now()*0.001;ctx.clearRect(0,0,wfW,wfH);
+    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p);const wave=Math.sin(pt.phase+p*5)*12*wfDpr*p;const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.34+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
+    const fcx=wfW/2,fcy=wfH*0.46,fr=Math.min(wfW,wfH)*0.5,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.62)');fg.addColorStop(0.5,'rgba(244,236,220,0.2)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
+    /* clickable story dots — larger, brighter, pulsing once converged */
+    storyScreen=[];
+    storyN.forEach((s,i)=>{const x=s.cx+(s.tx-s.cx)*easeOut(p),y=s.cy+(s.ty-s.cy)*easeOut(p);const rad=(6+5*p)*wfDpr,pulse=1+Math.sin(t*2+s.phase)*0.12;
+      if(p>0.35){ctx.beginPath();ctx.arc(x,y,rad*2.4*pulse,0,7);ctx.strokeStyle='rgba(0,219,182,'+(0.25*p)+')';ctx.lineWidth=1.4*wfDpr;ctx.stroke();}
+      ctx.beginPath();ctx.arc(x,y,rad*pulse,0,7);ctx.fillStyle='rgba(0,219,182,'+(0.5+0.45*p)+')';ctx.shadowColor='rgba(0,219,182,0.8)';ctx.shadowBlur=16*p;ctx.fill();ctx.shadowBlur=0;
+      storyScreen.push({x:x/wfDpr,y:y/wfDpr,r:Math.max(18,rad*2/wfDpr),i});
+    });
+    if(wfHint) wfHint.classList.toggle('show',p>0.55);
   }
   sizeWf();window.addEventListener('resize',sizeWf);
+  /* story dots — hover cursor + click opens a placeholder card */
+  (function(){
+    const modal=document.getElementById('storyModal'),title=document.getElementById('storyTitle'),body=document.getElementById('storyBody');
+    if(!modal)return;
+    function hit(e){const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let f=null;storyScreen.forEach(s=>{if(Math.hypot(mx-s.x,my-s.y)<=s.r)f=s;});return f;}
+    cvs.addEventListener('mousemove',e=>{cvs.style.cursor=hit(e)?'pointer':'default';});
+    cvs.addEventListener('click',e=>{const s=hit(e);if(!s)return;title.textContent=STORIES[s.i].title;body.textContent=STORY_BODY;modal.classList.add('open');modal.setAttribute('aria-hidden','false');});
+    modal.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}));
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}});
+  })();
 
   /* HOW — drag to compare */
   (function(){
@@ -560,7 +533,7 @@
   })();
 
   /* master loop */
-  function loop(){tickHero();tickWhy();tickWf();requestAnimationFrame(loop);}
+  function loop(){tickWhy();tickWf();requestAnimationFrame(loop);}
   requestAnimationFrame(loop);
 </script>
 </body>
