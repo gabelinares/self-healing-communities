@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Self-Healing Communities Fund — Photo Banner Concepts</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* SHCF brand palette — cloned from index.html */
+    --emerald:#009169;
+    --emerald-bright:#00DBB6;
+    --emerald-deep:#06513C;
+    --emerald-soft:#A4D6C6;
+    --paper:#F4ECDC;
+    --paper-warm:#EFE2CB;
+    --cream:#FBF6EA;
+    --terracotta:#C9442F;
+    --ink:#0F2A22;
+    --ink-soft:#4A5F58;
+    --rule: rgba(15,42,34,.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh}
+
+  /* ---------- Top selector (cloned from index.html) ---------- */
+  .selector{
+    position:sticky;top:0;z-index:100;
+    background:rgba(244,236,220,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .selector-inner{
+    max-width:1400px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 32px;
+  }
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand img{height:32px;display:block}
+  .brand small{font-family:'Inter';font-weight:400;color:var(--ink-soft);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding-left:14px;border-left:1px solid var(--rule)}
+  .tabs{display:flex;gap:4px;background:var(--cream);padding:4px;border-radius:999px;border:1px solid var(--rule)}
+  .tab{
+    border:0;background:transparent;cursor:pointer;
+    font-family:'Inter';font-size:13px;font-weight:500;color:var(--ink-soft);
+    padding:8px 16px;border-radius:999px;letter-spacing:.01em;
+    transition:all .25s ease;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.active{background:var(--emerald);color:var(--cream)}
+  .tab .num{font-family:'Fraunces',serif;font-style:italic;font-weight:400;opacity:.7;margin-right:6px}
+
+  /* ---------- stage switching (cloned) ---------- */
+  .stage{display:none}
+  .stage.active{display:block}
+
+  /* shared bits (cloned) */
+  .eyebrow{
+    font-family:'Inter';text-transform:uppercase;letter-spacing:.22em;
+    font-size:11px;color:var(--ink-soft);font-weight:500;
+  }
+  .desc{
+    max-width:1400px;margin:0 auto;padding:18px 32px 0;
+    display:flex;gap:24px;align-items:baseline;color:var(--ink-soft);font-size:13px;
+  }
+  .desc b{font-family:'Fraunces',serif;font-style:italic;color:var(--ink);font-weight:500;font-size:14px}
+
+  /* context spacers so the parallax is felt as you scroll past the band */
+  .spacer{
+    max-width:1400px;margin:0 auto;padding:90px 32px;
+  }
+  .spacer .ghost{
+    font-family:'Fraunces',serif;font-style:italic;color:var(--ink);opacity:.32;
+    font-size:clamp(22px,2.4vw,30px);max-width:30ch;line-height:1.25;
+  }
+  .spacer .tag{display:block;margin-bottom:14px}
+
+  .band-h{
+    font-family:'Fraunces',serif;font-weight:400;
+    font-size:clamp(34px,5vw,76px);line-height:1.04;letter-spacing:-.02em;
+    font-variation-settings:'WONK' 0,'SOFT' 0;
+  }
+  .band-h em{font-style:italic;color:var(--emerald-bright);font-weight:400}
+  .credit{
+    position:absolute;right:16px;bottom:12px;z-index:5;
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(251,246,234,.55);
+  }
+
+  /* ============================================================
+     OPTION 01 — Eye Contact  (full-bleed cinematic band, depth parallax)
+     ============================================================ */
+  #b1 .band{position:relative;height:clamp(380px,42vw,560px);overflow:hidden;background:var(--emerald-deep)}
+  #b1 .band-bg{
+    position:absolute;left:0;right:0;top:-8%;height:116%;
+    background-image:url(assets/eyes.jpg);
+    background-size:cover;background-position:center 42%;
+    will-change:transform;
+  }
+  /* warm legibility wash on the left, fading to clear over the eyes */
+  #b1 .band-veil{
+    position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(6,81,60,.82) 0%, rgba(6,81,60,.45) 38%, rgba(6,81,60,0) 64%);
+  }
+  #b1 .band-copy{
+    position:absolute;left:0;top:0;height:100%;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+    padding:0 32px;max-width:760px;will-change:transform;
+  }
+  #b1 .band-copy .eyebrow{color:var(--emerald-soft)}
+  #b1 .band-h{color:var(--cream)}
+
+  /* ============================================================
+     OPTION 02 — Split Reveal  (idea + portrait, two-speed parallax)
+     ============================================================ */
+  #b2 .band{position:relative;display:grid;grid-template-columns:1fr 1fr;min-height:78vh;overflow:hidden;background:var(--cream)}
+  #b2 .b2-text{
+    display:flex;flex-direction:column;justify-content:center;gap:22px;
+    padding:64px clamp(32px,5vw,80px);will-change:transform;
+  }
+  #b2 .b2-text .band-h{color:var(--ink)}
+  #b2 .b2-text .band-h em{color:var(--emerald)}
+  #b2 .b2-note{font-size:15px;line-height:1.6;color:var(--ink-soft);max-width:42ch}
+  #b2 .b2-photo{position:relative;overflow:hidden;background:var(--emerald-deep)}
+  #b2 .b2-img{
+    position:absolute;left:0;right:0;top:-12%;height:124%;
+    background-image:url(assets/eyes.jpg);
+    background-size:cover;background-position:center 40%;
+    will-change:transform;
+  }
+  /* emerald wash unifies the photo with the brand without killing the eyes */
+  #b2 .b2-wash{
+    position:absolute;inset:0;mix-blend-mode:multiply;
+    background:linear-gradient(180deg, rgba(0,145,105,.30), rgba(6,81,60,.42));
+  }
+  #b2 .b2-edge{position:absolute;left:0;top:0;bottom:0;width:120px;background:linear-gradient(90deg,var(--cream),rgba(251,246,234,0));z-index:2}
+  @media(max-width:860px){
+    #b2 .band{grid-template-columns:1fr}
+    #b2 .b2-photo{min-height:46vh;order:-1}
+    #b2 .b2-edge{display:none}
+  }
+
+  /* ============================================================
+     OPTION 03 — Held Gaze  (immersive sticky background, copy scrolls over)
+     ============================================================ */
+  #b3 .band{position:relative;height:190vh}
+  #b3 .b3-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:var(--emerald-deep)}
+  #b3 .b3-bg{
+    position:absolute;inset:0;
+    background-image:url(assets/eyes.jpg);
+    background-size:cover;background-position:center 44%;
+    will-change:transform;
+  }
+  #b3 .b3-tint{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 55%, rgba(6,81,60,0) 30%, rgba(6,81,60,.55) 100%)}
+  #b3 .b3-flow{position:relative;z-index:3;margin-top:-100vh;pointer-events:none}
+  #b3 .b3-screen{height:100vh;display:flex;align-items:center;justify-content:center;padding:0 32px}
+  #b3 .b3-card{
+    max-width:680px;text-align:center;display:flex;flex-direction:column;gap:20px;align-items:center;
+  }
+  #b3 .b3-card .eyebrow{color:var(--emerald-soft)}
+  #b3 .b3-card .band-h{color:var(--cream)}
+  #b3 .b3-card .band-h em{color:var(--emerald-bright)}
+  #b3 .b3-first{justify-content:flex-start;align-items:center}
+  /* a faint scrim panel behind the copy for legibility over the eyes */
+  #b3 .b3-card .panel{
+    background:rgba(6,81,60,.34);backdrop-filter:blur(2px);
+    padding:34px 40px;border-radius:18px;border:1px solid rgba(164,214,198,.22);
+  }
+</style>
+</head>
+<body>
+
+<div class="selector">
+  <div class="selector-inner">
+    <div class="brand">
+      <img src="logo.svg" alt="Self-Healing Communities Fund" />
+      <small>Photo Banner · 01</small>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-v="b1"><span class="num">01</span>Eye Contact</button>
+      <button class="tab" data-v="b2"><span class="num">02</span>Split Reveal</button>
+      <button class="tab" data-v="b3"><span class="num">03</span>Held Gaze</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================================================================
+     OPTION 01 — Eye Contact
+     ================================================================= -->
+<section class="stage active" id="b1">
+  <div class="desc">
+    <b>01 · Eye Contact</b>
+    <span>A full-bleed cinematic band. The eyes hold steady while a warm wash carries one line of copy. The image drifts slower than the page as you scroll past, giving it quiet depth.</span>
+  </div>
+  <div class="spacer top">
+    <span class="eyebrow tag">Preceding section</span>
+    <p class="ghost">…the story has been moving from friction toward flow…</p>
+  </div>
+
+  <div class="band" data-band>
+    <div class="band-bg" data-par="0.05"></div>
+    <div class="band-veil"></div>
+    <div class="band-copy" data-par="-0.05">
+      <div class="eyebrow">The Self-Healing Communities Fund</div>
+      <h2 class="band-h">Everything begins<br><em>with being seen.</em></h2>
+    </div>
+    <span class="credit">Photo · Mustafa ezz / Pexels</span>
+  </div>
+
+  <div class="spacer bottom">
+    <span class="eyebrow tag">Following section</span>
+    <p class="ghost">…and here the page continues into the next chapter.</p>
+  </div>
+</section>
+
+<!-- =================================================================
+     OPTION 02 — Split Reveal
+     ================================================================= -->
+<section class="stage" id="b2">
+  <div class="desc">
+    <b>02 · Split Reveal</b>
+    <span>The big idea sits in plain words on the cream half, the gaze answers it on the right. Text and portrait scroll at different speeds. This is the one that also solves "explain the Fund earlier."</span>
+  </div>
+  <div class="spacer top">
+    <span class="eyebrow tag">Preceding section</span>
+    <p class="ghost">…the story has been moving from friction toward flow…</p>
+  </div>
+
+  <div class="band" data-band>
+    <div class="b2-text" data-par="-0.04">
+      <div class="eyebrow">What the Fund is</div>
+      <h2 class="band-h">Communities that <em>heal themselves</em> when they're built for it.</h2>
+      <p class="b2-note">Placeholder copy. One or two plain sentences naming what the Self-Healing Communities Fund does, set the moment a visitor arrives — so no one has to scroll the whole story to understand it.</p>
+    </div>
+    <div class="b2-photo">
+      <div class="b2-img" data-par="0.14"></div>
+      <div class="b2-wash"></div>
+      <div class="b2-edge"></div>
+      <span class="credit">Photo · Mustafa ezz / Pexels</span>
+    </div>
+  </div>
+
+  <div class="spacer bottom">
+    <span class="eyebrow tag">Following section</span>
+    <p class="ghost">…and here the page continues into the next chapter.</p>
+  </div>
+</section>
+
+<!-- =================================================================
+     OPTION 03 — Held Gaze
+     ================================================================= -->
+<section class="stage" id="b3">
+  <div class="desc">
+    <b>03 · Held Gaze</b>
+    <span>A full-screen pause. The eyes stay fixed in place while two short lines rise over them. The most immersive of the three — a held breath between the heavier, idea-dense sections.</span>
+  </div>
+  <div class="spacer top">
+    <span class="eyebrow tag">Preceding section</span>
+    <p class="ghost">…the story has been moving from friction toward flow…</p>
+  </div>
+
+  <div class="band" data-band>
+    <div class="b3-sticky">
+      <div class="b3-bg" data-par="0.10"></div>
+      <div class="b3-tint"></div>
+      <span class="credit">Photo · Mustafa ezz / Pexels</span>
+    </div>
+    <div class="b3-flow">
+      <div class="b3-screen b3-first">
+        <div class="b3-card">
+          <div class="eyebrow">The Self-Healing Communities Fund</div>
+        </div>
+      </div>
+      <div class="b3-screen">
+        <div class="b3-card">
+          <div class="panel">
+            <h2 class="band-h">Every outcome starts<br>as <em>a child's first years.</em></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer bottom">
+    <span class="eyebrow tag">Following section</span>
+    <p class="ghost">…and here the page continues into the next chapter.</p>
+  </div>
+</section>
+
+<script>
+  /* ---------- tab switching (cloned from index.html) ---------- */
+  const tabs = document.querySelectorAll('.tab');
+  const stages = document.querySelectorAll('.stage');
+  const brandSmall = document.querySelector('.brand small');
+  const labelFor = {b1:'01',b2:'02',b3:'03'};
+  tabs.forEach(t=>{
+    t.addEventListener('click',()=>{
+      tabs.forEach(x=>x.classList.remove('active'));
+      stages.forEach(s=>s.classList.remove('active'));
+      t.classList.add('active');
+      const v = t.dataset.v;
+      document.getElementById(v).classList.add('active');
+      brandSmall.textContent = 'Photo Banner · ' + labelFor[v];
+      window.scrollTo({top:0,behavior:'instant'});
+      tick();
+    });
+  });
+
+  /* ---------- lightweight parallax ----------
+     Each [data-par] translates on Y by a fraction of how far the band's
+     center is from the viewport center. Positive = moves with scroll
+     (background depth), negative = drifts against it (foreground). */
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ticking = false;
+
+  function tick(){
+    ticking = false;
+    if(reduce) return;
+    const vh = window.innerHeight;
+    document.querySelectorAll('.stage.active [data-band]').forEach(band=>{
+      const r = band.getBoundingClientRect();
+      const bandCenter = r.top + r.height/2;
+      const delta = bandCenter - vh/2;           // px from viewport center
+      band.querySelectorAll('[data-par]').forEach(el=>{
+        const speed = parseFloat(el.dataset.par);
+        el.style.transform = 'translate3d(0,'+(delta*speed).toFixed(1)+'px,0)';
+      });
+    });
+  }
+  function onScroll(){
+    if(!ticking){ ticking = true; requestAnimationFrame(tick); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', tick);
+  tick();
+</script>
+</body>
+</html>

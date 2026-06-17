@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHCF — Sitemap & Homepage Structure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --emerald:#009169;--emerald-bright:#00DBB6;--emerald-deep:#06513C;--emerald-soft:#A4D6C6;
+    --paper:#F4ECDC;--cream:#FBF6EA;--terracotta:#C9442F;
+    --ink:#0F2A22;--ink-soft:#4A5F58;--rule:rgba(15,42,34,.16);--rule-soft:rgba(15,42,34,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.45}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:11px;color:var(--ink-soft);font-weight:600}
+  .ff{font-family:'Fraunces',serif;font-weight:400}
+  em{font-style:italic;color:var(--emerald);font-weight:300}
+
+  header.top{padding:60px 0 30px}
+  header.top .eyebrow{margin-bottom:14px}
+  header.top h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.04;letter-spacing:-.02em}
+  header.top p{margin-top:16px;color:var(--ink-soft);font-size:16px;max-width:60ch}
+
+  section{padding:30px 0 56px}
+  .lbl{display:flex;align-items:center;gap:14px;margin-bottom:32px}
+  .lbl .n{width:30px;height:30px;flex:none;border-radius:50%;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+  .lbl h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(24px,3vw,34px);line-height:1.1;letter-spacing:-.01em}
+  .divider{border:0;border-top:1px solid var(--rule);max-width:1000px;margin:0 auto}
+
+  /* ---------- SITEMAP FLOWCHART ---------- */
+  .map{display:flex;flex-direction:column;align-items:center}
+  .home{background:var(--emerald-deep);color:var(--cream);border-radius:14px;padding:16px 30px;text-align:center;min-width:200px}
+  .home .k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald-bright);font-weight:600}
+  .home .t{font-family:'Fraunces',serif;font-size:22px;margin-top:3px}
+  .stem{width:2px;height:26px;background:var(--rule)}
+  .rail{width:84%;max-width:760px;height:2px;background:var(--rule);position:relative}
+  .drops{display:flex;justify-content:space-between;width:84%;max-width:760px}
+  .drops .d{width:2px;height:22px;background:var(--rule)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;margin-top:0}
+  .pc{background:var(--cream);border:1px solid var(--rule);border-radius:12px;padding:18px 18px 16px}
+  .pc .top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+  .pc .nm{font-family:'Fraunces',serif;font-size:19px}
+  .pc .ds{font-size:12.5px;color:var(--ink-soft);line-height:1.4}
+  .pc .child{margin-top:11px;font-size:11.5px;color:var(--emerald-deep);background:rgba(0,145,105,.08);border-radius:8px;padding:7px 9px;display:flex;gap:6px;align-items:center}
+  .dot{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .dot.sci{background:rgba(0,145,105,.14);color:var(--emerald-deep)}
+  .dot.app{background:rgba(0,219,182,.20);color:var(--emerald-deep)}
+  .dot.new{background:var(--terracotta);color:#fff}
+  .dot.tr{background:rgba(15,42,34,.07);color:var(--ink-soft)}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}.rail,.drops{display:none}}
+
+  /* ---------- HOMEPAGE NARRATIVE ---------- */
+  .flow{display:flex;flex-direction:column;gap:0}
+  .step{display:grid;grid-template-columns:64px 1fr;gap:22px;position:relative}
+  .step .gut{display:flex;flex-direction:column;align-items:center}
+  .step .bub{width:46px;height:46px;flex:none;border-radius:50%;border:2px solid var(--emerald);color:var(--emerald-deep);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:18px;background:var(--cream);z-index:1}
+  .step .line{flex:1;width:2px;background:var(--rule);margin:4px 0}
+  .step:last-child .line{display:none}
+  .step .body{padding-bottom:26px}
+  .step .kk{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald);font-weight:600}
+  .step h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,3vw,30px);line-height:1.08;margin:5px 0 7px}
+  .step p{font-size:14.5px;color:var(--ink-soft);max-width:54ch}
+  .step .meets{margin-top:10px;font-size:11.5px;color:var(--ink-soft);display:inline-flex;align-items:center;gap:7px;background:rgba(0,145,105,.06);border:1px solid var(--rule-soft);border-radius:999px;padding:5px 12px}
+  .step .meets b{color:var(--emerald-deep);font-weight:600}
+  .step.first .bub{background:var(--emerald-deep);color:var(--cream);border-color:var(--emerald-deep)}
+  .step.last .bub{background:var(--emerald);color:var(--cream)}
+
+  footer{padding:8px 0 70px;color:var(--ink-soft);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Self-Healing Communities Fund</div>
+    <h1>Sitemap &amp; <em>homepage structure.</em></h1>
+    <p>The new page map, and a simpler homepage that names the Fund up front.</p>
+  </div>
+</header>
+<hr class="divider">
+
+<!-- ============ 1. SITEMAP ============ -->
+<section>
+  <div class="wrap">
+    <div class="lbl"><span class="n">1</span><h2>The new sitemap</h2></div>
+
+    <div class="map">
+      <div class="home"><div class="k">Homepage</div><div class="t">The big idea</div></div>
+      <div class="stem"></div>
+      <div class="rail"></div>
+      <div class="drops">
+        <span class="d"></span><span class="d"></span><span class="d"></span>
+      </div>
+
+      <div class="cards">
+        <div class="pc">
+          <div class="top"><span class="nm">The Science</span><span class="dot sci">Why</span></div>
+          <div class="ds">Experience shapes health. The evidence, in plain language.</div>
+        </div>
+        <div class="pc">
+          <div class="top"><span class="nm">Our Approach</span><span class="dot app">How</span></div>
+          <div class="ds">Building the conditions for communities to heal, not one-off fixes.</div>
+        </div>
+        <div class="pc">
+          <div class="top"><span class="nm">Community Stories</span><span class="dot new">New</span></div>
+          <div class="ds">The Fund in real places.</div>
+          <div class="child">↳ grows into a hub of stories</div>
+        </div>
+        <div class="pc">
+          <div class="top"><span class="nm">Who We Work With</span><span class="dot tr">Partners</span></div>
+          <div class="ds">Funders, policy partners, communities.</div>
+        </div>
+        <div class="pc">
+          <div class="top"><span class="nm">About</span><span class="dot tr">Trust</span></div>
+          <div class="ds">The movement and its people. Founder roles, corrected.</div>
+        </div>
+        <div class="pc">
+          <div class="top"><span class="nm">Get Involved</span><span class="dot tr">Act</span></div>
+          <div class="ds">The single next step.</div>
+          <div class="child">↳ optional PDF brief</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ============ 2. HOMEPAGE ============ -->
+<section>
+  <div class="wrap">
+    <div class="lbl"><span class="n">2</span><h2>The homepage, four sections</h2></div>
+
+    <div class="flow">
+
+      <div class="step first">
+        <div class="gut"><div class="bub">1</div><div class="line"></div></div>
+        <div class="body">
+          <div class="kk">Section 1 · Intro</div>
+          <h3>What the Fund is.</h3>
+          <p>One headline that names the Fund and what it does, plus the close-up photo. The visitor gets it in five seconds.</p>
+          <span class="meets"><b>Feedback ✓</b> the Fund is named first</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="gut"><div class="bub">2</div><div class="line"></div></div>
+        <div class="body">
+          <div class="kk">Section 2 · Why</div>
+          <h3>Why it matters.</h3>
+          <p>A short summary of the science, then a link to the full Science page. Just enough here, depth one click away.</p>
+          <span class="meets"><b>Feedback ✓</b> big idea up top, detail on its own page</span>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="gut"><div class="bub">3</div><div class="line"></div></div>
+        <div class="body">
+          <div class="kk">Section 3 · How</div>
+          <h3>How it works.</h3>
+          <p>The fragmented-vs-healing contrast as one quick interaction, then a link to the Approach page.</p>
+          <span class="meets"><b>Feedback ✓</b> less density, the loved moment kept</span>
+        </div>
+      </div>
+
+      <div class="step last">
+        <div class="gut"><div class="bub">4</div></div>
+        <div class="body">
+          <div class="kk">Section 4 · Act</div>
+          <h3>Get involved.</h3>
+          <p>One clear call to action. Nothing else competing for the click.</p>
+          <span class="meets"><b>Feedback ✓</b> a single, obvious next step</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>Self-Healing Communities Fund · sitemap & homepage structure · 2026</footer>
+
+</body>
+</html>
