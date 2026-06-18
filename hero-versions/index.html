@@ -71,6 +71,7 @@
   #why .brandline img{height:26px;opacity:.92}
   #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
   #why .stage{display:flex;flex-direction:column;align-items:center;gap:30px;z-index:4}
+  #why .book-zoom{transform-origin:25% 50%;will-change:transform}
   #why .book{position:relative;width:min(90vw,960px,108vh);aspect-ratio:3/2;perspective:2800px;transform-style:preserve-3d;flex-shrink:0}
   #why .book::after{content:"";position:absolute;left:5%;right:5%;bottom:-20px;height:26px;background:radial-gradient(ellipse at center,rgba(42,30,21,.42),transparent 70%);filter:blur(12px);z-index:0}
   #why .book .edge{position:absolute;top:1.5%;bottom:1.5%;width:8px;background:repeating-linear-gradient(180deg,#EFE2CB 0 1.5px,#D8C8A6 1.5px 3px);z-index:1;border-radius:1px;box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
@@ -91,9 +92,9 @@
   /* text pages (cover intro + cascade text) */
   #why .txtpage{background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%);display:flex;flex-direction:column;justify-content:center;padding:9% 11%}
   #why .txtpage .eyebrow{margin-bottom:18px}
-  #why .cover-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(17px,2.05vw,27px);line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
-  #why .cover-rule{width:54px;height:1px;background:var(--emerald);margin:20px 0 16px}
-  #why .cover-see{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,1.85vw,23px);color:var(--emerald);line-height:1.2}
+  #why .cover-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(15px,1.75vw,23px);line-height:1.22;letter-spacing:-.01em;color:var(--ink-soft)}
+  #why .cover-rule{width:54px;height:1px;background:var(--emerald);margin:22px 0 18px}
+  #why .cover-see{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(21px,2.75vw,37px);color:var(--emerald);line-height:1.1;letter-spacing:-.015em}
   #why .cas-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
   #why .cas-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(17px,1.95vw,25px);line-height:1.16;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
   #why .cas-quote{font-family:'Fraunces',serif;font-size:clamp(13px,1.45vw,17px);line-height:1.38;color:var(--ink-soft);margin-bottom:14px}
@@ -113,34 +114,27 @@
   /* ============================================================
      WAYFINDING — scatter → flow (particle river)
      ============================================================ */
-  #wayfinding .scroll-area{height:300vh;position:relative}
+  #wayfinding .scroll-area{height:340vh;position:relative}
   #wayfinding .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 30% 20%,#F8EFDC 0%,#EFE2CB 60%,#E6D4B5 100%)}
   #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
-  #wayfinding .ph{position:absolute;width:clamp(240px,22vw,400px);aspect-ratio:4/5;background-size:cover;background-position:center;border-radius:4px;opacity:0;transform:scale(.94);box-shadow:0 50px 90px -35px rgba(15,42,34,.45),0 12px 30px -10px rgba(15,42,34,.18);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.2,1);border:10px solid var(--cream);will-change:transform}
-  #wayfinding .ph.show{opacity:1;transform:scale(1)}
-  #wayfinding .ph.p1{top:9%;left:3%;transform:rotate(-4deg) scale(.94)}#wayfinding .ph.p1.show{transform:rotate(-4deg) scale(1)}
-  #wayfinding .ph.p2{bottom:7%;left:6%;transform:rotate(3deg) scale(.94)}#wayfinding .ph.p2.show{transform:rotate(3deg) scale(1)}
-  #wayfinding .ph.p3{top:7%;right:4%;transform:rotate(5deg) scale(.94)}#wayfinding .ph.p3.show{transform:rotate(5deg) scale(1)}
-  #wayfinding .ph.p4{bottom:9%;right:6%;transform:rotate(-3deg) scale(.94)}#wayfinding .ph.p4.show{transform:rotate(-3deg) scale(1)}
-  #wayfinding .copy{position:absolute;top:63%;left:50%;transform:translate(-50%,-50%);text-align:center;max-width:760px;width:90%;z-index:5;pointer-events:none;padding:0 48px}
-  #wayfinding .copy .eyebrow{margin-bottom:18px}
-  #wayfinding .copy .lede{margin:20px auto 0}
+  #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.82fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
+  #wayfinding .lc-frame{position:relative;width:100%;max-width:392px;aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:11px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
+  #wayfinding .lc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .7s ease}
+  #wayfinding .lc-img.show{opacity:1}
+  #wayfinding .lc-cap{position:absolute;left:0;right:0;bottom:0;padding:32px 16px 13px;background:linear-gradient(0deg,rgba(6,81,60,.82),transparent);color:rgba(251,246,234,.78);font-size:10px;letter-spacing:.22em;text-transform:uppercase;z-index:2;display:flex;align-items:baseline;gap:10px}
+  #wayfinding .lc-cap span{font-family:'Fraunces',serif;font-style:italic;text-transform:none;letter-spacing:0;font-size:19px;color:var(--cream)}
+  #wayfinding .copy{position:relative;text-align:left;max-width:560px;z-index:5;pointer-events:none}
+  #wayfinding .copy .eyebrow{margin-bottom:16px}
+  #wayfinding .copy .lede{margin:20px 0 0}
   #wayfinding .corners{position:absolute;inset:26px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
   #wayfinding .corners .r{text-align:right}
-  #wayfinding .wf-hint{position:absolute;left:50%;bottom:7vh;transform:translateX(-50%);z-index:6;color:var(--ink-soft);font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;gap:9px;align-items:center;opacity:0;transition:opacity .6s;pointer-events:none;text-align:center}
-  #wayfinding .wf-hint.show{opacity:1}
-  #wayfinding .wf-hint .d{width:8px;height:8px;border-radius:50%;background:var(--emerald-bright);box-shadow:0 0 12px var(--emerald-bright);animation:pulse 2s infinite}
-  /* story placeholder popover — springs from the clicked dot */
-  .story-pop{position:absolute;width:300px;max-width:80vw;margin-left:-150px;z-index:20;pointer-events:none}
-  .story-pop .pcard{position:relative;background:var(--cream);border-radius:16px;padding:22px 22px 20px;box-shadow:0 30px 70px -22px rgba(15,42,34,.55),0 4px 14px -6px rgba(15,42,34,.3);text-align:left;opacity:0;transform:scale(.78) translateY(-12px);transform-origin:50% 0;transition:opacity .2s ease,transform .34s cubic-bezier(.2,.9,.3,1.35);pointer-events:none}
-  .story-pop.open .pcard{opacity:1;transform:none;pointer-events:auto}
-  .story-pop .pcard::before{content:"";position:absolute;top:-7px;left:50%;margin-left:-7px;width:14px;height:14px;background:var(--cream);transform:rotate(45deg);box-shadow:-3px -3px 8px -5px rgba(15,42,34,.25)}
-  .story-pop .pavatar{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--emerald-bright),var(--emerald));margin-bottom:14px}
-  .story-pop .peyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep);font-weight:600;margin-bottom:9px}
-  .story-pop h4{font-family:'Fraunces',serif;font-weight:400;font-size:20px;line-height:1.18;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
-  .story-pop p{font-size:13.5px;line-height:1.5;color:var(--ink-soft)}
-  .story-pop .ptag{margin-top:15px;display:inline-block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald-deep);background:rgba(0,145,105,.1);padding:6px 11px;border-radius:999px}
-  .story-pop .pclose{position:absolute;top:9px;right:11px;border:0;background:none;font-size:18px;color:var(--ink-soft);cursor:pointer;line-height:1}
+  @media (max-width:820px){
+    #wayfinding .wf-layout{grid-template-columns:1fr;align-content:center;gap:26px;padding:0 28px}
+    #wayfinding .lc-frame{max-width:236px}
+    #wayfinding .copy{text-align:center;max-width:none}
+    #wayfinding .copy .lede{margin-left:auto;margin-right:auto}
+    #wayfinding .corners{display:none}
+  }
 
   /* ============================================================
      3 · HOW — drag to compare
@@ -149,23 +143,23 @@
   .how .head{text-align:center;max-width:720px;margin:0 auto 44px}
   .how .head .h2{margin-top:14px}
   .how .head .lede{margin:18px auto 0;text-align:center}
-  .compare{position:relative;max-width:1120px;margin:0 auto;height:clamp(420px,56vh,560px);border-radius:14px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 40px 80px -50px rgba(15,42,34,.5);user-select:none}
-  .cpanel{position:absolute;inset:0;padding:clamp(28px,5vw,60px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-  .cpanel .ctag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-bottom:14px}
-  .cpanel h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(26px,3.2vw,42px);line-height:1.08;letter-spacing:-.015em;max-width:15ch}
-  .cpanel ul{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:11px;max-width:30ch}
-  .cpanel li{font-size:14.5px;line-height:1.4;display:flex;gap:11px;align-items:flex-start}
+  .compare{position:relative;max-width:1120px;margin:0 auto;height:clamp(560px,76vh,720px);border-radius:18px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 40px 80px -50px rgba(15,42,34,.5);user-select:none}
+  .cpanel{position:absolute;inset:0;padding:clamp(32px,5.5vw,70px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .cpanel .ctag{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:16px}
+  .cpanel h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(30px,3.7vw,50px);line-height:1.08;letter-spacing:-.015em;max-width:15ch;text-shadow:0 1px 16px rgba(0,0,0,.22)}
+  .cpanel ul{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:14px;max-width:34ch}
+  .cpanel li{font-size:18px;line-height:1.4;display:flex;gap:12px;align-items:flex-start;text-shadow:0 1px 12px rgba(0,0,0,.2)}
   .cpanel li::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;margin-top:6px}
   .cpanel.flow{background:radial-gradient(ellipse at 72% 28%,#0c6b50 0%,var(--emerald-deep) 72%);color:var(--cream);align-items:flex-end;text-align:right;z-index:0}
   .cpanel.flow .ctag{color:var(--emerald-bright)}
   .cpanel.flow ul{margin-left:auto}
   .cpanel.flow li{justify-content:flex-end;text-align:right}
   .cpanel.flow li::before{order:2;margin-top:6px;background:var(--emerald-bright)}
-  .cpanel.friction{background:radial-gradient(ellipse at 28% 30%,#d6553f 0%,var(--terracotta) 76%);color:#fff5f0;z-index:1;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+  .cpanel.friction{background:radial-gradient(ellipse at 28% 30%,#bb3c27 0%,#963019 82%);color:#fff;z-index:1;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
   .cpanel.friction .ctag{color:#ffd9cd}
   .cpanel.friction li::before{background:#ffd9cd}
   .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-  .compare .cbg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  .compare .cbg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.6}
   .chandle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:var(--cream);transform:translateX(-1px);z-index:10;cursor:ew-resize}
   .chandle .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--cream);box-shadow:0 6px 20px -6px rgba(15,42,34,.5);display:flex;align-items:center;justify-content:center;gap:4px}
   .chandle .grip::before,.chandle .grip::after{content:"";width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent}
@@ -223,6 +217,7 @@
     <div class="sticky">
       <div class="progress" id="why-prog">Cover</div>
       <div class="stage">
+        <div class="book-zoom" id="bookZoom">
         <div class="book" id="why-book">
           <span class="edge left"></span><span class="edge right"></span>
           <div class="book-base">
@@ -265,7 +260,8 @@
           </div>
           <div class="spine"></div>
         </div>
-        <div class="cta-row">
+        </div>
+        <div class="cta-row" id="ctaRow">
           <a class="btn" href="#how">See how it works <span class="arrow">→</span></a>
           <a class="btn dark" href="#act">Get involved</a>
         </div>
@@ -280,25 +276,25 @@
   <div class="scroll-area" data-tick="wayfinding">
     <div class="sticky">
       <canvas id="wf-canvas"></canvas>
-      <div class="copy">
-        <div class="eyebrow">Like water finding its way</div>
-        <h2 class="h2">We can't force a river to flow. We can <em>restore what lets it.</em></h2>
-        <p class="lede" style="margin-left:auto;margin-right:auto">Remove the barriers, strengthen the banks, reconnect the channels, and health, connection, and opportunity move where they naturally want to go.</p>
+      <div class="wf-layout">
+        <div class="lc-frame" id="lcFrame">
+          <div class="lc-img show" style="background-image:url('https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?w=760&q=85')"></div>
+          <div class="lc-img" style="background-image:url('https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=760&q=85')"></div>
+          <div class="lc-img" style="background-image:url('https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=760&q=85')"></div>
+          <div class="lc-img" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=760&q=85')"></div>
+          <div class="lc-img" style="background-image:url('https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=760&q=85')"></div>
+          <div class="lc-img" style="background-image:url('https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=760&q=85')"></div>
+          <div class="lc-cap">A life unfolds&nbsp;&middot;&nbsp;<span id="lcStage">Infancy</span></div>
+        </div>
+        <div class="copy">
+          <div class="eyebrow">Like water finding its way</div>
+          <h2 class="h2">We can't force a river to flow. We can <em>restore what lets it.</em></h2>
+          <p class="lede">Scroll, and scattered points gather into a single current — a whole life, from the first years to the last, moving where it naturally wants to go.</p>
+        </div>
       </div>
       <div class="corners">
-        <div>Blocked · barriers</div>
-        <div class="r">Restored · flowing</div>
-      </div>
-      <div class="wf-hint" id="wfHint"><span class="d"></span>Click a glowing dot to open a community story</div>
-      <div class="story-pop" id="storyPop" aria-hidden="true">
-        <div class="pcard" role="dialog" aria-modal="false">
-          <button class="pclose" data-close aria-label="Close">&times;</button>
-          <div class="pavatar"></div>
-          <div class="peyebrow">Community story</div>
-          <h4 id="storyTitle">A story from a community</h4>
-          <p id="storyBody">This is where a real community story will live.</p>
-          <span class="ptag">Placeholder · coming soon</span>
-        </div>
+        <div>Scattered · blocked</div>
+        <div class="r">Gathered · flowing</div>
       </div>
     </div>
   </div>
@@ -388,74 +384,57 @@
   function lerp(a,b,t){return a+(b-a)*t}
   function easeOut(t){return 1-Math.pow(1-t,3)}
 
-  /* OPENING book — at rest shows the cover (eyes + intro); scroll turns into the cascades */
+  /* OPENING book — phase A: full face pulls back into the open book; phase B: pages turn */
   const whySection=document.querySelector('#why .scroll-area');
   const whyLeaves=document.querySelectorAll('#why .leaf');
   const whyProg=document.getElementById('why-prog');
+  const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow');
+  const A=0.26;  /* first 26% of the scroll is the pull-back */
   let whySmooth=0;
+  function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
     if(!inView(whySection))return;
-    whySmooth=lerp(whySmooth,progressOf(whySection),0.15);
-    const p=whySmooth,total=whyLeaves.length,turns=total;let flipped=0;
-    whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,p*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';if(local<0.5)leaf.style.zIndex=50-i;else{leaf.style.zIndex=100+i;flipped++;}});
+    whySmooth=lerp(whySmooth,progressOf(whySection),0.14);
+    const p=whySmooth;
+    /* phase A — the face fills the screen, then pulls back to reveal the open book */
+    const pa=Math.min(1,p/A),e=easeInOut(pa);
+    if(bookZoom){
+      const bw=bookEl.offsetWidth||600,bh=bookEl.offsetHeight||400;
+      const cover=Math.max(2*window.innerWidth/bw,window.innerHeight/bh)*1.04;
+      const S=lerp(cover,1,e),TX=lerp(bw/4,0,e),TY=lerp(42,0,e);
+      bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
+    }
+    if(ctaRow) ctaRow.style.opacity=Math.min(1,Math.max(0,(p-0.12)/0.12)).toFixed(2);
+    /* phase B — turn the pages */
+    const pb=Math.max(0,(p-A)/(1-A)),total=whyLeaves.length,turns=total;let flipped=0;
+    whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,pb*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';if(local<0.5)leaf.style.zIndex=50-i;else{leaf.style.zIndex=100+i;flipped++;}});
     if(whyProg) whyProg.textContent = flipped===0 ? 'Cover' : ('Page '+flipped+' of '+total);
   }
 
-  /* WAYFINDING — scatter → flow, with clickable community-story dots */
+  /* WAYFINDING — scatter → gentle flow, with a life-course frame that advances on scroll */
   const wfSection=document.querySelector('#wayfinding .scroll-area'),cvs=document.getElementById('wf-canvas'),ctx=cvs.getContext('2d');
-  const wfHint=document.getElementById('wfHint');
-  const STORIES=[
-    {t:0.20,title:'Where neighbors became the safety net'},
-    {t:0.42,title:'A clinic that started asking different questions'},
-    {t:0.64,title:'The block that planned for its kids'},
-    {t:0.84,title:'Elders back at the center'}
-  ];
-  const STORY_BODY="A real community story will live here: the place, the people, and the change they made together. We're collecting these now.";
-  let particles=[],storyN=[],storyScreen=[],wfW=0,wfH=0,wfDpr=1;
-  function flowY(t){return wfH*0.22+Math.pow(t,2)*wfH*0.15;}  /* sits above the text; flat then descends to the right — not a bell curve */
+  const lcImgs=document.querySelectorAll('#wayfinding .lc-img'),lcStage=document.getElementById('lcStage');
+  const STAGES=['Infancy','Childhood','Adolescence','Adulthood','Parenthood','Elderhood'];
+  let particles=[],wfW=0,wfH=0,wfDpr=1;
+  function flowY(t){return wfH*0.46+Math.sin(t*Math.PI*2.4+0.4)*wfH*0.09;}  /* gentle little-mountains — between a bell curve and a straight line */
   function sizeWf(){
     wfDpr=window.devicePixelRatio||1;const r=cvs.getBoundingClientRect();
     wfW=cvs.width=r.width*wfDpr;wfH=cvs.height=r.height*wfDpr;
-    particles=[];const count=Math.floor(wfW*wfH/5000);
-    for(let i=0;i<count;i++){const t=Math.random();particles.push({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:t*wfW,ty:flowY(t)+(Math.random()*70-35)*wfDpr,phase:Math.random()*Math.PI*2,r:Math.random()*2.2+0.9});}
-    storyN=STORIES.map((s,i)=>({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:s.t*wfW,ty:flowY(s.t),phase:i*1.7}));
+    particles=[];const count=Math.floor(wfW*wfH/5200);
+    for(let i=0;i<count;i++){const t=Math.random();particles.push({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:t*wfW,ty:flowY(t)+(Math.random()*64-32)*wfDpr,phase:Math.random()*Math.PI*2,r:Math.random()*2.2+0.9});}
   }
   function tickWf(){
     if(!inView(wfSection))return;
-    const p=progressOf(wfSection),t=Date.now()*0.001;ctx.clearRect(0,0,wfW,wfH);
-    const flow=t*0.55;  /* continuous gentle current so the river is always slightly moving */
-    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p)+Math.sin(flow+pt.phase)*7*wfDpr*p;const wave=Math.sin(pt.phase+flow*1.6)*9*wfDpr*(0.35+p*0.65);const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.34+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
-    const fcx=wfW/2,fcy=wfH*0.63,fr=Math.min(wfW,wfH)*0.5,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.62)');fg.addColorStop(0.5,'rgba(244,236,220,0.2)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
-    /* clickable story dots — larger, brighter, pulsing once converged */
-    storyScreen=[];
-    storyN.forEach((s,i)=>{const x=s.cx+(s.tx-s.cx)*easeOut(p)+Math.sin(flow+s.phase)*7*wfDpr*p,y=s.cy+(s.ty-s.cy)*easeOut(p)+Math.sin(s.phase+flow*1.6)*9*wfDpr*(0.35+p*0.65);const rad=(7+5*p)*wfDpr,pulse=1+Math.sin(t*2.2+s.phase)*0.14;
-      /* gold — a distinct accent against the emerald/terracotta river */
-      if(p>0.3){ctx.beginPath();ctx.arc(x,y,rad*2.5*pulse,0,7);ctx.strokeStyle='rgba(245,184,72,'+(0.3*p)+')';ctx.lineWidth=1.4*wfDpr;ctx.stroke();}
-      ctx.beginPath();ctx.arc(x,y,rad*pulse,0,7);ctx.fillStyle='rgba(245,184,72,'+(0.55+0.4*p)+')';ctx.shadowColor='rgba(245,184,72,0.9)';ctx.shadowBlur=18*p+5;ctx.fill();
-      ctx.beginPath();ctx.arc(x,y,rad*0.4*pulse,0,7);ctx.fillStyle='rgba(255,247,228,'+(0.65+0.3*p)+')';ctx.fill();ctx.shadowBlur=0;
-      storyScreen.push({x:x/wfDpr,y:y/wfDpr,r:Math.max(18,rad*2/wfDpr),i});
-    });
-    if(wfHint) wfHint.classList.toggle('show',p>0.55);
+    const p=progressOf(wfSection),t=Date.now()*0.001,flow=t*0.5;ctx.clearRect(0,0,wfW,wfH);
+    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p)+Math.sin(flow+pt.phase)*7*wfDpr*p;const wave=Math.sin(pt.phase+flow*1.5)*8*wfDpr*(0.35+p*0.65);const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.32+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
+    /* readability wash behind the copy (right side) */
+    const fcx=wfW*0.72,fcy=wfH*0.5,fr=Math.min(wfW,wfH)*0.62,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.6)');fg.addColorStop(0.55,'rgba(244,236,220,0.18)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
+    /* life-course frame advances with scroll */
+    const idx=Math.max(0,Math.min(STAGES.length-1,Math.round(p*(STAGES.length-1))));
+    lcImgs.forEach((im,i)=>im.classList.toggle('show',i===idx));
+    if(lcStage&&lcStage.textContent!==STAGES[idx]) lcStage.textContent=STAGES[idx];
   }
   sizeWf();window.addEventListener('resize',sizeWf);
-  /* story dots — hover cursor + click springs a popover from the dot */
-  (function(){
-    const pop=document.getElementById('storyPop'),title=document.getElementById('storyTitle'),body=document.getElementById('storyBody');
-    const sticky=document.querySelector('#wayfinding .sticky');
-    if(!pop)return;
-    function hit(e){const r=cvs.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let f=null;storyScreen.forEach(s=>{if(Math.hypot(mx-s.x,my-s.y)<=s.r)f=s;});return f;}
-    function closePop(){pop.classList.remove('open');pop.setAttribute('aria-hidden','true');}
-    function openPop(s){
-      title.textContent=STORIES[s.i].title;body.textContent=STORY_BODY;
-      const w=sticky.clientWidth,x=Math.max(160,Math.min(w-160,s.x));
-      pop.style.left=x+'px';pop.style.top=(s.y+18)+'px';
-      pop.classList.add('open');pop.setAttribute('aria-hidden','false');
-    }
-    cvs.addEventListener('mousemove',e=>{cvs.style.cursor=hit(e)?'pointer':'default';});
-    cvs.addEventListener('click',e=>{const s=hit(e);if(s)openPop(s);else closePop();});
-    pop.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',closePop));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop();});
-  })();
 
   /* HOW — drag to compare */
   (function(){
@@ -505,11 +484,11 @@
       pts.forEach((p,i)=>{
         const ang=nodes[i].ph*2.3,len=14+(i%3)*7;
         rctx.beginPath();rctx.moveTo(p.x,p.y);rctx.lineTo(p.x+Math.cos(ang)*len,p.y+Math.sin(ang)*len);
-        rctx.strokeStyle='rgba(255,214,200,0.22)';rctx.stroke();
+        rctx.strokeStyle='rgba(255,224,212,0.34)';rctx.stroke();
         if(i%3===0){const gx=p.x+Math.cos(ang)*len,gy=p.y+Math.sin(ang)*len;rctx.strokeStyle='rgba(255,120,90,0.5)';rctx.beginPath();rctx.moveTo(gx-4,gy-4);rctx.lineTo(gx+4,gy+4);rctx.moveTo(gx+4,gy-4);rctx.lineTo(gx-4,gy+4);rctx.stroke();}
       });
       [[0,7],[3,9],[5,11],[2,8]].forEach(([a,b])=>{if(pts[a]&&pts[b]){rctx.beginPath();rctx.moveTo(pts[a].x,pts[a].y);rctx.lineTo(pts[b].x,pts[b].y);rctx.strokeStyle='rgba(255,120,90,0.16)';rctx.stroke();}});
-      pts.forEach((p,i)=>{rctx.beginPath();rctx.arc(p.x,p.y,nodes[i].r,0,7);rctx.fillStyle='rgba(255,236,227,0.55)';rctx.shadowColor='rgba(255,120,80,0.5)';rctx.shadowBlur=9;rctx.fill();});
+      pts.forEach((p,i)=>{rctx.beginPath();rctx.arc(p.x,p.y,nodes[i].r,0,7);rctx.fillStyle='rgba(255,240,232,0.78)';rctx.shadowColor='rgba(0,0,0,0.4)';rctx.shadowBlur=9;rctx.fill();});
       rctx.shadowBlur=0;
       requestAnimationFrame(drawNet);
     }
