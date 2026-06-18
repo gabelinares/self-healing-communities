@@ -410,20 +410,22 @@
     whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,pb*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;});
   }
 
-  /* HERO TITLE — "It begins with seeing differently." rendered as dots that scatter on scroll */
+  /* HERO TITLE — crisp antialiased text first, then it breaks into dots and scatters (no scrim) */
   const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d');
-  let titleParts=[],tcw=0,tch=0,tDpr=1;
+  const TITLE_L1='It begins with',TITLE_L2='seeing differently.';
+  let titleParts=[],tcw=0,tch=0,tDpr=1,titleFs=0,titleCx=0,titleCy=0,titleLh=0;
+  function smooth(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
+  function setTitleFont(c){c.font='italic 400 '+titleFs+'px Fraunces, Georgia, serif';c.textAlign='center';c.textBaseline='middle';}
   function buildTitle(){
     if(!titleCv)return;
     tDpr=window.devicePixelRatio||1;
     tcw=titleCv.width=titleCv.offsetWidth*tDpr;tch=titleCv.height=titleCv.offsetHeight*tDpr;
+    titleFs=Math.min(titleCv.offsetWidth*0.072,86)*tDpr;
+    titleCx=tcw/2;titleCy=tch*0.46;titleLh=titleFs*1.04;
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
-    o.fillStyle='#fff';o.textAlign='center';o.textBaseline='middle';
-    const fs=Math.min(titleCv.offsetWidth*0.072,86)*tDpr;
-    o.font='italic 400 '+fs+'px Fraunces, Georgia, serif';
-    const cx=tcw/2,cy=tch*0.46,lh=fs*1.04;
-    o.fillText('It begins with',cx,cy-lh*0.5);
-    o.fillText('seeing differently.',cx,cy+lh*0.55);
+    o.fillStyle='#fff';setTitleFont(o);
+    o.fillText(TITLE_L1,titleCx,titleCy-titleLh*0.5);
+    o.fillText(TITLE_L2,titleCx,titleCy+titleLh*0.55);
     const data=o.getImageData(0,0,tcw,tch).data;
     titleParts=[];const step=Math.max(3,Math.round(3*tDpr));
     for(let y=0;y<tch;y+=step)for(let x=0;x<tcw;x+=step){
@@ -433,16 +435,28 @@
   function drawTitle(pa){
     if(!titleCtx)return;
     titleCtx.clearRect(0,0,tcw,tch);
-    if(pa>=0.62)return;
-    const diss=Math.min(1,pa/0.55),e=easeInOut(diss),t=Date.now()*0.001;
-    const sg=titleCtx.createRadialGradient(tcw/2,tch*0.46,0,tcw/2,tch*0.46,Math.max(tcw,tch)*0.5);
-    sg.addColorStop(0,'rgba(6,38,28,'+(0.42*(1-e)).toFixed(3)+')');sg.addColorStop(0.6,'rgba(6,38,28,'+(0.14*(1-e)).toFixed(3)+')');sg.addColorStop(1,'rgba(6,38,28,0)');
-    titleCtx.fillStyle=sg;titleCtx.fillRect(0,0,tcw,tch);
-    for(const p of titleParts){
-      const dx=Math.cos(p.ang)*p.dist*e,dy=Math.sin(p.ang)*p.dist*e-26*tDpr*e;
-      const x=p.hx+dx+Math.sin(t*0.8+p.ph)*2*tDpr*e,y=p.hy+dy,a=(1-e)*0.95;
-      titleCtx.fillStyle='rgba(251,247,235,'+a.toFixed(3)+')';
-      titleCtx.beginPath();titleCtx.arc(x,y,(1.7+e*1.2)*tDpr,0,7);titleCtx.fill();
+    if(pa>=0.64)return;
+    const t=Date.now()*0.001;
+    /* 1 — crisp antialiased text, what you see at first; fades as it turns to dots */
+    const solidA=1-smooth(0.05,0.30,pa);
+    if(solidA>0.01){
+      titleCtx.save();titleCtx.globalAlpha=solidA;setTitleFont(titleCtx);
+      titleCtx.shadowColor='rgba(0,0,0,0.42)';titleCtx.shadowBlur=22*tDpr;titleCtx.shadowOffsetY=2*tDpr;
+      titleCtx.fillStyle='rgba(252,248,237,1)';
+      titleCtx.fillText(TITLE_L1,titleCx,titleCy-titleLh*0.5);
+      titleCtx.fillText(TITLE_L2,titleCx,titleCy+titleLh*0.55);
+      titleCtx.restore();
+    }
+    /* 2 — the letters break into dots that drift apart */
+    if(pa>0.08){
+      const e=easeInOut(Math.min(1,(pa-0.08)/0.56)),appear=smooth(0.08,0.20,pa);
+      for(const p of titleParts){
+        const dx=Math.cos(p.ang)*p.dist*e,dy=Math.sin(p.ang)*p.dist*e-26*tDpr*e;
+        const x=p.hx+dx+Math.sin(t*0.8+p.ph)*2*tDpr*e,y=p.hy+dy,a=appear*(1-e)*0.95;
+        if(a<=0.01)continue;
+        titleCtx.fillStyle='rgba(252,248,237,'+a.toFixed(3)+')';
+        titleCtx.beginPath();titleCtx.arc(x,y,(1.5+e*1.3)*tDpr,0,7);titleCtx.fill();
+      }
     }
   }
   buildTitle();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(buildTitle);
