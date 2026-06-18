@@ -46,7 +46,7 @@
   .no-js .reveal{opacity:1;transform:none}
 
   /* ---------- NAV ---------- */
-  .nav{position:sticky;top:0;z-index:200;background:rgba(244,236,220,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule-soft)}
+  .nav{position:sticky;top:0;z-index:200;background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
   .nav-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
   .nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
   .nav .brand img{height:30px}
@@ -66,7 +66,7 @@
   #why{position:relative}
   #why .scroll-area{height:360vh;position:relative}
   #why .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:radial-gradient(ellipse at 50% 24%,#FBF6EA 0%,#F4ECDC 52%,#E9D7BA 100%)}
+    background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
   #why .brandline{position:absolute;top:5vh;left:0;right:0;display:flex;justify-content:center;align-items:center;z-index:6}
   #why .brandline img{height:26px;opacity:.92}
   #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
@@ -101,8 +101,11 @@
   #why .cas-quote .qm{color:var(--emerald-soft);font-family:'Fraunces',serif;font-size:1.7em;line-height:0;vertical-align:-.35em;margin-right:3px}
   #why .cas-attr{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
   #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
-  #why .turn-cue{position:absolute;bottom:5vh;left:0;right:0;display:flex;gap:10px;align-items:center;justify-content:center;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
-  #why .turn-cue .dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite}
+  #why canvas#heroTitle{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
+  #why .cover-meta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  #why .scrollcue{position:absolute;bottom:4.5vh;left:50%;transform:translateX(-50%);z-index:7;width:24px;height:38px;border:2px solid rgba(15,42,34,.38);border-radius:14px;display:flex;justify-content:center;transition:opacity .4s}
+  #why .scrollcue span{width:4px;height:8px;border-radius:2px;background:var(--emerald);margin-top:6px;animation:scrolld 1.8s infinite}
+  @keyframes scrolld{0%{opacity:0;transform:translateY(0)}30%{opacity:1}65%{opacity:1;transform:translateY(13px)}100%{opacity:0;transform:translateY(13px)}}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   @media (max-width:720px){
     #why .book{width:94vw}
@@ -115,7 +118,7 @@
      WAYFINDING — scatter → flow (particle river)
      ============================================================ */
   #wayfinding .scroll-area{height:340vh;position:relative}
-  #wayfinding .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 30% 20%,#F8EFDC 0%,#EFE2CB 60%,#E6D4B5 100%)}
+  #wayfinding .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
   #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
   #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.82fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
   #wayfinding .lc-frame{position:relative;width:100%;max-width:392px;aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:11px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
@@ -139,7 +142,7 @@
   /* ============================================================
      3 · HOW — drag to compare
      ============================================================ */
-  .how{background:var(--paper);border-top:1px solid var(--rule-soft);padding:clamp(72px,9vw,116px) 0}
+  .how{background:var(--paper);padding:clamp(80px,10vw,130px) 0}
   .how .head{text-align:center;max-width:720px;margin:0 auto 44px}
   .how .head .h2{margin-top:14px}
   .how .head .lede{margin:18px auto 0;text-align:center}
@@ -215,7 +218,7 @@
 <section id="why" aria-label="The Self-Healing Communities Fund">
   <div class="scroll-area" data-tick="why">
     <div class="sticky">
-      <div class="progress" id="why-prog">Cover</div>
+      <canvas id="heroTitle"></canvas>
       <div class="stage">
         <div class="book-zoom" id="bookZoom">
         <div class="book" id="why-book">
@@ -230,7 +233,7 @@
                 <div class="eyebrow">Self-Healing Communities Fund</div>
                 <div class="cover-title">We help communities, with public and philanthropic partners, restore the conditions where wellbeing can grow.</div>
                 <div class="cover-rule"></div>
-                <div class="cover-see">It begins with seeing differently.</div>
+                <div class="cover-meta">A fund by ACE Interface</div>
               </div>
               <div class="face verso txtpage">
                 <div class="cas-eyebrow">Page one</div>
@@ -266,7 +269,7 @@
           <a class="btn dark" href="#act">Get involved</a>
         </div>
       </div>
-      <div class="turn-cue"><span class="dot"></span>Scroll to turn the pages</div>
+      <div class="scrollcue" id="scrollCue"><span></span></div>
     </div>
   </div>
 </section>
@@ -291,10 +294,6 @@
           <h2 class="h2">We can't force a river to flow. We can <em>restore what lets it.</em></h2>
           <p class="lede">Scroll, and scattered points gather into a single current — a whole life, from the first years to the last, moving where it naturally wants to go.</p>
         </div>
-      </div>
-      <div class="corners">
-        <div>Scattered · blocked</div>
-        <div class="r">Gathered · flowing</div>
       </div>
     </div>
   </div>
@@ -384,11 +383,10 @@
   function lerp(a,b,t){return a+(b-a)*t}
   function easeOut(t){return 1-Math.pow(1-t,3)}
 
-  /* OPENING book — phase A: full face pulls back into the open book; phase B: pages turn */
+  /* OPENING — phase A: full face + dissolving title pull back into the open book; phase B: pages turn */
   const whySection=document.querySelector('#why .scroll-area');
   const whyLeaves=document.querySelectorAll('#why .leaf');
-  const whyProg=document.getElementById('why-prog');
-  const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow');
+  const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow'),scrollCue=document.getElementById('scrollCue');
   const A=0.26;  /* first 26% of the scroll is the pull-back */
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
@@ -396,7 +394,7 @@
     if(!inView(whySection))return;
     whySmooth=lerp(whySmooth,progressOf(whySection),0.14);
     const p=whySmooth;
-    /* phase A — the face fills the screen, then pulls back to reveal the open book */
+    /* phase A — the face fills the screen, the title scatters into dots, the book forms */
     const pa=Math.min(1,p/A),e=easeInOut(pa);
     if(bookZoom){
       const bw=bookEl.offsetWidth||600,bh=bookEl.offsetHeight||400;
@@ -404,12 +402,51 @@
       const S=lerp(cover,1,e),TX=lerp(bw/4,0,e),TY=lerp(42,0,e);
       bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
     }
-    if(ctaRow) ctaRow.style.opacity=Math.min(1,Math.max(0,(p-0.12)/0.12)).toFixed(2);
+    drawTitle(pa);
+    if(scrollCue) scrollCue.style.opacity=Math.max(0,1-p/0.06).toFixed(2);
+    if(ctaRow) ctaRow.style.opacity=Math.min(1,Math.max(0,(p-0.16)/0.12)).toFixed(2);
     /* phase B — turn the pages */
-    const pb=Math.max(0,(p-A)/(1-A)),total=whyLeaves.length,turns=total;let flipped=0;
-    whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,pb*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';if(local<0.5)leaf.style.zIndex=50-i;else{leaf.style.zIndex=100+i;flipped++;}});
-    if(whyProg) whyProg.textContent = flipped===0 ? 'Cover' : ('Page '+flipped+' of '+total);
+    const pb=Math.max(0,(p-A)/(1-A)),total=whyLeaves.length,turns=total;
+    whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,pb*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;});
   }
+
+  /* HERO TITLE — "It begins with seeing differently." rendered as dots that scatter on scroll */
+  const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d');
+  let titleParts=[],tcw=0,tch=0,tDpr=1;
+  function buildTitle(){
+    if(!titleCv)return;
+    tDpr=window.devicePixelRatio||1;
+    tcw=titleCv.width=titleCv.offsetWidth*tDpr;tch=titleCv.height=titleCv.offsetHeight*tDpr;
+    const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
+    o.fillStyle='#fff';o.textAlign='center';o.textBaseline='middle';
+    const fs=Math.min(titleCv.offsetWidth*0.072,86)*tDpr;
+    o.font='italic 400 '+fs+'px Fraunces, Georgia, serif';
+    const cx=tcw/2,cy=tch*0.46,lh=fs*1.04;
+    o.fillText('It begins with',cx,cy-lh*0.5);
+    o.fillText('seeing differently.',cx,cy+lh*0.55);
+    const data=o.getImageData(0,0,tcw,tch).data;
+    titleParts=[];const step=Math.max(3,Math.round(3*tDpr));
+    for(let y=0;y<tch;y+=step)for(let x=0;x<tcw;x+=step){
+      if(data[(y*tcw+x)*4+3]>130)titleParts.push({hx:x,hy:y,ang:Math.random()*6.283,dist:(60+Math.random()*230)*tDpr,ph:Math.random()*6.283});
+    }
+  }
+  function drawTitle(pa){
+    if(!titleCtx)return;
+    titleCtx.clearRect(0,0,tcw,tch);
+    if(pa>=0.62)return;
+    const diss=Math.min(1,pa/0.55),e=easeInOut(diss),t=Date.now()*0.001;
+    const sg=titleCtx.createRadialGradient(tcw/2,tch*0.46,0,tcw/2,tch*0.46,Math.max(tcw,tch)*0.5);
+    sg.addColorStop(0,'rgba(6,38,28,'+(0.42*(1-e)).toFixed(3)+')');sg.addColorStop(0.6,'rgba(6,38,28,'+(0.14*(1-e)).toFixed(3)+')');sg.addColorStop(1,'rgba(6,38,28,0)');
+    titleCtx.fillStyle=sg;titleCtx.fillRect(0,0,tcw,tch);
+    for(const p of titleParts){
+      const dx=Math.cos(p.ang)*p.dist*e,dy=Math.sin(p.ang)*p.dist*e-26*tDpr*e;
+      const x=p.hx+dx+Math.sin(t*0.8+p.ph)*2*tDpr*e,y=p.hy+dy,a=(1-e)*0.95;
+      titleCtx.fillStyle='rgba(251,247,235,'+a.toFixed(3)+')';
+      titleCtx.beginPath();titleCtx.arc(x,y,(1.7+e*1.2)*tDpr,0,7);titleCtx.fill();
+    }
+  }
+  buildTitle();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(buildTitle);
+  window.addEventListener('resize',buildTitle);
 
   /* WAYFINDING — scatter → gentle flow, with a life-course frame that advances on scroll */
   const wfSection=document.querySelector('#wayfinding .scroll-area'),cvs=document.getElementById('wf-canvas'),ctx=cvs.getContext('2d');
