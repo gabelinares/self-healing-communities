@@ -162,7 +162,7 @@
   .cpanel.friction .ctag{color:#ffd9cd}
   .cpanel.friction li::before{background:#ffd9cd}
   .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-  .compare .cbg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.6}
+  .compare .cbg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.9}
   .chandle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:var(--cream);transform:translateX(-1px);z-index:10;cursor:ew-resize}
   .chandle .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--cream);box-shadow:0 6px 20px -6px rgba(15,42,34,.5);display:flex;align-items:center;justify-content:center;gap:4px}
   .chandle .grip::before,.chandle .grip::after{content:"";width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent}
@@ -510,36 +510,63 @@
     const fc=document.getElementById('flowCanvas'),rc=document.getElementById('fricCanvas');
     if(!fc||!rc)return;
     const fctx=fc.getContext('2d'),rctx=rc.getContext('2d');
-    const P=[[.10,.30],[.18,.66],[.27,.18],[.33,.82],[.43,.48],[.50,.24],[.55,.74],[.62,.42],[.70,.64],[.74,.30],[.82,.58],[.88,.80],[.90,.36]];
-    let W=0,H=0,nodes=[],edges=[];
+    const P=[[.10,.30],[.18,.66],[.27,.18],[.33,.82],[.43,.48],[.50,.24],[.55,.74],[.62,.42],[.70,.64],[.74,.30],[.82,.58],[.88,.80],[.90,.36],[.06,.50],[.15,.88],[.22,.42],[.38,.30],[.40,.66],[.48,.88],[.60,.16],[.66,.86],[.78,.46],[.86,.20],[.93,.62]];
+    let W=0,H=0,nodes=[],edges=[],strands=[];
+    function pickOther(a,b){let n,g=0;do{n=Math.floor(Math.random()*P.length);}while((n===a||n===b)&&++g<24);return n;}
     function size(){
       const dpr=window.devicePixelRatio||1;
       [fc,rc].forEach(c=>{W=c.offsetWidth;H=c.offsetHeight;c.width=W*dpr;c.height=H*dpr;c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);});
       nodes=P.map((p,i)=>({bx:p[0]*W,by:p[1]*H,ph:i*0.9,r:i%4===0?4.5:3.2}));
       edges=[];
       nodes.forEach((n,i)=>{
-        nodes.map((m,j)=>({j,d:Math.hypot(m.bx-n.bx,m.by-n.by)})).filter(o=>o.j!==i).sort((a,b)=>a.d-b.d).slice(0,2)
-          .forEach(o=>{if(i<o.j)edges.push([i,o.j]);});
+        const srt=nodes.map((m,j)=>({j,d:Math.hypot(m.bx-n.bx,m.by-n.by)})).filter(o=>o.j!==i).sort((a,b)=>a.d-b.d);
+        n.near=srt.slice(0,5).map(o=>o.j);
+        srt.slice(0,2).forEach(o=>{if(i<o.j)edges.push([i,o.j]);});
       });
+      if(!strands.length){for(let i=0;i<24;i++){const a=i%nodes.length;const nb=nodes[a].near;strands.push({a,b:nb[i%nb.length],t:Math.random(),sp:0.0007+Math.random()*0.0006,bend:(0.14+Math.random()*0.4)*(i%2?1:-1)});}}
     }
     function drawNet(){
       const t=Date.now()*0.001;
       const pts=nodes.map(n=>({x:n.bx+Math.cos(t*0.6+n.ph)*5,y:n.by+Math.sin(t*0.5+n.ph)*5}));
       /* FLOW — calm connected network */
       fctx.clearRect(0,0,W,H);fctx.lineWidth=1;
-      edges.forEach(([a,b])=>{fctx.beginPath();fctx.moveTo(pts[a].x,pts[a].y);fctx.lineTo(pts[b].x,pts[b].y);fctx.strokeStyle='rgba(0,219,182,0.34)';fctx.stroke();});
-      pts.forEach((p,i)=>{fctx.beginPath();fctx.arc(p.x,p.y,nodes[i].r,0,7);fctx.fillStyle='rgba(222,255,246,0.72)';fctx.shadowColor='rgba(0,219,182,0.6)';fctx.shadowBlur=10;fctx.fill();});
+      fctx.lineCap='round';fctx.lineWidth=1.3;
+      strands.forEach(s=>{
+        s.t+=s.sp;
+        if(s.t>=1){                                        /* fully faded — quietly reappear connecting a new pair */
+          s.t=0;s.a=Math.floor(Math.random()*nodes.length);
+          const nb=nodes[s.a].near;s.b=nb[Math.floor(Math.random()*nb.length)];
+          s.bend=(0.14+Math.random()*0.4)*(Math.random()<.5?1:-1);s.sp=0.0007+Math.random()*0.0006;
+        }
+        let env=s.t<0.25?s.t/0.25:s.t>0.78?(1-s.t)/0.22:1;  /* slow fade in · long vivid hold · slow fade out */
+        env=env*env*(3-2*env);
+        const A=pts[s.a],B=pts[s.b];
+        const mx=(A.x+B.x)/2,my=(A.y+B.y)/2,dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy)||1,px=-dy/len,py=dx/len;
+        const cx=mx+px*len*s.bend, cy=my+py*len*s.bend;
+        fctx.beginPath();fctx.moveTo(A.x,A.y);fctx.quadraticCurveTo(cx,cy,B.x,B.y);
+        fctx.strokeStyle='rgba(0,219,182,'+(0.62*env).toFixed(3)+')';
+        fctx.shadowColor='rgba(0,219,182,'+(0.5*env).toFixed(3)+')';fctx.shadowBlur=6;fctx.stroke();fctx.shadowBlur=0;
+      });
+      pts.forEach((p,i)=>{fctx.beginPath();fctx.arc(p.x,p.y,nodes[i].r,0,7);fctx.fillStyle='rgba(222,255,246,0.95)';fctx.shadowColor='rgba(0,219,182,0.85)';fctx.shadowBlur=12;fctx.fill();});
       fctx.shadowBlur=0;
       /* FRICTION — same nodes, broken stubs, X-gaps, a few tangled crossings */
       rctx.clearRect(0,0,W,H);rctx.lineWidth=1;
       pts.forEach((p,i)=>{
         const ang=nodes[i].ph*2.3,len=14+(i%3)*7;
         rctx.beginPath();rctx.moveTo(p.x,p.y);rctx.lineTo(p.x+Math.cos(ang)*len,p.y+Math.sin(ang)*len);
-        rctx.strokeStyle='rgba(255,224,212,0.34)';rctx.stroke();
-        if(i%3===0){const gx=p.x+Math.cos(ang)*len,gy=p.y+Math.sin(ang)*len;rctx.strokeStyle='rgba(255,120,90,0.5)';rctx.beginPath();rctx.moveTo(gx-4,gy-4);rctx.lineTo(gx+4,gy+4);rctx.moveTo(gx+4,gy-4);rctx.lineTo(gx-4,gy+4);rctx.stroke();}
+        rctx.strokeStyle='rgba(255,224,212,0.55)';rctx.stroke();
+        if(i%3===0){const gx=p.x+Math.cos(ang)*len,gy=p.y+Math.sin(ang)*len;rctx.strokeStyle='rgba(255,120,90,0.72)';rctx.beginPath();rctx.moveTo(gx-4,gy-4);rctx.lineTo(gx+4,gy+4);rctx.moveTo(gx+4,gy-4);rctx.lineTo(gx-4,gy+4);rctx.stroke();}
       });
-      [[0,7],[3,9],[5,11],[2,8]].forEach(([a,b])=>{if(pts[a]&&pts[b]){rctx.beginPath();rctx.moveTo(pts[a].x,pts[a].y);rctx.lineTo(pts[b].x,pts[b].y);rctx.strokeStyle='rgba(255,120,90,0.16)';rctx.stroke();}});
-      pts.forEach((p,i)=>{rctx.beginPath();rctx.arc(p.x,p.y,nodes[i].r,0,7);rctx.fillStyle='rgba(255,240,232,0.78)';rctx.shadowColor='rgba(0,0,0,0.4)';rctx.shadowBlur=9;rctx.fill();});
+      rctx.setLineDash([5,7]);
+      [[0,7],[3,9],[5,11],[2,8]].forEach(([a,b],ci)=>{if(pts[a]&&pts[b]){
+        const p1=pts[a],p2=pts[b],mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;
+        const dx=p2.x-p1.x,dy=p2.y-p1.y,len=Math.hypot(dx,dy)||1,nx=-dy/len,ny=dx/len;
+        const bend=(ci%2?-1:1)*len*0.28*(0.7+Math.sin(t*0.4+ci*1.7)*0.4);
+        rctx.beginPath();rctx.moveTo(p1.x,p1.y);rctx.quadraticCurveTo(mx+nx*bend,my+ny*bend,p2.x,p2.y);
+        rctx.strokeStyle='rgba(255,120,90,0.3)';rctx.stroke();
+      }});
+      rctx.setLineDash([]);
+      pts.forEach((p,i)=>{rctx.beginPath();rctx.arc(p.x,p.y,nodes[i].r,0,7);rctx.fillStyle='rgba(255,240,232,0.95)';rctx.shadowColor='rgba(0,0,0,0.4)';rctx.shadowBlur=9;rctx.fill();});
       rctx.shadowBlur=0;
       requestAnimationFrame(drawNet);
     }
