@@ -67,6 +67,10 @@
   #why .scroll-area{height:360vh;position:relative}
   #why .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
+  /* the book opens from a wide box (whitespace + title) into the full frame — one continuous image */
+  #why .clip-window{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;
+    clip-path:inset(24vh 16vw 26vh 16vw round 16px);will-change:clip-path}
+  .no-js #why .clip-window{clip-path:none}
   #why .brandline{position:absolute;top:5vh;left:0;right:0;display:flex;justify-content:center;align-items:center;z-index:6}
   #why .brandline img{height:26px;opacity:.92}
   #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
@@ -120,8 +124,8 @@
   #wayfinding .scroll-area{height:340vh;position:relative}
   #wayfinding .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
   #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
-  #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.82fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
-  #wayfinding .lc-frame{position:relative;width:100%;max-width:392px;aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:11px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
+  #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.58fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
+  #wayfinding .lc-frame{position:relative;width:100%;max-width:300px;aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:8px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
   #wayfinding .lc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .7s ease}
   #wayfinding .lc-img.show{opacity:1}
   #wayfinding .lc-cap{position:absolute;left:0;right:0;bottom:0;padding:32px 16px 13px;background:linear-gradient(0deg,rgba(6,81,60,.82),transparent);color:rgba(251,246,234,.78);font-size:10px;letter-spacing:.22em;text-transform:uppercase;z-index:2;display:flex;align-items:baseline;gap:10px}
@@ -133,7 +137,7 @@
   #wayfinding .corners .r{text-align:right}
   @media (max-width:820px){
     #wayfinding .wf-layout{grid-template-columns:1fr;align-content:center;gap:26px;padding:0 28px}
-    #wayfinding .lc-frame{max-width:236px}
+    #wayfinding .lc-frame{max-width:196px}
     #wayfinding .copy{text-align:center;max-width:none}
     #wayfinding .copy .lede{margin-left:auto;margin-right:auto}
     #wayfinding .corners{display:none}
@@ -219,6 +223,7 @@
   <div class="scroll-area" data-tick="why">
     <div class="sticky">
       <canvas id="heroTitle"></canvas>
+      <div class="clip-window" id="clipWin">
       <div class="stage">
         <div class="book-zoom" id="bookZoom">
         <div class="book" id="why-book">
@@ -268,6 +273,7 @@
           <a class="btn" href="#how">See how it works <span class="arrow">→</span></a>
           <a class="btn dark" href="#act">Get involved</a>
         </div>
+      </div>
       </div>
       <div class="scrollcue" id="scrollCue"><span></span></div>
     </div>
@@ -386,27 +392,42 @@
   /* OPENING — phase A: full face + dissolving title pull back into the open book; phase B: pages turn */
   const whySection=document.querySelector('#why .scroll-area');
   const whyLeaves=document.querySelectorAll('#why .leaf');
+  const clipWin=document.getElementById('clipWin');
   const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow'),scrollCue=document.getElementById('scrollCue');
-  const A=0.26;  /* first 26% of the scroll is the pull-back */
+  const OPEN=0.22;   /* 0 → OPEN: the wide box opens out to the full frame */
+  const SETTLE=0.46; /* OPEN → SETTLE: the same face settles from the zoom into the open book */
+  const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
+  const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
+  /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
+  const BOX={t:30,r:16,b:16,l:16,rad:44};
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
     if(!inView(whySection))return;
     whySmooth=lerp(whySmooth,progressOf(whySection),0.14);
     const p=whySmooth;
-    /* phase A — the face fills the screen, the title scatters into dots, the book forms */
-    const pa=Math.min(1,p/A),e=easeInOut(pa);
+    /* phase A — the wide box opens out; the title dissolves into dots */
+    const pc=Math.min(1,p/OPEN),ec=easeInOut(pc);
+    if(clipWin){
+      const vw=window.innerWidth,vh=window.innerHeight;
+      const it=BOX.t*(1-ec)/100*vh,ib=BOX.b*(1-ec)/100*vh,il=BOX.l*(1-ec)/100*vw,rad=BOX.rad*(1-ec);
+      clipWin.style.clipPath='inset('+it.toFixed(1)+'px '+il.toFixed(1)+'px '+ib.toFixed(1)+'px '+il.toFixed(1)+'px round '+rad.toFixed(1)+'px)';
+    }
+    drawTitle(pc);
+    /* phase B — the same face settles from the zoom into the open book */
+    const ps=Math.max(0,Math.min(1,(p-OPEN)/(SETTLE-OPEN))),es=easeInOut(ps);
     if(bookZoom){
-      const bw=bookEl.offsetWidth||600,bh=bookEl.offsetHeight||400;
-      const cover=Math.max(2*window.innerWidth/bw,window.innerHeight/bh)*1.04;
-      const S=lerp(cover,1,e),TX=lerp(bw/4,0,e),TY=lerp(42,0,e);
+      const bw=bookEl.offsetWidth||600,bh=bw*2/3;
+      const boxW=window.innerWidth*(1-(BOX.l+BOX.r)/100);
+      const fz=Math.max(1.8,boxW/(bw/2)*OVERSCAN);  /* zoom so only the face fills the box, at any width */
+      const ty0=(0.5-EYE)*bh*fz;                    /* lift the eyes to the box centre at rest */
+      const S=lerp(fz,1,es),TX=lerp(bw/4,0,es),TY=lerp(ty0,0,es);
       bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
     }
-    drawTitle(pa);
-    if(scrollCue) scrollCue.style.opacity=Math.max(0,1-p/0.06).toFixed(2);
-    if(ctaRow) ctaRow.style.opacity=Math.min(1,Math.max(0,(p-0.16)/0.12)).toFixed(2);
-    /* phase B — turn the pages */
-    const pb=Math.max(0,(p-A)/(1-A)),total=whyLeaves.length,turns=total;
+    if(scrollCue) scrollCue.style.opacity=Math.max(0,1-p/0.05).toFixed(2);
+    if(ctaRow) ctaRow.style.opacity=Math.min(1,Math.max(0,(p-SETTLE-0.02)/0.12)).toFixed(2);
+    /* phase C — turn the pages */
+    const pb=Math.max(0,(p-SETTLE)/(1-SETTLE)),total=whyLeaves.length,turns=total;
     whyLeaves.forEach((leaf,i)=>{const local=Math.max(0,Math.min(1,pb*turns-i));leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;});
   }
 
@@ -420,8 +441,8 @@
     if(!titleCv)return;
     tDpr=window.devicePixelRatio||1;
     tcw=titleCv.width=titleCv.offsetWidth*tDpr;tch=titleCv.height=titleCv.offsetHeight*tDpr;
-    titleFs=Math.min(titleCv.offsetWidth*0.072,86)*tDpr;
-    titleCx=tcw/2;titleCy=tch*0.46;titleLh=titleFs*1.04;
+    titleFs=Math.min(titleCv.offsetWidth*0.058,68)*tDpr;
+    titleCx=tcw/2;titleCy=tch*0.135;titleLh=titleFs*1.04;
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';setTitleFont(o);
     o.fillText(TITLE_L1,titleCx,titleCy-titleLh*0.5);
@@ -441,8 +462,8 @@
     const solidA=1-smooth(0.05,0.30,pa);
     if(solidA>0.01){
       titleCtx.save();titleCtx.globalAlpha=solidA;setTitleFont(titleCtx);
-      titleCtx.shadowColor='rgba(0,0,0,0.42)';titleCtx.shadowBlur=22*tDpr;titleCtx.shadowOffsetY=2*tDpr;
-      titleCtx.fillStyle='rgba(252,248,237,1)';
+      titleCtx.shadowColor='rgba(251,246,234,0.6)';titleCtx.shadowBlur=10*tDpr;titleCtx.shadowOffsetY=1*tDpr;
+      titleCtx.fillStyle='rgba(15,42,34,0.94)';
       titleCtx.fillText(TITLE_L1,titleCx,titleCy-titleLh*0.5);
       titleCtx.fillText(TITLE_L2,titleCx,titleCy+titleLh*0.55);
       titleCtx.restore();
@@ -454,7 +475,7 @@
         const dx=Math.cos(p.ang)*p.dist*e,dy=Math.sin(p.ang)*p.dist*e-26*tDpr*e;
         const x=p.hx+dx+Math.sin(t*0.8+p.ph)*2*tDpr*e,y=p.hy+dy,a=appear*(1-e)*0.95;
         if(a<=0.01)continue;
-        titleCtx.fillStyle='rgba(252,248,237,'+a.toFixed(3)+')';
+        titleCtx.fillStyle='rgba(15,42,34,'+a.toFixed(3)+')';
         titleCtx.beginPath();titleCtx.arc(x,y,(1.5+e*1.3)*tDpr,0,7);titleCtx.fill();
       }
     }
@@ -467,19 +488,46 @@
   const lcImgs=document.querySelectorAll('#wayfinding .lc-img'),lcStage=document.getElementById('lcStage');
   const STAGES=['Infancy','Childhood','Adolescence','Adulthood','Parenthood','Elderhood'];
   let particles=[],wfW=0,wfH=0,wfDpr=1;
-  function flowY(t){return wfH*0.46+Math.sin(t*Math.PI*2.4+0.4)*wfH*0.09;}  /* gentle little-mountains — between a bell curve and a straight line */
+  const FLOW_SPEED=0.05;  /* how fast the current carries a dot down the river (fraction of width per second) */
+  function flowY(u){return wfH*0.46+Math.sin(u*Math.PI*2.4+0.4)*wfH*0.09;}  /* the river's gentle meander */
   function sizeWf(){
     wfDpr=window.devicePixelRatio||1;const r=cvs.getBoundingClientRect();
     wfW=cvs.width=r.width*wfDpr;wfH=cvs.height=r.height*wfDpr;
-    particles=[];const count=Math.floor(wfW*wfH/5200);
-    for(let i=0;i<count;i++){const t=Math.random();particles.push({cx:Math.random()*wfW,cy:Math.random()*wfH,tx:t*wfW,ty:flowY(t)+(Math.random()*64-32)*wfDpr,phase:Math.random()*Math.PI*2,r:Math.random()*2.2+0.9});}
+    particles=[];const count=Math.floor(wfW*wfH/2400);
+    for(let i=0;i<count;i++){particles.push({
+      u:Math.random(),                       /* position along the river, 0..1 */
+      off:(Math.random()-0.5)*wfH*0.14,      /* spread across the river */
+      sx:Math.random()*wfW,sy:Math.random()*wfH, /* scattered origin */
+      phase:Math.random()*Math.PI*2,r:Math.random()*2.8+1.4,
+      delay:Math.random()*0.55               /* each dot fades in at its own moment */
+    });}
   }
   function tickWf(){
     if(!inView(wfSection))return;
-    const p=progressOf(wfSection),t=Date.now()*0.001,flow=t*0.5;ctx.clearRect(0,0,wfW,wfH);
-    particles.forEach(pt=>{const x=pt.cx+(pt.tx-pt.cx)*easeOut(p)+Math.sin(flow+pt.phase)*7*wfDpr*p;const wave=Math.sin(pt.phase+flow*1.5)*8*wfDpr*(0.35+p*0.65);const y=pt.cy+(pt.ty-pt.cy)*easeOut(p)+wave;const alpha=0.32+p*0.5;const r=Math.round(201+(0-201)*p),g=Math.round(68+(219-68)*p),b=Math.round(47+(182-47)*p);ctx.fillStyle='rgba('+r+','+g+','+b+','+alpha+')';ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(1+p*0.6),0,7);ctx.fill();});
-    /* readability wash behind the copy (right side) */
-    const fcx=wfW*0.72,fcy=wfH*0.5,fr=Math.min(wfW,wfH)*0.62,fg=ctx.createRadialGradient(fcx,fcy,0,fcx,fcy,fr);fg.addColorStop(0,'rgba(244,236,220,0.6)');fg.addColorStop(0.55,'rgba(244,236,220,0.18)');fg.addColorStop(1,'rgba(244,236,220,0)');ctx.fillStyle=fg;ctx.fillRect(0,0,wfW,wfH);
+    const p=progressOf(wfSection),t=Date.now()*0.001,flowU=t*FLOW_SPEED;ctx.clearRect(0,0,wfW,wfH);
+    particles.forEach(pt=>{
+      const lp=Math.max(0,Math.min(1,(p-pt.delay)/0.45));  /* per-dot gather + fade-in window */
+      if(lp<=0)return;
+      const g=easeOut(lp);
+      let u=(pt.u+flowU)%1;if(u<0)u+=1;                     /* carried downstream, wrapping around */
+      const rx=u*wfW,ry=flowY(u)+pt.off+Math.sin(t*1.2+pt.phase)*6*wfDpr;
+      const x=pt.sx+(rx-pt.sx)*g,y=pt.sy+(ry-pt.sy)*g;
+      const edge=Math.min(1,u/0.05,(1-u)/0.05);             /* fade at the river's ends so the wrap is invisible */
+      const alpha=(0.42+0.5*p)*lp*(1-(1-edge)*g);
+      if(alpha<=0.01)return;
+      const cr=Math.round(201+(0-201)*g),cg=Math.round(68+(219-68)*g),cb=Math.round(47+(182-47)*g);
+      ctx.fillStyle='rgba('+cr+','+cg+','+cb+','+alpha.toFixed(3)+')';
+      ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(0.7+g*0.5),0,7);ctx.fill();
+    });
+    /* readability — a subtle cream radial sat exactly behind the copy, at any layout/width */
+    const copyEl=document.querySelector('#wayfinding .copy');
+    if(copyEl){
+      const cr=copyEl.getBoundingClientRect(),cb=cvs.getBoundingClientRect();
+      const cx=(cr.left+cr.width/2-cb.left)*wfDpr,cy=(cr.top+cr.height/2-cb.top)*wfDpr,rad=Math.max(cr.width,cr.height)*0.95*wfDpr;
+      const wg=ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+      wg.addColorStop(0,'rgba(244,236,220,0.82)');wg.addColorStop(0.55,'rgba(244,236,220,0.42)');wg.addColorStop(1,'rgba(244,236,220,0)');
+      ctx.fillStyle=wg;ctx.fillRect(0,0,wfW,wfH);
+    }
     /* life-course frame advances with scroll */
     const idx=Math.max(0,Math.min(STAGES.length-1,Math.round(p*(STAGES.length-1))));
     lcImgs.forEach((im,i)=>im.classList.toggle('show',i===idx));
