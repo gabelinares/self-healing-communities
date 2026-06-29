@@ -258,7 +258,7 @@
               </div>
             </div>
             <div class="leaf" data-i="1">
-              <div class="face recto" style="background-image:url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=1400&q=85')"></div>
+              <div class="face recto" style="background-image:url('assets/cascade.jpg');background-image:image-set(url('assets/cascade.avif') type('image/avif'),url('assets/cascade.jpg') type('image/jpeg'))"></div>
               <div class="face verso txtpage">
                 <div class="cas-eyebrow">Page two</div>
                 <div class="cas-title">Adversity carries forward.</div>
@@ -380,18 +380,13 @@
   setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* nav hover-preview */
-  (function(){
-    const links=document.getElementById('navLinks'),prev=document.getElementById('navPreview'),pv=document.getElementById('navPv');
-    links.querySelectorAll('a[data-pv]').forEach(a=>a.addEventListener('mouseenter',()=>{pv.textContent=a.dataset.pv;prev.classList.add('open');}));
-    links.addEventListener('mouseleave',()=>prev.classList.remove('open'));
-  })();
+  /* nav hover-preview removed */
 
   /* nav: transparent over the hero, glass background from the second section on */
   (function(){
     const nav=document.querySelector('.nav'),second=document.getElementById('wayfinding');
     if(!nav||!second)return;
-    function navState(){nav.classList.toggle('solid',window.scrollY+nav.offsetHeight>=second.offsetTop-40);}
+    function navState(){nav.classList.toggle('solid',window.scrollY>48);}
     window.addEventListener('scroll',navState,{passive:true});
     window.addEventListener('resize',navState);
     navState();
