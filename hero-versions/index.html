@@ -84,7 +84,7 @@
   #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
   #why .stage{display:flex;flex-direction:column;align-items:center;gap:30px;z-index:4}
   #why .book-zoom{transform-origin:25% 50%;will-change:transform}
-  #why .book{position:relative;width:min(90vw,960px,108vh);aspect-ratio:12/5;perspective:2800px;transform-style:preserve-3d;flex-shrink:0}
+  #why .book{position:relative;width:min(90vw,960px,108vh);aspect-ratio:3/2;perspective:2800px;transform-style:preserve-3d;flex-shrink:0}
   #why .book::after{content:"";position:absolute;left:5%;right:5%;bottom:-20px;height:26px;background:radial-gradient(ellipse at center,rgba(42,30,21,.42),transparent 70%);filter:blur(12px);z-index:0}
   #why .book .edge{position:absolute;top:1.5%;bottom:1.5%;width:8px;background:repeating-linear-gradient(180deg,#EFE2CB 0 1.5px,#D8C8A6 1.5px 3px);z-index:1;border-radius:1px;box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
   #why .book .edge.left{left:-8px;border-radius:2px 0 0 2px}
@@ -93,11 +93,11 @@
   #why .page{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%)}
   #why .page.page-left{box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.26)}
   #why .page.page-right{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.22)}
-  #why .photo-face{position:absolute;inset:0;background-size:cover;background-position:center 42%}
+  #why .photo-face{position:absolute;inset:0;background-size:cover;background-position:center 32%}
   #why .spine{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:linear-gradient(90deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.3) 100%);z-index:60;pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.4)}
   #why .leaves{position:absolute;inset:0;transform-style:preserve-3d;z-index:5}
   #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
-  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 42%;overflow:hidden}
+  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 32%;overflow:hidden}
   #why .leaf .recto{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.18)}
   #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2) 0%,transparent 14%);pointer-events:none}
   #why .leaf .verso{transform:rotateY(180deg);box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.18)}
@@ -121,7 +121,7 @@
   @keyframes scrolld{0%{opacity:0;transform:translateY(0)}30%{opacity:1}65%{opacity:1;transform:translateY(13px)}100%{opacity:0;transform:translateY(13px)}}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   @media (max-width:720px){
-    #why .book{width:94vw;aspect-ratio:3/2}
+    #why .book{width:94vw}
     #why .cover-title{font-size:26px}#why .cas-title{font-size:14.5px}#why .cas-quote{font-size:11.5px}#why .cover-see{font-size:15px}
     #why .brandline,#why .progress{display:none}
     #why .txtpage{padding:7% 8%}
@@ -239,7 +239,7 @@
         <div class="book" id="why-book">
           <span class="edge left"></span><span class="edge right"></span>
           <div class="book-base">
-            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/face.jpg');background-image:image-set(url('assets/face.avif') type('image/avif'),url('assets/face.jpg') type('image/jpeg'));background-position:center 42%"></div></div>
+            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/face.jpg');background-image:image-set(url('assets/face.avif') type('image/avif'),url('assets/face.jpg') type('image/jpeg'));background-position:center 30%"></div></div>
             <div class="page page-right"><div class="photo-face" style="background-image:url('assets/community.jpg');background-image:image-set(url('assets/community.avif') type('image/avif'),url('assets/community.jpg') type('image/jpeg'))"></div></div>
           </div>
           <div class="leaves" id="why-leaves">
@@ -414,7 +414,7 @@
   const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
   const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
   /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
-  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:34,r:16,b:13,l:16,rad:44};}
+  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:41,r:16,b:18,l:16,rad:44};}
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
@@ -436,7 +436,8 @@
       const bw=bookEl.offsetWidth||600,bh=bw*2/3;
       const boxW=window.innerWidth*(1-(BOX.l+BOX.r)/100);
       const fz=Math.max(1.8,boxW/(bw/2)*OVERSCAN);  /* zoom so only the face fills the box, at any width */
-      const ty0=(0.5-EYE)*bh*fz;                    /* lift the eyes to the box centre at rest */
+      const boxOff=(BOX.t-BOX.b)/200*window.innerHeight;  /* the box centre sits below the viewport centre when t>b */
+      const ty0=(0.5-EYE)*bh*fz+boxOff;             /* lift the eyes to the box centre at rest */
       const S=lerp(fz,1,es),TX=lerp(bw/4,0,es),TY=lerp(ty0,0,es);
       bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
     }
@@ -505,7 +506,7 @@
     eyebrowFs=Math.min(titleCv.offsetWidth*(tm?0.03:0.012),tm?12:13)*tDpr;
     eyebrowGap=leadFs*0.7;
     leadLh=leadFs*1.18;emphGap=leadFs*0.42;
-    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.205);
+    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
     const data=o.getImageData(0,0,tcw,tch).data;
