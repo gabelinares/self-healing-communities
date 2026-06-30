@@ -414,7 +414,7 @@
   const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
   const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
   /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
-  function curBox(){return window.innerWidth<=720?{t:40,r:6,b:28,l:6,rad:20}:{t:34,r:16,b:13,l:16,rad:44};}
+  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:34,r:16,b:13,l:16,rad:44};}
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
@@ -449,17 +449,20 @@
 
   /* HERO TITLE — crisp antialiased text first, then it breaks into dots and scatters (no scrim) */
   const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d');
-  let TITLE_LEAD=['We help communities, with public and philanthropic','partners, restore the conditions where'];
-  const TITLE_EMPH='wellbeing can grow.';
-  let titleParts=[],tcw=0,tch=0,tDpr=1,titleCx=0,titleCy=0,leadFs=0,emphFs=0,leadLh=0,emphGap=0;
+  let TITLE_LEAD=['Technically Rigorous. Deeply Hopeful.','Stewardship to bring'];
+  const TITLE_EMPH='wellbeing to scale.';
+  const TITLE_EYEBROW='Self-Healing Communities Fund';
+  let titleParts=[],tcw=0,tch=0,tDpr=1,titleCx=0,titleCy=0,leadFs=0,emphFs=0,leadLh=0,emphGap=0,eyebrowFs=0,eyebrowGap=0;
   function smooth(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
-  function leadFont(c){c.font='400 '+leadFs+'px Fraunces, Georgia, serif';c.textAlign='center';c.textBaseline='middle';}
-  function emphFont(c){c.font='600 '+emphFs+'px Fraunces, Georgia, serif';c.textAlign='center';c.textBaseline='middle';}
+  function leadFont(c){c.font='400 '+leadFs+'px Fraunces, Georgia, serif';c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
+  function emphFont(c){c.font='600 '+emphFs+'px Fraunces, Georgia, serif';c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
+  function eyebrowFont(c){c.font='600 '+eyebrowFs+'px Inter, system-ui, sans-serif';c.textAlign='center';c.textBaseline='middle';c.letterSpacing=(eyebrowFs*0.22)+'px';}
   function titleLayout(){
-    const n=TITLE_LEAD.length,totalH=(n-1)*leadLh+leadFs+emphGap+emphFs,top=titleCy-totalH/2;
-    const leadY=[];for(let i=0;i<n;i++)leadY.push(top+leadFs/2+i*leadLh);
-    const emphY=top+(n-1)*leadLh+leadFs+emphGap+emphFs/2;
-    return {leadY,emphY};
+    const n=TITLE_LEAD.length,totalH=eyebrowFs+eyebrowGap+(n-1)*leadLh+leadFs+emphGap+emphFs,top=titleCy-totalH/2;
+    const eyebrowY=top+eyebrowFs/2,leadTop=top+eyebrowFs+eyebrowGap;
+    const leadY=[];for(let i=0;i<n;i++)leadY.push(leadTop+leadFs/2+i*leadLh);
+    const emphY=leadTop+(n-1)*leadLh+leadFs+emphGap+emphFs/2;
+    return {eyebrowY,leadY,emphY};
   }
   /* a sketchy, hand-drawn dark pencil underline (two slightly-wobbling passes) */
   function pencilUnderline(c,x0,x1,y,a){
@@ -475,12 +478,15 @@
   }
   /* offscreen white mask so the whole headline shatters into dots uniformly */
   function paintTitleMask(c){
-    const L=titleLayout();leadFont(c);for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
+    const L=titleLayout();
+    eyebrowFont(c);c.fillText(TITLE_EYEBROW.toUpperCase(),titleCx,L.eyebrowY);
+    leadFont(c);for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
     emphFont(c);c.fillText(TITLE_EMPH,titleCx,L.emphY);
   }
   /* the at-rest headline: small upright dark lead, a bigger upright payoff with a pencil mark */
   function paintTitleSolid(c,a){
     const L=titleLayout();
+    c.fillStyle='rgba(74,95,88,0.92)';eyebrowFont(c);c.fillText(TITLE_EYEBROW.toUpperCase(),titleCx,L.eyebrowY);
     c.fillStyle='rgba(15,42,34,0.9)';leadFont(c);
     for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
     emphFont(c);
@@ -493,11 +499,13 @@
     tDpr=window.devicePixelRatio||1;
     tcw=titleCv.width=titleCv.offsetWidth*tDpr;tch=titleCv.height=titleCv.offsetHeight*tDpr;
     const tm=titleCv.offsetWidth<=720;
-    TITLE_LEAD=tm?['We help communities,','with public and philanthropic','partners, restore the','conditions where']:['We help communities, with public and philanthropic','partners, restore the conditions where'];
-    leadFs=Math.min(titleCv.offsetWidth*(tm?0.036:0.0235),tm?26:26)*tDpr;
-    emphFs=Math.min(titleCv.offsetWidth*(tm?0.054:0.044),tm?34:50)*tDpr;
-    leadLh=leadFs*1.24;emphGap=leadFs*0.9;
-    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.215);
+    TITLE_LEAD=tm?['Technically Rigorous.','Deeply Hopeful.','Stewardship to bring']:['Technically Rigorous. Deeply Hopeful.','Stewardship to bring'];
+    leadFs=Math.min(titleCv.offsetWidth*(tm?0.05:0.026),tm?32:28)*tDpr;
+    emphFs=Math.min(titleCv.offsetWidth*(tm?0.07:0.046),tm?44:54)*tDpr;
+    eyebrowFs=Math.min(titleCv.offsetWidth*(tm?0.03:0.012),tm?12:13)*tDpr;
+    eyebrowGap=leadFs*0.7;
+    leadLh=leadFs*1.18;emphGap=leadFs*0.42;
+    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.205);
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
     const data=o.getImageData(0,0,tcw,tch).data;
