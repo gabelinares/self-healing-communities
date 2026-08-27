@@ -115,6 +115,7 @@
   #why .cas-attr{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
   #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
   #why canvas#heroTitle{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
+  #why .hero-lede{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:6;width:min(720px,82vw);text-align:center;font-family:'Inter',system-ui,sans-serif;font-weight:400;font-size:14px;line-height:1.45;color:rgba(74,95,88,.82);pointer-events:none;opacity:0}
   #why .cover-meta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
   #why .scrollcue{position:absolute;bottom:4.5vh;left:50%;transform:translateX(-50%);z-index:7;width:24px;height:38px;border:2px solid rgba(15,42,34,.38);border-radius:14px;display:flex;justify-content:center;transition:opacity .4s}
   #why .scrollcue span{width:4px;height:8px;border-radius:2px;background:var(--emerald);margin-top:6px;animation:scrolld 1.8s infinite}
@@ -125,6 +126,7 @@
     #why .cover-title{font-size:26px}#why .cas-title{font-size:14.5px}#why .cas-quote{font-size:11.5px}#why .cover-see{font-size:15px}
     #why .brandline,#why .progress{display:none}
     #why .txtpage{padding:7% 8%}
+    #why .hero-lede{font-size:13px;line-height:1.5;width:86vw}
   }
 
   /* ============================================================
@@ -237,6 +239,7 @@
     <div class="sticky">
       <div class="grain-tex"></div>
       <canvas id="heroTitle"></canvas>
+      <p class="hero-lede" id="heroLede">The Self-Healing Communities Fund is building a new model that helps communities and public systems to align people, funding, and practices around the common causes of lifelong wellbeing.</p>
       <div class="clip-window" id="clipWin">
       <div class="stage">
         <div class="book-zoom" id="bookZoom">
@@ -455,7 +458,7 @@
   }
 
   /* HERO TITLE — crisp antialiased text first, then it breaks into dots and scatters (no scrim) */
-  const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d');
+  const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d'),heroLede=document.getElementById('heroLede');
   let TITLE_LEAD=['From crisis response to lasting community capacity'];
   const TITLE_EMPH='to leave each generation stronger.';
   const TITLE_EYEBROW='Self-Healing Communities Fund';
@@ -516,9 +519,10 @@
      leadFont(probe);let lw=0;for(const s of TITLE_LEAD)lw=Math.max(lw,probe.measureText(s).width);if(lw>maxLeadW)leadFs*=maxLeadW/lw;
      const maxEmphW=tcw*(tm?0.94:0.92);
      emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}
-    eyebrowGap=leadFs*0.7;
-    leadLh=leadFs*1.18;emphGap=leadFs*0.42;
+    eyebrowGap=leadFs*0.55;
+    leadLh=leadFs*1.18;emphGap=leadFs*0.32;
     titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
+    if(heroLede){const L=titleLayout();heroLede.style.top=((L.emphY+emphFs*0.6)/tDpr+10)+'px';}
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
     const data=o.getImageData(0,0,tcw,tch).data;
@@ -530,10 +534,11 @@
   function drawTitle(pa){
     if(!titleCtx)return;
     titleCtx.clearRect(0,0,tcw,tch);
-    if(pa>=0.64)return;
+    if(pa>=0.64){if(heroLede)heroLede.style.opacity=0;return;}
     const t=Date.now()*0.001;
     /* 1 — crisp antialiased text, what you see at first; fades as it turns to dots */
     const solidA=1-smooth(0.05,0.30,pa);
+    if(heroLede)heroLede.style.opacity=solidA.toFixed(3);
     if(solidA>0.01){
       titleCtx.save();titleCtx.globalAlpha=solidA;
       titleCtx.shadowColor='rgba(251,246,234,0.6)';titleCtx.shadowBlur=10*tDpr;titleCtx.shadowOffsetY=1*tDpr;
