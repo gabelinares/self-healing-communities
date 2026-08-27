@@ -110,9 +110,17 @@
   #why .cover-see{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(21px,2.75vw,37px);color:var(--emerald);line-height:1.1;letter-spacing:-.015em}
   #why .cas-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px}
   #why .cas-title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(17px,1.95vw,25px);line-height:1.16;letter-spacing:-.01em;color:var(--ink);margin-bottom:16px}
-  #why .cas-quote{font-family:'Fraunces',serif;font-size:clamp(13px,1.45vw,17px);line-height:1.38;color:var(--ink-soft);margin-bottom:14px}
-  #why .cas-quote .qm{color:var(--emerald-soft);font-family:'Fraunces',serif;font-size:1.7em;line-height:0;vertical-align:-.35em;margin-right:3px}
+  #why .cas-body{font-family:'Inter',system-ui,sans-serif;font-size:clamp(12.5px,1.15vw,14.5px);line-height:1.58;color:var(--ink);margin-bottom:14px}
+  #why .cas-stats{display:flex;gap:22px;flex-wrap:wrap;margin:2px 0 16px}
+  #why .cas-stats .stat{flex:1 1 150px;min-width:140px}
+  #why .cas-stats .num{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:clamp(26px,3vw,38px);line-height:1.05;color:var(--emerald-deep);letter-spacing:-.01em;margin-bottom:6px}
+  #why .cas-stats .lbl{display:block;font-family:'Inter',system-ui,sans-serif;font-size:10.5px;line-height:1.42;color:var(--ink-soft)}
+  #why .cas-quote{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(13px,1.45vw,17px);line-height:1.38;color:var(--ink-soft);margin-bottom:14px}
+  #why .cas-quote .qm{color:var(--emerald-soft);font-family:'Fraunces',serif;font-style:normal;font-size:1.7em;line-height:0;vertical-align:-.35em;margin-right:3px}
   #why .cas-attr{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  #why .txtpage.dense{justify-content:flex-start;overflow-y:auto;padding:7% 9%;scrollbar-width:thin}
+  #why .txtpage.dense::-webkit-scrollbar{width:5px}
+  #why .txtpage.dense::-webkit-scrollbar-thumb{background:rgba(15,42,34,.18);border-radius:3px}
   #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
   #why canvas#heroTitle{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
   #why .hero-lede{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:6;width:min(720px,82vw);text-align:center;font-family:'Inter',system-ui,sans-serif;font-weight:400;font-size:14px;line-height:1.45;color:rgba(74,95,88,.82);pointer-events:none;opacity:0}
@@ -124,8 +132,10 @@
   @media (max-width:720px){
     #why .book{width:94vw}
     #why .cover-title{font-size:26px}#why .cas-title{font-size:14.5px}#why .cas-quote{font-size:11.5px}#why .cover-see{font-size:15px}
+    #why .cas-body{font-size:11px}#why .cas-stats{gap:14px;margin-bottom:12px}#why .cas-stats .num{font-size:22px}#why .cas-stats .lbl{font-size:9.5px}
     #why .brandline,#why .progress{display:none}
     #why .txtpage{padding:7% 8%}
+    #why .txtpage.dense{padding:6% 6.5%}
     #why .hero-lede{font-size:13px;line-height:1.5;width:86vw}
   }
 
@@ -251,35 +261,47 @@
           </div>
           <div class="leaves" id="why-leaves">
             <div class="leaf" data-i="0">
-              <div class="face recto txtpage">
+              <div class="face recto txtpage dense">
                 <div class="eyebrow">Self-Healing Communities Fund</div>
                 <div class="cover-title">It begins with <em>seeing differently.</em></div>
                 <div class="cover-rule"></div>
-                <div class="cover-meta">A fund by ACE Interface</div>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>I used to think we had lots of separate problems. Then I realized we were seeing the same problem from different departments, the same people at different moments in their lives.</div>
+                <div class="cas-attr">City Commissioner</div>
+                <p class="cas-body">We keep treating and financing connected problems as separate ones. Homelessness, behavioral health, chronic disease, addiction, family instability, violence, and problems at school and work are shaped by common causes.</p>
               </div>
-              <div class="face verso txtpage">
+              <div class="face verso txtpage dense">
                 <div class="cas-eyebrow">Page one</div>
-                <div class="cas-title">Experience sets off cascades.</div>
-                <div class="cas-quote"><span class="qm">&ldquo;</span>For years no one asked what my childhood was like. The first time someone did, the rest of my health record finally made sense.</div>
-                <div class="cas-attr">Community member, rural clinic</div>
+                <div class="cas-title">Risk can build over time.</div>
+                <p class="cas-body">The Adverse Childhood Experiences (ACEs) discoveries show how risk can accumulate across childhood, potentially affecting health, learning, family stability, work, and involvement with public systems across a lifetime.</p>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>Every experience teaches the body and brain what to expect next. When families experience high levels of stress over and over, risk builds over time and can affect the life course and the next generation.</div>
+                <div class="cas-attr">Dr. Robert Anda</div>
               </div>
             </div>
             <div class="leaf" data-i="1">
               <div class="face recto" style="background-image:url('assets/cascade.jpg');background-image:image-set(url('assets/cascade.avif') type('image/avif'),url('assets/cascade.jpg') type('image/jpeg'))"></div>
-              <div class="face verso txtpage">
+              <div class="face verso txtpage dense">
                 <div class="cas-eyebrow">Page two</div>
-                <div class="cas-title">Adversity carries forward.</div>
-                <div class="cas-quote"><span class="qm">&ldquo;</span>We kept paying for the same emergencies. No one had ever added up what it was costing the rest of us.</div>
-                <div class="cas-attr">County health director</div>
+                <div class="cas-title">ACE-related risk has outgrown the systems built to manage it.</div>
+                <div class="cas-stats">
+                  <div class="stat"><span class="num">27%</span><span class="lbl">increase in average ACE score among adults 25&ndash;39, 2009&ndash;2010 to 2023&ndash;2024</span></div>
+                  <div class="stat"><span class="num">1 in 4</span><span class="lbl">adults that age now report 4+ ACEs, up from about 1 in 6 a decade earlier</span></div>
+                </div>
+                <p class="cas-body">This creates a structural mismatch. The public systems responding to the consequences of adversity were largely built in an earlier, lower-prevalence era &mdash; before we understood how ACE-related risk can accumulate across the life course, cross systems, and carry forward to the next generation.</p>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>The bills show up in one place, the savings show up somewhere else, and they don't happen until years later. Addressing the common causes will hold all of us accountable for breaking the cycle.</div>
+                <div class="cas-attr">Budget Director</div>
               </div>
             </div>
             <div class="leaf" data-i="2">
               <div class="face recto" style="background-image:url('assets/adversity.jpg');background-image:image-set(url('assets/adversity.avif') type('image/avif'),url('assets/adversity.jpg') type('image/jpeg'))"></div>
-              <div class="face verso txtpage">
+              <div class="face verso txtpage dense">
                 <div class="cas-eyebrow">Page three</div>
-                <div class="cas-title">We can change the conditions.</div>
-                <div class="cas-quote"><span class="qm">&ldquo;</span>We stopped waiting for kids to fall apart. We changed what was around them, and fewer of them ever got there.</div>
-                <div class="cas-attr">Family services coordinator</div>
+                <div class="cas-title">Our fragmented programmatic approach is too expensive.</div>
+                <div class="cas-stats">
+                  <div class="stat"><span class="num">$14.1T</span><span class="lbl">per year &mdash; the economic burden of ACE exposure in the US adult population</span></div>
+                </div>
+                <p class="cas-body">This estimate is likely conservative: childhood adversity is only one part of a larger risk cascade. Adversity in the home interacts with experiences in schools, neighborhoods, and communities, creating reinforcing pathways that increase health, social, and economic costs across the life course and often into the next generation.</p>
+                <div class="cas-quote"><span class="qm">&ldquo;</span>Success isn't just about money &mdash; it is about how we invest all our resources including people, place, stewardship, knowledge, and funds. Every public dollar we don't need to spend on a crisis is a dollar that can stay in the pocket of a taxpayer who really needs it.</div>
+                <div class="cas-attr">State Legislator</div>
               </div>
             </div>
           </div>
@@ -423,7 +445,7 @@
   const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
   const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
   /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
-  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:41,r:16,b:18,l:16,rad:44};}
+  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:48,r:16,b:25,l:16,rad:44};}
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
