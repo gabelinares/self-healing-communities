@@ -206,6 +206,33 @@
   .how .more{text-align:center;margin-top:30px}
 
   /* ============================================================
+     FLAGSHIP CASE — two bodies of work, rising into one arch
+     ============================================================ */
+  .flagship{background:linear-gradient(180deg,var(--paper) 0%,var(--paper-warm) 100%);padding:clamp(80px,10vw,130px) 0}
+  .flagship .head{text-align:center;max-width:640px;margin:0 auto}
+  .flagship .head .h2{margin-top:14px}
+  .flagship .head .lede{margin:18px auto 0;text-align:center}
+  .fs-arch{position:relative;max-width:840px;margin:64px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-top:56px}
+  .fs-line{position:absolute;top:0;left:0;width:100%;height:92px;overflow:visible;pointer-events:none}
+  .fs-line path{fill:none;stroke:var(--emerald);stroke-width:2;stroke-linecap:round;opacity:.5;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s cubic-bezier(.2,.7,.2,1) .1s}
+  .fs-arch.in .fs-line path{stroke-dashoffset:0}
+  .fs-key{position:absolute;top:14px;left:50%;transform:translate(-50%,-10px) scale(.82);opacity:0;background:var(--emerald-deep);color:var(--cream);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:10px 20px;border-radius:999px;box-shadow:0 16px 32px -14px rgba(15,42,34,.45);transition:opacity .5s ease 1.3s,transform .5s cubic-bezier(.2,.7,.2,1) 1.3s;white-space:nowrap;z-index:3}
+  .fs-arch.in .fs-key{opacity:1;transform:translate(-50%,0) scale(1)}
+  .fs-pillar{position:relative;z-index:2;background:var(--cream);border-radius:20px;padding:36px 30px;box-shadow:0 34px 64px -36px rgba(15,42,34,.28);border:1px solid rgba(15,42,34,.05)}
+  .fs-pillar.p2{transition-delay:.14s}
+  .fs-num{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--emerald);margin-bottom:12px}
+  .fs-pillar h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(19px,2vw,23px);line-height:1.24;letter-spacing:-.01em;color:var(--ink);margin-bottom:10px}
+  .fs-pillar p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+  .flagship .tie{text-align:center;max-width:62ch;margin:48px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.6}
+  .fs-quote{text-align:center;max-width:50ch;margin:36px auto 0;font-family:'Fraunces',serif;font-style:italic;font-size:19px;line-height:1.5;color:var(--ink)}
+  .fs-quote .fs-attr{display:block;margin-top:10px;font-family:'Inter',sans-serif;font-style:normal;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  @media (max-width:720px){
+    .fs-arch{grid-template-columns:1fr;gap:18px;padding-top:0;margin-top:40px}
+    .fs-line,.fs-key{display:none}
+    .fs-pillar{padding:28px 24px}
+  }
+
+  /* ============================================================
      4 · ACT
      ============================================================ */
   .act{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#0c6b50 0%,var(--emerald-deep) 70%);color:var(--cream);padding:clamp(80px,10vw,140px) 0;text-align:center;border-radius:clamp(28px,4vw,56px) clamp(28px,4vw,56px) 0 0}
@@ -383,6 +410,35 @@
     </div>
     <p class="tie reveal">Healing emerges from the <b>whole system</b>, not from any single program or agency. The Fund helps communities, in partnership with government and philanthropic funders, restore the conditions that let it flow, and <b>measures the difference</b> so everyone can see it.</p>
     <div class="more reveal"><a class="pagelink" href="#">See our approach <span class="arrow">→</span></a></div>
+  </div>
+</section>
+
+<!-- ===================== FLAGSHIP CASE ===================== -->
+<section class="flagship" id="flagship">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">Flagship case</div>
+      <h2 class="h2 reveal">A Flagship Case, ready for implementation.</h2>
+      <p class="lede reveal">Much of the work underway is building the foundation necessary to do that well. It falls into two major bodies of work:</p>
+    </div>
+    <div class="fs-arch reveal" id="fsArch">
+      <svg class="fs-line" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M200,190 C200,70 330,20 400,20 C470,20 600,70 600,190" />
+      </svg>
+      <div class="fs-key">Flagship Case</div>
+      <div class="fs-pillar p1">
+        <div class="fs-num">01</div>
+        <h3>Intellectual groundwork</h3>
+        <p>Understanding and strategically managing life-course and intergenerational risk.</p>
+      </div>
+      <div class="fs-pillar p2">
+        <div class="fs-num">02</div>
+        <h3>Governance &amp; financing architecture</h3>
+        <p>Acting on that knowledge, and sustaining improvements over time.</p>
+      </div>
+    </div>
+    <p class="tie reveal">These two bodies of work build on the momentum of the Adverse Childhood Experience Study, the feature-length films &ldquo;Paper Tigers&rdquo; and &ldquo;Resilience,&rdquo; and the stunning work of people throughout the nation who have asked for better metrics, more durable financing, and opportunities to collaboratively deliver success that no one agency or neighborhood can deliver on its own.</p>
+    <p class="fs-quote reveal">&ldquo;For years no one asked what my childhood was like. The first time someone did, my life finally made sense.&rdquo;<span class="fs-attr">Community member, rural health clinic</span></p>
   </div>
 </section>
 
