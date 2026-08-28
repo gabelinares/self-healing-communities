@@ -685,9 +685,9 @@
     const copyEl=document.querySelector('#wayfinding .copy');
     if(copyEl){
       const cr=copyEl.getBoundingClientRect(),cb=cvs.getBoundingClientRect();
-      const cx=(cr.left+cr.width/2-cb.left)*wfDpr,cy=(cr.top+cr.height/2-cb.top)*wfDpr,rad=Math.max(cr.width,cr.height)*0.95*wfDpr;
+      const cx=(cr.left+cr.width/2-cb.left)*wfDpr,cy=(cr.top+cr.height/2-cb.top)*wfDpr,rad=Math.max(cr.width,cr.height)*1.1*wfDpr;
       const wg=ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
-      wg.addColorStop(0,'rgba(244,236,220,0.82)');wg.addColorStop(0.55,'rgba(244,236,220,0.42)');wg.addColorStop(1,'rgba(244,236,220,0)');
+      wg.addColorStop(0,'rgba(244,236,220,0.97)');wg.addColorStop(0.45,'rgba(244,236,220,0.86)');wg.addColorStop(0.75,'rgba(244,236,220,0.5)');wg.addColorStop(1,'rgba(244,236,220,0)');
       ctx.fillStyle=wg;ctx.fillRect(0,0,wfW,wfH);
     }
     /* life-course frame advances with scroll */
