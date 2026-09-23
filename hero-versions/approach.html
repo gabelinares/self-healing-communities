@@ -67,12 +67,27 @@
   .nav-preview .pv{padding:9px 32px;font-size:13px;color:var(--ink-soft);font-family:'Archivo',system-ui,sans-serif}
   @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px}}
   .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-  .fs-pillar{position:relative;z-index:2;background:var(--cream);border-radius:20px;padding:36px 30px;box-shadow:0 34px 64px -36px rgba(15,42,34,.28);border:1px solid rgba(15,42,34,.05);transform:perspective(900px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
-  .fs-pillar:hover{box-shadow:0 46px 84px -34px rgba(15,42,34,.34)}
-  .fs-num{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--emerald);margin-bottom:12px}
-  .fs-pillar h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,2.1vw,25px);line-height:1.08;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:10px}
-  .fs-pillar p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
-    .fs-pillar{padding:28px 24px}
+  /* the same card the Flagship section uses on the homepage — these two pages were
+     sharing the class name while looking nothing alike, which read as an oversight.
+     Three returns here rather than two, so there is a third tint: deep forest, which
+     keeps the trio inside the palette and still tells the cards apart at a glance. */
+  .fs-pillar{position:relative;z-index:2;overflow:hidden;border-radius:20px;padding:38px 32px 34px;
+    box-shadow:0 34px 64px -34px rgba(15,42,34,.34);border:1px solid var(--fs-edge);
+    background:var(--fs-bg);transform:perspective(900px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+  .fs-pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--fs-accent)}
+  .fs-pillar::after{content:"";position:absolute;right:-96px;bottom:-96px;width:230px;height:230px;border-radius:50%;border:1.5px solid var(--fs-accent);opacity:.24;pointer-events:none}
+  .fs-pillar:hover{box-shadow:0 46px 84px -32px rgba(15,42,34,.4)}
+  .fs-pillar.p1{--fs-accent:var(--emerald);--fs-edge:rgba(0,145,105,.24);--fs-ink:var(--emerald-deep);
+    --fs-bg:linear-gradient(162deg,#E9F4EE 0%,#D3E9DD 100%)}
+  .fs-pillar.p2{--fs-accent:var(--terracotta-bright);--fs-edge:rgba(195,105,56,.26);--fs-ink:#8A4522;
+    --fs-bg:linear-gradient(162deg,#FAEBDD 0%,#F0D6BE 100%)}
+  .fs-pillar.p3{--fs-accent:var(--emerald-deep);--fs-edge:rgba(6,81,60,.24);--fs-ink:#06513C;
+    --fs-bg:linear-gradient(162deg,#EDF2ED 0%,#D6E3D8 100%)}
+  .fs-num{position:relative;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--fs-accent);color:var(--cream);font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.01em;margin-bottom:16px;box-shadow:0 8px 18px -8px var(--fs-accent)}
+  .fs-pillar h3{position:relative;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(21px,2.2vw,27px);line-height:1.06;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--fs-ink);margin-bottom:12px}
+  .fs-pillar h3::after{content:"";display:block;width:40px;height:2px;background:var(--fs-accent);opacity:.5;margin-top:14px}
+  .fs-pillar p{position:relative;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+    .fs-pillar{padding:30px 26px 28px}
   footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
   .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
   footer img{height:30px}
@@ -130,7 +145,16 @@
   /* ---------- right: the spiral ---------- */
   .sp-stage{position:relative;width:min(100%,64vh,600px);aspect-ratio:1;margin:0 auto}
   .sp-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-  .sp-track{fill:rgba(15,42,34,.34);stroke:none}
+  /* the line is a current of dots now, drawn on canvas underneath the SVG. 400+ dots
+     redrawn every frame is four attribute writes each as SVG and janks a mid laptop;
+     on canvas it is one fill per dot. */
+  .sp-flow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  /* the outer sweep is the one part of the figure that is not a step, so it is
+     labelled as a band rather than given a numbered chip */
+  .sp-band{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:.17em;
+    text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
+    font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
+  .sp-stage.armed .sp-band{opacity:.2}
   .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
     stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
   .sp-dot{fill:var(--cream);stroke:var(--emerald);stroke-width:2.4;transition:fill .3s,stroke .3s,r .3s}
@@ -138,11 +162,6 @@
   .sp-halo{fill:none;stroke:var(--terracotta-bright);stroke-width:2;opacity:0;transition:opacity .3s,r .35s cubic-bezier(.2,.7,.2,1)}
   .sp-halo.on{opacity:.5}
   .sp-seed{fill:rgba(15,42,34,.3)}
-  /* the pulse: a wide blurred band for the halo, a narrow bright one for the core
-     of the light, and a head at the leading edge. JS drives the opacity. */
-  .sp-pulse{fill:none;stroke:var(--emerald-bright);stroke-linecap:round;opacity:0}
-  .sp-pulse.halo{stroke-width:17;filter:url(#spGlowF)}
-  .sp-pulse-head{fill:var(--emerald-bright);opacity:0;filter:url(#spGlowF)}
 
   /* the steps are HTML over the SVG, not SVG text: they read horizontally at every
      position on the curve, and they can look like the buttons they are */
@@ -265,6 +284,7 @@
       </div>
 
       <div class="sp-stage reveal idle" id="spStage">
+        <canvas class="sp-flow" id="spFlow" aria-hidden="true"></canvas>
         <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120" aria-hidden="true">
           <defs>
             <!-- the core fade: it has to clear the centre label (ink reaches 145 units) but reveal
@@ -274,14 +294,12 @@
               <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
             </radialGradient>
             <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
-            <filter id="spGlowF" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="7"/>
-            </filter>
           </defs>
           <g mask="url(#spMask)" id="spMasked">
-            <path class="sp-track" id="spTrack" />
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
+          <path id="spBandPath" fill="none" stroke="none" />
+          <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
           <g id="spDots"></g>
         </svg>
         <div class="sp-center">
@@ -323,17 +341,17 @@
       <h2 class="h2 reveal">Success creates value in <em>more than one way.</em></h2>
     </div>
     <div class="ap-returns">
-      <div class="fs-pillar reveal">
+      <div class="fs-pillar p1 reveal">
         <div class="fs-num">01</div>
         <h3>Human return</h3>
         <p>Better health, safety, learning, stability, belonging, relationships, and wellbeing.</p>
       </div>
-      <div class="fs-pillar reveal">
+      <div class="fs-pillar p2 reveal">
         <div class="fs-num">02</div>
         <h3>Economic return</h3>
         <p>Greater participation in work, earnings, productivity, family economic stability, and community economic vitality.</p>
       </div>
-      <div class="fs-pillar reveal">
+      <div class="fs-pillar p3 reveal">
         <div class="fs-num">03</div>
         <h3>Fiscal return</h3>
         <p>Reduced or more stable demand for costly public services and, where demonstrated, measurable improvements in public costs or revenues.</p>
@@ -392,7 +410,7 @@
   (function(){
     const svg=document.getElementById('spSvg');if(!svg)return;
     const stage=document.getElementById('spStage');
-    const track=document.getElementById('spTrack'),trail=document.getElementById('spTrail');
+    const trail=document.getElementById('spTrail');
     const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips');
     const panel=document.getElementById('apPanel'),detail=document.getElementById('spDetail'),ticksEl=document.getElementById('spTicks');
     const steps=[...document.querySelectorAll('#spSteps li')].map(li=>({
@@ -430,21 +448,155 @@
     for(let i=1;i<=N;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
     const total=cum[N];
     trail.setAttribute('d','M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'));
-    /* the track is drawn as a closed ribbon rather than a stroke, so it can start as a hairline
-       at the core and thicken all the way out — a stroke can only be one width end to end */
-    const half=i=>0.42+2.95*(i/N);
-    const lo=[],hi=[];
-    for(let i=0;i<=N;i++){
-      const t=TMAX*i/N,r=R0+K*t,a=t-Math.PI/2;
-      let nx=K*Math.cos(a)-r*Math.sin(a),ny=K*Math.sin(a)+r*Math.cos(a);   /* tangent */
-      const m=Math.hypot(nx,ny);nx/=m;ny/=m;
-      const px=-ny,py=nx,w=half(i);                                        /* unit normal */
-      hi.push((pts[i][0]+px*w).toFixed(1)+' '+(pts[i][1]+py*w).toFixed(1));
-      lo.push((pts[i][0]-px*w).toFixed(1)+' '+(pts[i][1]-py*w).toFixed(1));
-    }
-    track.setAttribute('d','M'+hi.join('L')+'L'+lo.reverse().join('L')+'Z');
     const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
     const NS='http://www.w3.org/2000/svg';
+
+    /* ============================================================
+       THE FLOW — the line, made of moving water
+       The spiral's line is not a line any more. It is a current of dots running
+       outward from the core, widening and fading as the radius grows, and then a
+       quieter return stream that carries them back and lets them dissolve into the
+       centre from below. A cycle you can watch, rather than a ring you are told is one.
+       The return leaves the spiral where it ends (top of the stage), keeps flowing the
+       same way it was already going — clockwise, out and down the right — and comes up
+       into the core from underneath. Reversing it there instead would read as a rebound,
+       not a return.
+       ============================================================ */
+    /* The return surfaces rather than loops. Routing it around the outside of the frame
+       fails twice over: the stage has ~100 units of margin past the spiral and the chips
+       occupy most of it, and an arc long enough to get round is mostly off-canvas — which
+       spent nearly half the dots drawing nothing, starving the spiral as well. So only the
+       part worth seeing exists. The current fades out where the spiral ends and rises back
+       in from under the bottom edge, into the core from below. The journey between is
+       underground, which is what a returning current does.
+       It starts BELOW the canvas so it fades in rather than appearing at the edge. */
+    const RET_START=[190,655],RET_C1=[150,360],RET_C2=[-60,300],RET_END=[0,104];
+    const bez=(u,p0,c1,c2,p3)=>{const m=1-u,a=m*m*m,b=3*m*m*u,c=3*m*u*u,d=u*u*u;
+      return [a*p0[0]+b*c1[0]+c*c2[0]+d*p3[0], a*p0[1]+b*c1[1]+c*c2[1]+d*p3[1]];};
+
+    /* One polyline for the whole loop, spiral then return, with cumulative length so a
+       dot's progress can be a single number in 0..1 regardless of which part it is on. */
+    const FP=[],FL=[0];
+    for(let i=0;i<=N;i++){const p=pt(TMAX*i/N);FP.push([p[0],p[1],p[2]]);}
+    const SPIRAL_PTS=FP.length;
+    {const M=200;
+     for(let i=0;i<=M;i++){const q=bez(i/M,RET_START,RET_C1,RET_C2,RET_END);
+       FP.push([q[0],q[1],Math.hypot(q[0],q[1])]);}}
+    for(let i=1;i<FP.length;i++)FL.push(FL[i-1]+Math.hypot(FP[i][0]-FP[i-1][0],FP[i][1]-FP[i-1][1]));
+    const FTOT=FL[FL.length-1],SPIRAL_U=FL[SPIRAL_PTS-1]/FTOT;
+
+    /* u -> point, plus the unit normal, so a dot can sit off the centreline */
+    function atU(u){
+      const target=u*FTOT;
+      let lo=0,hi=FL.length-1;
+      while(lo<hi-1){const mid=(lo+hi)>>1;if(FL[mid]<=target)lo=mid;else hi=mid;}
+      const seg=FL[hi]-FL[lo]||1,k=(target-FL[lo])/seg;
+      const a=FP[lo],b=FP[hi];
+      const x=a[0]+(b[0]-a[0])*k,y=a[1]+(b[1]-a[1])*k;
+      let tx=b[0]-a[0],ty=b[1]-a[1];const m=Math.hypot(tx,ty)||1;tx/=m;ty/=m;
+      return [x,y,-ty,tx,a[2]+(b[2]-a[2])*k];
+    }
+
+    (function(){
+      const cv=document.getElementById('spFlow'),cx=cv.getContext('2d');
+      const NDOT=1050;
+      const drops=[];
+      for(let i=0;i<NDOT;i++)drops.push({
+        u:(i+Math.random()*0.85)/NDOT,
+        off:(Math.random()*2-1),                 /* where in the width of the stream */
+        sp:0.78+Math.random()*0.5,               /* the current is not uniform */
+        sz:0.7+Math.random()*0.75,
+        ph:Math.random()*6.283,
+        tone:Math.random()
+      });
+      let W=0,H=0,dpr=1;
+      function size(){
+        dpr=Math.min(2,window.devicePixelRatio||1);
+        const r=cv.getBoundingClientRect();W=r.width;H=r.height;
+        cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+        cx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      size();window.addEventListener('resize',size);
+      const X=v=>(v+560)/1120*W, Y=v=>(v+560)/1120*H, S=v=>v/1120*W;
+
+      /* the same core fade the SVG mask applies, so the flow dissolves into the
+         centre instead of colliding with the label */
+      const core=r=>Math.max(0,Math.min(1,(r-31)/(123-31)));
+
+      let armed=0,seen=true,t0=performance.now();
+      new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
+
+      /* THE SWELL. The old pulse was its own set of SVG bands riding the line; with the
+         line gone it read as a smear. It is now a brightening that travels along the
+         current itself — the same event, carried by the water instead of drawn over it.
+         It runs out of the core, slows as it widens, rests, and stands down while a step
+         is open so it never competes with the trail hover draws. */
+      const SW_TRAVEL=3400,SW_REST=2100,SW_JIT=1900;
+      let swStart=performance.now()+900,swSpan=SW_TRAVEL+SW_REST,swU=-1,swAmp=0;
+
+      function draw(now){
+        const t=(now-t0)/1000;
+        cx.clearRect(0,0,W,H);
+        armed+=((stage.classList.contains('armed')?1:0)-armed)*0.08;
+        const mute=1-0.5*armed;
+
+        const e=now-swStart;
+        if(e>swSpan){swStart=now;swSpan=SW_TRAVEL+SW_REST+Math.random()*SW_JIT;swU=-1;swAmp=0;}
+        else if(e>=0&&e<SW_TRAVEL){
+          const k=e/SW_TRAVEL;
+          swU=(1-Math.pow(1-k,2.4))*SPIRAL_U;
+          swAmp=Math.min(1,k/0.13)*Math.min(1,(1-k)/0.26)*(1-armed);
+        } else { swU=-1;swAmp=0; }
+
+        for(const d of drops){
+          let u=d.u+t*0.035*d.sp; u-=Math.floor(u);
+          const [x,y,nx,ny,r]=atU(u);
+          const onSpiral=u<SPIRAL_U;
+          const wob=Math.sin(t*0.9*d.sp+d.ph)*0.3+d.off*0.8;
+          const width=onSpiral?(2.2+6.5*(r/456)):11;
+          const px=x+nx*wob*width, py=y+ny*wob*width;
+          let a;
+          if(onSpiral){
+            const k=u/SPIRAL_U;
+            a=0.34*Math.min(1,k/0.09)*(1-Math.pow(Math.max(0,(k-0.74)/0.26),1.6));
+          }else{
+            const k=(u-SPIRAL_U)/(1-SPIRAL_U);
+            a=0.26*Math.min(1,k/0.16)*Math.min(1,(1-k)/0.30);   /* the return is quieter, not absent */
+          }
+          /* the swell: a soft band around its position, brightest at the centre of it */
+          let lift=0;
+          if(swAmp>0&&onSpiral){
+            const dd=Math.abs(u-swU);
+            if(dd<0.075) lift=swAmp*Math.pow(1-dd/0.075,1.8);
+          }
+          a=(a+lift*0.5)*core(Math.hypot(px,py))*mute;
+          if(a<=0.004)continue;
+          const rad=S((onSpiral?(0.85+1.9*(r/456)):1.5)*d.sz*(1+lift*0.7));
+          cx.globalAlpha=Math.min(1,a);
+          /* water, not dust: the current carries the Fund's green, deepening as it widens,
+             and the swell pushes the dots it passes toward the bright end of it */
+          cx.fillStyle = lift>0.38 ? '#00DBB6' : (lift>0.06 ? '#009169' : (d.tone<0.62 ? '#0F2A22' : '#009169'));
+          cx.beginPath();cx.arc(X(px),Y(py),Math.max(0.55,rad),0,6.2832);cx.fill();
+        }
+        cx.globalAlpha=1;
+      }
+      if(reduce){draw(performance.now());window.addEventListener('resize',()=>{size();draw(performance.now());});return;}
+      requestAnimationFrame(function tick(now){requestAnimationFrame(tick);if(seen)draw(now);});
+    })();
+
+    /* THE OUTER BAND. It follows the spiral's own curve, offset outward, and runs past
+       where the line stops so the words sit across the TOP of the stage where they read
+       horizontally. The client asked for this to follow the widening edge; she also
+       asked, earlier, that step names never tilt. Both hold here because this is not a
+       step — it is the label on the sweep the steps produce. */
+    {
+      const bp=document.getElementById('spBandPath'),seg=[];
+      for(let i=0;i<=200;i++){
+        const t=11.40+(13.70-11.40)*i/200,r=R0+K*t+38,a=t-Math.PI/2;
+        seg.push((r*Math.cos(a)).toFixed(1)+' '+(r*Math.sin(a)).toFixed(1));
+      }
+      bp.setAttribute('d','M'+seg.join('L'));
+    }
     const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
 
     const nodes=STEP_T.map((t,i)=>{
@@ -515,64 +667,6 @@
       nd.tick.addEventListener('focus',open);
       nd.tick.addEventListener('click',open);
     });
-    /* ============================================================
-       THE PULSE
-       Every few seconds a glow runs the spiral from the core outward — the cycle
-       showing itself in motion rather than only when someone points at it.
-       Three elements share one dash offset: a wide blurred band (the halo), a
-       narrow bright one (the core of the light) and a head at the leading edge.
-       It eases out of the centre and slows as it dissipates, fades in and out at
-       both ends rather than popping, and stands down whenever a step is open so
-       it never competes with the trail that hover draws.
-       ============================================================ */
-    (function(){
-      if(reduce)return;
-      const masked=document.getElementById('spMasked');
-      const d=trail.getAttribute('d');
-      const mk=(cls,tag)=>{const e=document.createElementNS(NS,tag||'path');e.setAttribute('class',cls);if(!tag)e.setAttribute('d',d);masked.appendChild(e);return e;};
-
-      /* A single dash would be as bright at its tail as at its head. Instead four
-         bands all *end* at the same leading edge and get shorter and brighter, so
-         the light falls away behind the head — a taper that follows the curve
-         exactly, which a linear gradient could not do on a spiral. */
-      const LAYERS=[
-        {k:1.00,a:0.30,cls:'sp-pulse halo'},
-        {k:1.00,a:0.20,cls:'sp-pulse'},
-        {k:0.52,a:0.42,cls:'sp-pulse'},
-        {k:0.20,a:0.95,cls:'sp-pulse'}
-      ].map(l=>({...l,el:mk(l.cls)}));
-      const head=mk('sp-pulse-head','circle');head.setAttribute('r',4.5);
-
-      /* measured off a path with no pathLength override, so these are real user units */
-      const L=LAYERS[0].el.getTotalLength(),BAND=L*0.085;
-      LAYERS.forEach(l=>{l.len=BAND*l.k;l.el.style.strokeDasharray=l.len+' '+(L+l.len);});
-
-      const TRAVEL=2900,REST=1700,JITTER=1800;
-      let start=performance.now()+1100,span=TRAVEL+REST,armed=0,seen=true;
-      /* rAF already idles on a hidden tab; this covers the spiral being scrolled past */
-      new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
-
-      requestAnimationFrame(function tick(now){
-        requestAnimationFrame(tick);
-        if(!seen){start=now;return;}
-        /* ease the stand-down so opening a step doesn't cut the light dead */
-        armed+=((stage.classList.contains('armed')?1:0)-armed)*0.12;
-        const e=now-start;
-        if(e<0)return;
-        if(e>span){start=now;span=TRAVEL+REST+Math.random()*JITTER;return;}
-        const u=e/TRAVEL;
-        if(u>=1){LAYERS.forEach(l=>l.el.style.opacity=0);head.style.opacity=0;return;}
-        const travelled=(1-Math.pow(1-u,2.4))*L;                 /* out of the core fast, dissipating slow */
-        const fade=Math.min(1,u/0.14)*Math.min(1,(1-u)/0.24)*(1-armed);
-        LAYERS.forEach(l=>{
-          l.el.style.strokeDashoffset=(l.len-travelled).toFixed(1);
-          l.el.style.opacity=(fade*l.a).toFixed(3);
-        });
-        const pt=LAYERS[0].el.getPointAtLength(travelled);
-        head.setAttribute('cx',pt.x.toFixed(1));head.setAttribute('cy',pt.y.toFixed(1));
-        head.style.opacity=(fade*0.9).toFixed(3);
-      });
-    })();
 
     const m=location.hash.match(/^#step-([1-6])$/);if(m){settle();show(+m[1]-1);}
     /* leaving the diagram clears it, but only if focus has not landed on a step */

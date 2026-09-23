@@ -236,6 +236,30 @@
   /* artwork sits flush to the bottom and to the edge opposite each panel's copy,
      mirrored so the arrows run out of that edge. object-position is set to the
      OPPOSITE side because scaleX flips the element after it is placed. */
+  /* ⚠ THE DRAG DOES NOT SURVIVE A PHONE. The two panels are stacked in one box and the
+     top one is clipped to a fraction of the width, which is the whole trick — but it means
+     each panel only ever shows part of its own copy, and it needs to be wide enough that
+     the visible part is still a readable column. At 326px it was not: both headlines and
+     every bullet were cut through the middle of a word, and the two halves collided.
+     Below 720px the panels simply stack, full width each, and the handle and the hint go
+     away. Same two ideas, same order, read one after the other instead of side by side. */
+  @media (max-width:720px){
+    .compare{height:auto;display:flex;flex-direction:column;overflow:visible;
+      border:0;box-shadow:none;border-radius:0;background:none}
+    .cpanel{position:relative;inset:auto;clip-path:none !important;border-radius:16px;
+      padding:34px 26px 30px;min-height:0;justify-content:flex-start;
+      box-shadow:0 26px 54px -34px rgba(15,42,34,.5)}
+    .cpanel.friction{order:1}
+    .cpanel.flow{order:2;margin-top:14px;align-items:flex-start;text-align:left}
+    .cpanel.flow ul{margin-left:0}
+    .cpanel.flow li{justify-content:flex-start;text-align:left}
+    .cpanel.flow li::before{order:0}
+    .cpanel h3{max-width:none;font-size:clamp(28px,8.4vw,38px)}
+    .cpanel ul{max-width:none;margin-top:20px;gap:12px}
+    .cpanel li{font-size:16.5px}
+    .compare .cbg{height:58%;opacity:.32}   /* the path art is scenery here, not a backdrop to read through */
+    .chandle,.drag-hint{display:none}
+  }
   .compare .cbg{position:absolute;left:0;right:0;bottom:0;width:100%;height:92%;object-fit:contain;pointer-events:none;z-index:1;opacity:.9}
   /* friction art is near-square, so at the 50% rest position a flush-right
      placement would sit entirely in the clipped half — scaled up so it reaches
@@ -980,6 +1004,10 @@
   /* HOW — drag to compare */
   (function(){
     const cmp=document.getElementById('compare'),handle=document.getElementById('cmpHandle'),friction=document.getElementById('frictionPanel'),hint=document.getElementById('dragHint');
+    /* stacked below 720px, so there is nothing to drag and the nudge would only
+       set a --pos the CSS is ignoring */
+    const stacked=window.matchMedia('(max-width:720px)');
+    if(stacked.matches)return;
     let dragging=false,nudged=false;
     function setPos(x){const r=cmp.getBoundingClientRect();let pct=((x-r.left)/r.width)*100;pct=Math.max(4,Math.min(96,pct));cmp.style.setProperty('--pos',pct+'%');friction.style.setProperty('--pos',pct+'%');handle.style.left=pct+'%';}
     cmp.style.setProperty('--pos','50%');friction.style.setProperty('--pos','50%');

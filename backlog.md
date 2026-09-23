@@ -259,7 +259,7 @@ bearing in both directions — wider and chip 03 collides with the step copy, na
 chips turn into four-line blocks. Measured ink clearance between the copy and every chip is
 positive at all four viewports (tightest: 18px).
 
-### 8f–8i · Not started
+### 8f–8i · Not started *(superseded — 8f, 8g and 8h are done in 8m below; 8i still blocked on Laura)*
 - **8f · "EXPAND THE CIRCLE OF LEADERSHIP"** on the outer edge of the widening spiral,
   visually distinct from the five steps so it does not read as a sixth. Her own idea and the
   best note in the document. Text on an SVG path along the outer arc; expect iteration.
@@ -360,3 +360,59 @@ This is a better layout than 8k on every measure, not just the requested one: th
 spread over r 184..368 (span 184, was 150) and the nearest chip ink is 133-263px from the
 copy (was 54-147). Verified at five viewport sizes: clockwise `12345`, radii strictly
 increasing, no chip collisions, hero fits, trail lights 0.18 -> 0.66, pulse running, no errors.
+
+---
+
+## 8m · The flow, the outer band, and the two deferred decisions (Sept 23)
+
+Gabriel: *"for the river/stream variant, you can keep the spiral, just change the line to
+nice organic circles moving outwards and fading on a stream that goes back to the center
+from below."* That folds 8g and 8h into one change and does it on the spiral rather than on
+the compare graphic.
+
+### The line is a current now
+`.sp-track` — the filled ribbon — is gone. The spiral is drawn as ~1050 dots running outward
+from the core, widening and deepening as the radius grows, on a **canvas** under the SVG.
+Canvas rather than SVG because 1050 nodes at four attribute writes each per frame janks a
+mid laptop; on canvas it is one fill. Measured 115–122fps at 1440x900.
+
+The SVG keeps what needs to stay crisp and interactive: the hover trail, the step markers,
+the chips and the band.
+
+### The return
+It surfaces rather than loops. Two routes were built and thrown away first:
+
+- **Around the outside of the frame.** The stage has ~100 units of margin past the spiral and
+  the chips occupy most of it, so half the stream sat behind a chip.
+- **A wide off-canvas sweep** from the spiral's end all the way round. Nearly half the dots
+  were then drawing something nobody could see, which starved the spiral itself — that is why
+  the first render looked sparse and clumpy.
+
+Shipped: the current fades out where the spiral ends, and a separate short stream rises from
+below the bottom edge into the core. The journey between is underground, which is what a
+returning current does. Only the part worth seeing exists, so the dots are spent on it.
+
+### The pulse became the swell
+The old pulse was its own set of SVG bands riding the line. With the line gone it read as a
+green smear. It is now a brightening that travels **along the current** — same event, same
+cadence and stand-down behaviour, carried by the water instead of drawn over it. Only the
+crest reaches `--emerald-bright`; the rest lifts to `--emerald`.
+
+### 8f · The outer band
+`EXPAND THE CIRCLE OF LEADERSHIP` follows the spiral's own curve, offset 38 units outward,
+extended past where the line stops so the words sit **across the top of the stage where they
+read horizontally**. The client asked for this to follow the widening edge; she also asked,
+earlier, that step names never tilt. Both hold, because this is not a step — it is the label
+on the sweep the steps produce. It mutes when a step is open.
+
+### Two decisions that had been sitting open since §7
+- **The approach page's return cards** now use the Flagship card treatment. They had been
+  sharing the `.fs-pillar` class name while looking nothing alike. Three returns rather than
+  two, so there is a third tint — deep forest — which keeps the trio in palette.
+- **The phone compare panels** stack below 720px. The drag needs each panel to be wide enough
+  that its clipped half is still a readable column; at 326px both headlines and every bullet
+  were cut through the middle of a word and the two halves collided. Measured six text
+  collisions before, zero after. The handle, the hint and the drag JS all stand down.
+
+### Still open
+8i — the Getty photos and the cascade illustration — is blocked on Laura, not on us.
