@@ -388,9 +388,17 @@ It surfaces rather than loops. Two routes were built and thrown away first:
   were then drawing something nobody could see, which starved the spiral itself — that is why
   the first render looked sparse and clumpy.
 
-Shipped: the current fades out where the spiral ends, and a separate short stream rises from
-below the bottom edge into the core. The journey between is underground, which is what a
-returning current does. Only the part worth seeing exists, so the dots are spent on it.
+Shipped 09-22: the current fades out where the spiral ends, and a separate short stream rises
+from below the bottom edge into the core.
+
+**Removed 2026-09-23** (Gabriel, on a screenshot with the stream boxed in red: "this part is
+weird, remove the dots on that path"). On the page the short return read as a stray dotted
+tail hanging off the centre label and down out of the frame, competing with the spiral's own
+line. There is no drawn way back now: a dot dissolves at the end of the sweep and surfaces in
+the core under the label's fade. The whole journey between is underground. `RET_*` and `bez`
+are gone from `approach.html`; `SPIRAL_U` is 1; `NDOT` went 1050 → 820, since about a fifth
+of the dots had been spent on the leg, so the spiral's density is unchanged. Verified: no
+console errors, the swell still runs the sweep, the outer band unchanged.
 
 ### The pulse became the swell
 The old pulse was its own set of SVG bands riding the line. With the line gone it read as a
@@ -416,3 +424,18 @@ on the sweep the steps produce. It mutes when a step is open.
 
 ### Still open
 8i — the Getty photos and the cascade illustration — is blocked on Laura, not on us.
+
+### 8n · Core kicker, dot spread, and a full-bleed figure for the thesis band (Sept 23)
+- **"At the centre" removed.** The core says its own name. Its bottom margin had been
+  pushing "Risk Stewardship" low in the circle; without it the label centres properly.
+- **Wider dot spread**, skewed small: roughly 0.5x-2.1x (was 0.7x-1.45x), weighted toward the
+  fine end so the current reads as many small drops with the occasional coarse one.
+- **The thesis band was centred copy in a full-width strip** — a lot of empty paper either
+  side and no reason for the section to be as tall as it was. It is now a two-column band:
+  a large placeholder figure running off the **left edge of the screen with no margin**, and
+  the words in the column beside it, their right edge aligned to the page wrap. The column
+  gives the prose its measure, so no text here carries a width of its own — see the standing
+  rule in memory `no-text-width-caps`.
+
+That figure is a real gap, not decoration: it is one of the places Laura's photo choice can
+land, and it uses the same "Image to come" placeholder language as the book's page four.

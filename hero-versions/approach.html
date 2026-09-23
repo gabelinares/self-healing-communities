@@ -189,7 +189,6 @@
 
   /* the core of the spiral holds the point of the whole cycle, and never moves */
   .sp-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36%;text-align:center;pointer-events:none;z-index:3}
-  .sp-core-k{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
   .sp-core-b{display:block;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(18px,2.15vw,28px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--emerald-deep)}
 
   /* the same six steps, read straight through — the only form that works without hover */
@@ -205,17 +204,38 @@
   .ap-value .head{text-align:center;max-width:680px;margin:0 auto}
   .ap-value .head .h2{margin-top:14px}
   .ap-returns{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1040px;margin:56px auto 0}
-  /* ---------- what the cycle is for, stated plainly between the diagram and the returns ---------- */
-  .ap-thesis{padding:clamp(66px,9vh,104px) 0 clamp(20px,3vh,34px);background:var(--paper)}
-  .ap-thesis .inner{max-width:68ch;margin:0 auto;text-align:center}
-  .ap-thesis .lead{font-size:clamp(18px,1.9vw,22px);line-height:1.46;color:var(--ink);text-wrap:pretty}
+  /* ---------- what the cycle is for ----------
+     This sat as centred copy in a full-width band, which left a great deal of empty
+     paper either side of it and no reason for the section to be as tall as it was.
+     The image now runs off the left edge of the screen with no margin at all, and the
+     words take the column beside it. The column is what gives the prose its measure,
+     so nothing here carries a width of its own. */
+  .ap-thesis{background:var(--paper);overflow:hidden}
+  .ap-thesis-grid{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);align-items:stretch}
+  .ap-thesis-fig{position:relative;min-height:clamp(420px,58vh,660px);
+    background:linear-gradient(152deg,#EFE3CB 0%,#E2D2B2 58%,#D8C6A3 100%);
+    display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .ap-thesis-fig::before{content:"";position:absolute;inset:26px;border:1.5px dashed rgba(15,42,34,.26);border-radius:4px}
+  .ap-thesis-fig::after{content:"";position:absolute;right:-120px;bottom:-140px;width:360px;height:360px;
+    border-radius:50%;border:1.5px solid var(--emerald);opacity:.16}
+  .ap-thesis-fig .ph-mark{position:relative;font-size:11px;font-weight:600;letter-spacing:.22em;
+    text-transform:uppercase;color:rgba(15,42,34,.46)}
+  .ap-thesis-say{display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(56px,7vh,96px) max(32px,calc((100vw - 1180px)/2 + 32px)) clamp(56px,7vh,96px) clamp(32px,4.4vw,74px)}
+  .ap-thesis .lead{font-size:clamp(19px,2vw,25px);line-height:1.38;color:var(--ink);text-wrap:pretty}
   .ap-thesis .lead b{font-weight:600;color:var(--emerald-deep)}
   /* the questions are the substance of the claim above, so they are set apart rather
      than run on — same words, same order, just given their own field */
-  .ap-thesis .qs{margin:clamp(22px,3vh,32px) auto 0;max-width:60ch;padding:18px 0 18px 22px;
-    border-left:2px solid var(--emerald);text-align:left;
+  .ap-thesis .qs{margin-top:clamp(22px,3vh,34px);padding:16px 0 16px 22px;
+    border-left:2px solid var(--emerald);
     font-size:16px;line-height:1.72;color:var(--ink-soft);text-wrap:pretty}
-  @media (max-width:760px){.ap-thesis .inner{text-align:left}.ap-thesis .qs{padding-left:16px}}
+  @media (max-width:900px){
+    .ap-thesis-grid{grid-template-columns:1fr}
+    .ap-thesis-fig{min-height:clamp(260px,42vh,380px)}
+    .ap-thesis-fig::before{inset:18px}
+    .ap-thesis-say{padding:clamp(38px,6vh,58px) max(22px,calc((100vw - 1180px)/2 + 32px))}
+    .ap-thesis .qs{padding-left:16px}
+  }
 
   .ap-value .tie{text-align:center;max-width:66ch;margin:52px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.6}
   .ap-value .tie b{color:var(--ink);font-weight:600}
@@ -303,7 +323,6 @@
           <g id="spDots"></g>
         </svg>
         <div class="sp-center">
-          <span class="sp-core-k">At the centre</span>
           <span class="sp-core-b">Risk<br>Stewardship</span>
         </div>
         <div id="spChips"></div>
@@ -325,8 +344,11 @@
 
 <!-- ===================== WHAT THE CYCLE IS FOR ===================== -->
 <section class="ap-thesis">
-  <div class="wrap">
-    <div class="inner">
+  <div class="ap-thesis-grid">
+    <div class="ap-thesis-fig" role="img" aria-label="Photograph to come">
+      <span class="ph-mark">Image to come</span>
+    </div>
+    <div class="ap-thesis-say">
       <p class="lead reveal">SHCF is not another answer to the question, &ldquo;What should we fund upstream?&rdquo; It is <b>infrastructure for continually answering harder questions together</b>:</p>
       <p class="qs reveal">What is driving risk? Where can its course be changed? How do we know? What is strengthening the protective capacities that support health, safety, and prosperity? What should be adapted, sustained, or scaled? And how do we align leadership, resources, and financial incentives to act on what we learn?</p>
     </div>
@@ -454,36 +476,22 @@
     /* ============================================================
        THE FLOW — the line, made of moving water
        The spiral's line is not a line any more. It is a current of dots running
-       outward from the core, widening and fading as the radius grows, and then a
-       quieter return stream that carries them back and lets them dissolve into the
-       centre from below. A cycle you can watch, rather than a ring you are told is one.
-       The return leaves the spiral where it ends (top of the stage), keeps flowing the
-       same way it was already going — clockwise, out and down the right — and comes up
-       into the core from underneath. Reversing it there instead would read as a rebound,
-       not a return.
+       outward from the core, widening and fading as the radius grows. A dot that
+       reaches the end of the sweep dissolves there and surfaces again in the core,
+       under the label's fade, so the cycle reads without a drawn way back.
+       ⚠ THERE IS NO RETURN STREAM (Gabriel, 2026-09-23: "this part in red is weird,
+       remove the dots on that path"). The first version drew the way back as a
+       quieter Bézier rising from under the bottom edge into the core; on the page it
+       read as a stray dotted tail hanging off the centre, competing with the
+       spiral's own line. The route between the end and the core is underground now,
+       which is what a returning current does.
        ============================================================ */
-    /* The return surfaces rather than loops. Routing it around the outside of the frame
-       fails twice over: the stage has ~100 units of margin past the spiral and the chips
-       occupy most of it, and an arc long enough to get round is mostly off-canvas — which
-       spent nearly half the dots drawing nothing, starving the spiral as well. So only the
-       part worth seeing exists. The current fades out where the spiral ends and rises back
-       in from under the bottom edge, into the core from below. The journey between is
-       underground, which is what a returning current does.
-       It starts BELOW the canvas so it fades in rather than appearing at the edge. */
-    const RET_START=[190,655],RET_C1=[150,360],RET_C2=[-60,300],RET_END=[0,104];
-    const bez=(u,p0,c1,c2,p3)=>{const m=1-u,a=m*m*m,b=3*m*m*u,c=3*m*u*u,d=u*u*u;
-      return [a*p0[0]+b*c1[0]+c*c2[0]+d*p3[0], a*p0[1]+b*c1[1]+c*c2[1]+d*p3[1]];};
-
-    /* One polyline for the whole loop, spiral then return, with cumulative length so a
-       dot's progress can be a single number in 0..1 regardless of which part it is on. */
+    /* The spiral as one polyline with cumulative length, so a dot's progress is a
+       single number in 0..1. */
     const FP=[],FL=[0];
     for(let i=0;i<=N;i++){const p=pt(TMAX*i/N);FP.push([p[0],p[1],p[2]]);}
-    const SPIRAL_PTS=FP.length;
-    {const M=200;
-     for(let i=0;i<=M;i++){const q=bez(i/M,RET_START,RET_C1,RET_C2,RET_END);
-       FP.push([q[0],q[1],Math.hypot(q[0],q[1])]);}}
     for(let i=1;i<FP.length;i++)FL.push(FL[i-1]+Math.hypot(FP[i][0]-FP[i-1][0],FP[i][1]-FP[i-1][1]));
-    const FTOT=FL[FL.length-1],SPIRAL_U=FL[SPIRAL_PTS-1]/FTOT;
+    const FTOT=FL[FL.length-1],SPIRAL_U=1;
 
     /* u -> point, plus the unit normal, so a dot can sit off the centreline */
     function atU(u){
@@ -499,13 +507,15 @@
 
     (function(){
       const cv=document.getElementById('spFlow'),cx=cv.getContext('2d');
-      const NDOT=1050;
+      /* 820, not the 1050 the loop carried: about a fifth of those spent their time on
+         the return leg, so with the leg gone the same density on the spiral needs fewer. */
+      const NDOT=820;
       const drops=[];
       for(let i=0;i<NDOT;i++)drops.push({
         u:(i+Math.random()*0.85)/NDOT,
         off:(Math.random()*2-1),                 /* where in the width of the stream */
         sp:0.78+Math.random()*0.5,               /* the current is not uniform */
-        sz:0.7+Math.random()*0.75,
+        sz:0.5+Math.pow(Math.random(),1.5)*1.6,   /* skewed small: many fine, a few coarse */
         ph:Math.random()*6.283,
         tone:Math.random()
       });
