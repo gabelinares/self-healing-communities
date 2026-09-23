@@ -7,6 +7,16 @@
       "runtimeArgs": ["-m", "http.server", "4611"],
       "cwd": "hero-versions",
       "port": 4611
+    },
+    {
+      "name": "test-agents",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "MOCK=1 exec ./node_modules/.bin/parcel app/index.html --port 3334"
+      ],
+      "cwd": "/Users/gabriellinares/awesomic/OpenReplay/openreplay-test-agents/frontend",
+      "port": 3334
     }
   ]
 }
