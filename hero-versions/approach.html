@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Different Way of Working &middot; Self-Healing Communities Fund</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap"></noscript>
+<style>
+  :root{
+    --emerald:#009169;--emerald-bright:#00DBB6;--emerald-deep:#06513C;--emerald-soft:#A4D6C6;
+    --paper:#F4ECDC;--paper-warm:#EFE2CB;--cream:#FBF6EA;--terracotta:#C9442F;--terracotta-soft:#E8A88E;--terracotta-bright:#C36938;
+    --ink:#0F2A22;--ink-soft:#4A5F58;
+    /* display axis settings — one place to retune the whole voice */
+    --disp:'Archivo','Archivo Narrow',system-ui,sans-serif;--disp-wdth:90;--disp-wght:700;--rule:rgba(15,42,34,.16);--rule-soft:rgba(15,42,34,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;font-variation-settings:'wdth' 100;-webkit-font-smoothing:antialiased;line-height:1.5}
+  body{min-height:100vh;overflow-x:hidden}
+  section{scroll-margin-top:80px}
+  img{max-width:100%;display:block}
+
+  /* ---------- atoms ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--ink-soft);font-weight:600}
+  .h1{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(42px,6vw,82px);line-height:.98;letter-spacing:-.032em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h1 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  .h2{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(32px,4.6vw,60px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h2 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  /* the second colour starts its own line, as it does in the client's reference */
+  .h1 em::before,.h2 em::before{content:"\A";white-space:pre}
+  .lede{font-size:19px;line-height:1.52;color:var(--ink-soft);max-width:48ch;letter-spacing:-.005em}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--emerald);color:var(--cream);text-decoration:none;padding:15px 26px;border-radius:999px;font-weight:500;font-size:14.5px;transition:transform .2s,background .2s;border:1px solid transparent}
+  .btn:hover{transform:translateY(-1px);background:var(--emerald-deep)}
+  .btn .arrow{display:inline-block;transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(3px)}
+  .btn.alt{background:transparent;color:var(--cream);border:1px solid rgba(251,246,234,.5)}
+  .btn.alt:hover{background:rgba(251,246,234,.12)}
+  .btn.dark{background:transparent;color:var(--emerald-deep);border:1px solid var(--rule)}
+  .btn.dark:hover{background:rgba(0,145,105,.08);border-color:var(--emerald)}
+  .pagelink{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;color:var(--emerald-deep);text-decoration:none;transition:gap .2s}
+  .pagelink:hover{gap:14px}
+  .pagelink .arrow{transition:transform .2s}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  .no-js .reveal{opacity:1;transform:none}
+
+  /* ---------- NAV ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;background:transparent;border-bottom:1px solid transparent;transition:background .4s ease,box-shadow .4s ease,border-color .4s ease,backdrop-filter .4s ease,-webkit-backdrop-filter .4s ease}
+  .nav.solid{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
+  .nav-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav .brand img{height:30px}
+  .nav-links{display:flex;align-items:center;gap:2px}
+  .nav-links a{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:999px;transition:all .2s}
+  .nav-links a:hover{color:var(--ink);background:rgba(0,145,105,.08)}
+  .nav-links a.cta{background:var(--emerald);color:var(--cream);margin-left:8px}
+  .nav-links a.cta:hover{background:var(--emerald-deep)}
+  .nav-preview{max-width:1280px;margin:0 auto;height:0;overflow:hidden;transition:height .3s}
+  .nav-preview.open{height:36px}
+  .nav-preview .pv{padding:9px 32px;font-size:13px;color:var(--ink-soft);font-family:'Archivo',system-ui,sans-serif}
+  @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px}}
+  .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  .fs-pillar{position:relative;z-index:2;background:var(--cream);border-radius:20px;padding:36px 30px;box-shadow:0 34px 64px -36px rgba(15,42,34,.28);border:1px solid rgba(15,42,34,.05);transform:perspective(900px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+  .fs-pillar:hover{box-shadow:0 46px 84px -34px rgba(15,42,34,.34)}
+  .fs-num{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--emerald);margin-bottom:12px}
+  .fs-pillar h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,2.1vw,25px);line-height:1.08;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:10px}
+  .fs-pillar p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+    .fs-pillar{padding:28px 24px}
+  footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
+  .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer img{height:30px}
+  .foot-links{display:flex;gap:22px;font-size:13px}
+  .foot-links a{color:rgba(251,246,234,.7);text-decoration:none;transition:color .2s}
+  .foot-links a:hover{color:var(--cream)}
+  footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.6)}
+
+  /* ============================================================
+     APPROACH — the cycle, drawn as a spiral
+     ============================================================ */
+  body{padding-top:0}
+  .nav{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
+
+  /* ============================================================
+     HERO — the spiral and the copy it explains share the first screen.
+     Nothing here scrolls: picking a step swaps the panel on the left, so the
+     diagram and the words about it are never separated by a scroll.
+     ============================================================ */
+  .ap-hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;
+    padding:clamp(92px,12vh,126px) 0 clamp(26px,4vh,46px);
+    background:radial-gradient(ellipse 132% 80% at 66% 6%,#FBF6EA 0%,#F2E7CF 46%,#E8D6B8 100%)}
+  .ap-hero .wrap{position:relative;z-index:2;width:100%}
+  .ap-grid{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1fr);align-items:center;gap:clamp(26px,4.4vw,70px)}
+
+  /* ---------- left: the headline, then whichever step is open ---------- */
+  .ap-say{min-width:0}
+  .ap-say .h2{margin-top:13px;font-size:clamp(23px,2.5vw,37px);line-height:1.08}
+  .ap-panel{position:relative;margin-top:clamp(20px,3vh,32px);padding-top:clamp(18px,2.4vh,26px);
+    border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px)}
+  .ap-panel>.sp-prompt,.ap-panel>.sp-detail{position:absolute;left:0;right:0;top:clamp(18px,2.4vh,26px);
+    transition:opacity .34s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
+  /* the resting state says what to do, and shows it — the dot mimics a cursor
+     arriving on a step, which is the one gesture the page depends on */
+  .sp-prompt .cue{display:inline-flex;align-items:center;gap:11px;font-size:11px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep)}
+  .sp-prompt .cue i{position:relative;width:11px;height:11px;border-radius:50%;background:var(--terracotta-bright);flex:0 0 auto}
+  .sp-prompt .cue i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid var(--terracotta-bright);opacity:0;animation:cuePing 2.4s cubic-bezier(.2,.7,.2,1) infinite}
+  @keyframes cuePing{0%{transform:scale(.55);opacity:.85}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
+  .sp-prompt p{margin-top:15px;font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:42ch}
+  .sp-detail{opacity:0;transform:translateY(10px);pointer-events:none}
+  .ap-panel.open .sp-prompt{opacity:0;transform:translateY(-10px);pointer-events:none}
+  .ap-panel.open .sp-detail{opacity:1;transform:none;pointer-events:auto}
+  .sp-detail-n{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--terracotta-bright);margin-bottom:9px}
+  .sp-detail h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,min(2.3vw,3.15vh),29px);line-height:1.04;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:11px}
+  .sp-detail p{font-size:clamp(14px,1.65vh,15.2px);line-height:1.56;color:var(--ink-soft);text-wrap:pretty;max-width:50ch}
+  /* five ticks double as the readout of where you are and as a second way in,
+     for anyone who never thinks to point at the diagram */
+  .sp-ticks{position:absolute;left:0;bottom:0;display:flex;gap:8px}
+  .sp-ticks button{width:30px;height:4px;padding:0;border:0;border-radius:2px;background:rgba(15,42,34,.17);
+    cursor:pointer;transition:background .3s,transform .2s;outline-offset:5px}
+  .sp-ticks button:hover{background:rgba(15,42,34,.34);transform:scaleY(1.6)}
+  .sp-ticks button.on{background:var(--terracotta-bright)}
+
+  /* ---------- right: the spiral ---------- */
+  .sp-stage{position:relative;width:min(100%,64vh,600px);aspect-ratio:1;margin:0 auto}
+  .sp-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .sp-track{fill:rgba(15,42,34,.34);stroke:none}
+  .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
+    stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
+  .sp-dot{fill:var(--cream);stroke:var(--emerald);stroke-width:2.4;transition:fill .3s,stroke .3s,r .3s}
+  .sp-dot.on{fill:var(--terracotta-bright);stroke:var(--terracotta-bright)}
+  .sp-halo{fill:none;stroke:var(--terracotta-bright);stroke-width:2;opacity:0;transition:opacity .3s,r .35s cubic-bezier(.2,.7,.2,1)}
+  .sp-halo.on{opacity:.5}
+  .sp-seed{fill:rgba(15,42,34,.3)}
+  /* the pulse: a wide blurred band for the halo, a narrow bright one for the core
+     of the light, and a head at the leading edge. JS drives the opacity. */
+  .sp-pulse{fill:none;stroke:var(--emerald-bright);stroke-linecap:round;opacity:0}
+  .sp-pulse.halo{stroke-width:17;filter:url(#spGlowF)}
+  .sp-pulse-head{fill:var(--emerald-bright);opacity:0;filter:url(#spGlowF)}
+
+  /* the steps are HTML over the SVG, not SVG text: they read horizontally at every
+     position on the curve, and they can look like the buttons they are */
+  .sp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;max-width:168px;text-align:left;line-height:1.28;
+    padding:8px 15px 8px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink);
+    background:var(--cream);
+    border:1px solid rgba(15,42,34,.16);box-shadow:0 7px 18px -9px rgba(15,42,34,.5);
+    cursor:pointer;outline:none;font-family:inherit;
+    transition:transform .26s cubic-bezier(.2,.7,.2,1),background .26s,border-color .26s,box-shadow .26s,color .26s,opacity .26s}
+  .sp-chip .n{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.05em;color:var(--emerald)}
+  .sp-chip:hover,.sp-chip:focus-visible{border-color:var(--emerald);
+    box-shadow:0 12px 26px -10px rgba(15,42,34,.55);transform:var(--sp-t) scale(1.05)}
+  .sp-chip.on{background:var(--emerald-deep);color:var(--cream);border-color:var(--emerald-deep);
+    box-shadow:0 14px 30px -10px rgba(6,81,60,.6);transform:var(--sp-t) scale(1.05)}
+  .sp-chip.on .n{color:var(--emerald-bright)}
+  .sp-stage.armed .sp-chip:not(.on){color:rgba(15,42,34,.42);border-color:rgba(15,42,34,.08);
+    box-shadow:0 4px 11px -9px rgba(15,42,34,.4)}
+  .sp-stage.armed .sp-chip:not(.on) .n{color:rgba(0,145,105,.45)}
+  /* until someone points at it, the chips breathe in sequence so the page is
+     visibly something you operate rather than something you read */
+  .sp-stage.idle .sp-chip{animation:chipBreathe 4.8s ease-in-out infinite;animation-delay:var(--sp-d)}
+  @keyframes chipBreathe{0%,74%,100%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5)}
+    84%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5),0 0 0 6px rgba(195,105,56,.16)}}
+  @media (prefers-reduced-motion:reduce){.sp-stage.idle .sp-chip{animation:none}.sp-prompt .cue i::after{animation:none;opacity:.5}}
+
+  /* the core of the spiral holds the point of the whole cycle, and never moves */
+  .sp-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36%;text-align:center;pointer-events:none;z-index:3}
+  .sp-core-k{display:block;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
+  .sp-core-b{display:block;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(18px,2.15vw,28px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--emerald-deep)}
+
+  /* the same six steps, read straight through — the only form that works without hover */
+  .sp-steps{display:none;list-style:none;max-width:616px;margin:0 auto;padding:0 28px;counter-reset:sp}
+  .sp-steps li{counter-increment:sp;border-top:1px solid var(--rule);padding:22px 0}
+  .sp-steps li:last-child{border-bottom:1px solid var(--rule)}
+  .sp-steps h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:20px;line-height:1.1;letter-spacing:-.025em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:8px}
+  .sp-steps h3::before{content:"0" counter(sp);font-weight:600;font-size:13px;color:var(--emerald);margin-right:11px}
+  .sp-steps p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+
+  /* ---------- the three returns ---------- */
+  .ap-value{background:linear-gradient(180deg,#E8D6B8 0%,var(--paper) 18%,var(--paper-warm) 100%);padding:clamp(80px,10vw,130px) 0}
+  .ap-value .head{text-align:center;max-width:680px;margin:0 auto}
+  .ap-value .head .h2{margin-top:14px}
+  .ap-returns{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1040px;margin:56px auto 0}
+  /* ---------- what the cycle is for, stated plainly between the diagram and the returns ---------- */
+  .ap-thesis{padding:clamp(66px,9vh,104px) 0 clamp(20px,3vh,34px);background:var(--paper)}
+  .ap-thesis .inner{max-width:68ch;margin:0 auto;text-align:center}
+  .ap-thesis .lead{font-size:clamp(18px,1.9vw,22px);line-height:1.46;color:var(--ink);text-wrap:pretty}
+  .ap-thesis .lead b{font-weight:600;color:var(--emerald-deep)}
+  /* the questions are the substance of the claim above, so they are set apart rather
+     than run on — same words, same order, just given their own field */
+  .ap-thesis .qs{margin:clamp(22px,3vh,32px) auto 0;max-width:60ch;padding:18px 0 18px 22px;
+    border-left:2px solid var(--emerald);text-align:left;
+    font-size:16px;line-height:1.72;color:var(--ink-soft);text-wrap:pretty}
+  @media (max-width:760px){.ap-thesis .inner{text-align:left}.ap-thesis .qs{padding-left:16px}}
+
+  .ap-value .tie{text-align:center;max-width:66ch;margin:52px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.6}
+  .ap-value .tie b{color:var(--ink);font-weight:600}
+  .ap-back{text-align:center;margin-top:34px}
+
+  /* a cue that there is more page below, since the hero now fills the screen exactly */
+  .ap-more{position:absolute;left:50%;bottom:clamp(14px,2.4vh,26px);transform:translateX(-50%);z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+  .ap-more:hover{color:var(--ink)}
+  .ap-more span{font-size:14px;line-height:1;animation:apBob 2.2s ease-in-out infinite}
+  @keyframes apBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+  @media (max-width:980px){
+    .ap-hero{min-height:0;display:block;padding:clamp(104px,14vh,132px) 0 clamp(40px,6vh,64px)}
+    .ap-grid{grid-template-columns:1fr;gap:34px}
+    .ap-say{text-align:center}
+    .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
+    .ap-panel,.ap-more{display:none}
+    .sp-chip{display:none}
+    .sp-stage{width:min(400px,76vw);margin-bottom:8px}
+    .sp-center{width:56%}
+    .sp-steps{display:block}
+    .ap-returns{grid-template-columns:1fr;gap:18px;margin-top:40px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><img src="logo.svg" alt="Self-Healing Communities Fund" /></a>
+    <div class="nav-links">
+      <a href="index.html#why">The Science</a>
+      <a href="approach.html" aria-current="page">Our Approach</a>
+      <a href="#">Community Stories</a>
+      <a href="#">About</a>
+      <a class="cta" href="index.html#act">Get Involved</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO — the cycle, explained in place ===================== -->
+<div class="ap-hero">
+  <div class="grain-tex"></div>
+  <div class="wrap">
+    <div class="ap-grid">
+
+      <div class="ap-say">
+        <div class="eyebrow reveal">A different way of working</div>
+        <h2 class="h2 reveal">SHCF brings evidence, community knowledge, learning, and financing together in <em>a continuing cycle.</em></h2>
+
+        <div class="ap-panel" id="apPanel">
+          <div class="sp-prompt">
+            <span class="cue"><i></i> Pick a step</span>
+            <p>Five steps wind outward from the core. Choose any one and the path lights from the centre out to it &mdash; what it means appears here.</p>
+          </div>
+          <div class="sp-detail" id="spDetail">
+            <div class="sp-detail-n"></div>
+            <h3></h3>
+            <p></p>
+          </div>
+          <div class="sp-ticks" id="spTicks" role="tablist" aria-label="The five steps"></div>
+        </div>
+      </div>
+
+      <div class="sp-stage reveal idle" id="spStage">
+        <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120" aria-hidden="true">
+          <defs>
+            <!-- the core fade: it has to clear the centre label (ink reaches 145 units) but reveal
+                 enough of the inner curl that the form reads as a spiral and not a ring.
+                 Fully hidden below 31 units, fully visible from 123. -->
+            <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
+              <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
+            </radialGradient>
+            <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
+            <filter id="spGlowF" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="7"/>
+            </filter>
+          </defs>
+          <g mask="url(#spMask)" id="spMasked">
+            <path class="sp-track" id="spTrack" />
+            <path class="sp-trail" id="spTrail" pathLength="1" />
+          </g>
+          <g id="spDots"></g>
+        </svg>
+        <div class="sp-center">
+          <span class="sp-core-k">At the centre</span>
+          <span class="sp-core-b">Risk<br>Stewardship</span>
+        </div>
+        <div id="spChips"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <ol class="sp-steps" id="spSteps">
+    <li><h3>Find leverage</h3><p>See connected risk and healing trajectories across systems, the life course, and generations. Use rigorous evidence and community knowledge to identify where change may have the greatest reach.</p></li>
+    <li><h3>Build effective portfolios</h3><p>Bring together community knowledge, lived experience, research, practice, public-system authority, and resources to build locally tailored portfolios that change underlying risk trajectories and strengthen protective capacity. Investments work together across the places where risk develops, building on the relationships, assets, and capacities already present.</p></li>
+    <li><h3>Learn continuously across investments</h3><p>Create shared feedback so communities and partners can learn together whether risk is changing, which benefits cascade across systems, where public costs change, and what should adapt, be sustained, or scale.</p></li>
+    <li><h3>Finance differently</h3><p>Finance portfolios that reduce risk earlier, strengthen community capacity, support learning, and create benefits across systems. Track the human, economic, and fiscal value created &mdash; and align incentives so public systems are rewarded for reducing risk earlier, not only responding to its consequences.</p></li>
+    <li><h3>Make improvement durable</h3><p>Connect learning, public financing, provider sustainability, and reinvestment so successful change does not disappear when a grant ends. Create mechanisms to reinvest financial gains from improved outcomes into risk reduction and community capacity.</p></li>
+  </ol>
+
+  <a class="ap-more" href="#value">What success returns <span>&darr;</span></a>
+</div>
+
+<!-- ===================== WHAT THE CYCLE IS FOR ===================== -->
+<section class="ap-thesis">
+  <div class="wrap">
+    <div class="inner">
+      <p class="lead reveal">SHCF is not another answer to the question, &ldquo;What should we fund upstream?&rdquo; It is <b>infrastructure for continually answering harder questions together</b>:</p>
+      <p class="qs reveal">What is driving risk? Where can its course be changed? How do we know? What is strengthening the protective capacities that support health, safety, and prosperity? What should be adapted, sustained, or scaled? And how do we align leadership, resources, and financial incentives to act on what we learn?</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE RETURNS ===================== -->
+<section class="ap-value" id="value">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">What success returns</div>
+      <h2 class="h2 reveal">Success creates value in <em>more than one way.</em></h2>
+    </div>
+    <div class="ap-returns">
+      <div class="fs-pillar reveal">
+        <div class="fs-num">01</div>
+        <h3>Human return</h3>
+        <p>Better health, safety, learning, stability, belonging, relationships, and wellbeing.</p>
+      </div>
+      <div class="fs-pillar reveal">
+        <div class="fs-num">02</div>
+        <h3>Economic return</h3>
+        <p>Greater participation in work, earnings, productivity, family economic stability, and community economic vitality.</p>
+      </div>
+      <div class="fs-pillar reveal">
+        <div class="fs-num">03</div>
+        <h3>Fiscal return</h3>
+        <p>Reduced or more stable demand for costly public services and, where demonstrated, measurable improvements in public costs or revenues.</p>
+      </div>
+    </div>
+    <p class="tie reveal">The result is a different way of working: communities and public systems move from repeatedly paying for the consequences of risk toward <b>continually learning how to reduce it</b> &mdash; and building the capacity to keep doing so.</p>
+    <div class="ap-back reveal"><a class="pagelink" href="index.html#act">Get involved <span class="arrow">&rarr;</span></a></div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" />
+      <div class="foot-links">
+        <a href="index.html#why">The Science</a><a href="approach.html">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="index.html#act">Get Involved</a>
+      </div>
+    </div>
+    <div class="copy">&copy; 2026 Self-Healing Communities Fund &mdash; a fund by ACE Interface. Founded on the ACE Study by Dr. Robert Anda and Laura Porter.</div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.remove('no-js');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* reveal on scroll — same observer as the home page */
+  (function(){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
+  })();
+
+  /* return cards tilt toward the cursor — same as the flagship pillars */
+  if(!reduce){
+    const TILT=6;
+    document.querySelectorAll('.fs-pillar').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+        card.style.transform='perspective(900px) rotateX('+((0.5-py)*TILT).toFixed(2)+'deg) rotateY('+((px-0.5)*TILT).toFixed(2)+'deg) translateY(-3px)';
+      });
+      card.addEventListener('mouseleave',()=>{card.style.transform='perspective(900px)';});
+    });
+  }
+
+  /* ============================================================
+     THE SPIRAL
+     An Archimedean spiral r = R0 + K*t, drawn outward from the core so the cycle
+     reads as widening rather than closing. The six steps sit at fixed angles on it.
+     The step labels are HTML positioned over the SVG rather than SVG text: they stay
+     horizontal wherever they land on the curve, and they can carry the border,
+     shadow and hover state that make them read as buttons.
+     ============================================================ */
+  (function(){
+    const svg=document.getElementById('spSvg');if(!svg)return;
+    const stage=document.getElementById('spStage');
+    const track=document.getElementById('spTrack'),trail=document.getElementById('spTrail');
+    const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips');
+    const panel=document.getElementById('apPanel'),detail=document.getElementById('spDetail'),ticksEl=document.getElementById('spTicks');
+    const steps=[...document.querySelectorAll('#spSteps li')].map(li=>({
+      h:li.querySelector('h3').textContent.trim(),
+      d:li.querySelector('p').textContent.trim()
+    }));
+    const R0=4,K=36.545,TMAX=12.368,GAP=26;
+    /* The steps advance 72 degrees each, so reading the diagram clockwise from any step
+       gives 01 02 03 04 05 in order. A 144-degree advance also spaced them evenly and was
+       easier to fit, but it wound twice round before closing, so the eye met them 1 4 2 5 3.
+       Sharing the numbering with the eye costs radial room: five steps at 72 degrees occupy
+       exactly ONE turn, and one turn inside a fixed radius cannot show the line passing
+       inside itself — it just reads as a circle. So the curve no longer stops at the last
+       step. It carries on for another 140 degrees past 05, which buys a second visible turn
+       and makes the form read as a spiral again.
+       That outer sweep is also where "expand the circle of leadership" belongs: it is the
+       one part of the figure that is not a step, which is exactly what the client asked for.
+       TMAX, K and the step span are not independent — TMAX sets every bearing at once, K
+       follows from the 456-unit outer radius, and a chip is up to 168px wide next to a 560px
+       stage with the copy column immediately left of it. Swept against real chip boxes:
+       step 01 sits at 192 degrees — centre-left, the first thing the eye lands on coming off the
+       headline — and the rest follow clockwise from there. 1.45 turns visible, steps spread
+       206 -> 390, 88 units of curve left beyond 05, no chip within 26px of the copy column, the
+       centre label or another chip. Step 01's bearing has a feasible band of 168..205 degrees,
+       so this is not balanced on an edge.
+       Note 01 cannot sit exactly where 05 used to (226 degrees): that puts the LARGEST radius,
+       and so the widest chip, at 154 degrees — hard left, straight through the copy column. No
+       overshoot value rescues it. 192 is the closest the geometry allows to centre-left. */
+    const STEP_T=[4.9218,6.1785,7.4351,8.6917,9.9484];
+    const pt=t=>{const r=R0+K*t,a=t-Math.PI/2;return[r*Math.cos(a),r*Math.sin(a),r,a];};
+
+    /* sample the curve once; the same points give us the path and the arc length at each step */
+    const N=900,pts=[],cum=[0];
+    for(let i=0;i<=N;i++)pts.push(pt(TMAX*i/N));
+    for(let i=1;i<=N;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+    const total=cum[N];
+    trail.setAttribute('d','M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'));
+    /* the track is drawn as a closed ribbon rather than a stroke, so it can start as a hairline
+       at the core and thicken all the way out — a stroke can only be one width end to end */
+    const half=i=>0.42+2.95*(i/N);
+    const lo=[],hi=[];
+    for(let i=0;i<=N;i++){
+      const t=TMAX*i/N,r=R0+K*t,a=t-Math.PI/2;
+      let nx=K*Math.cos(a)-r*Math.sin(a),ny=K*Math.sin(a)+r*Math.cos(a);   /* tangent */
+      const m=Math.hypot(nx,ny);nx/=m;ny/=m;
+      const px=-ny,py=nx,w=half(i);                                        /* unit normal */
+      hi.push((pts[i][0]+px*w).toFixed(1)+' '+(pts[i][1]+py*w).toFixed(1));
+      lo.push((pts[i][0]-px*w).toFixed(1)+' '+(pts[i][1]-py*w).toFixed(1));
+    }
+    track.setAttribute('d','M'+hi.join('L')+'L'+lo.reverse().join('L')+'Z');
+    const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
+    const NS='http://www.w3.org/2000/svg';
+    const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
+
+    const nodes=STEP_T.map((t,i)=>{
+      const [x,y,r,a]=pt(t);
+      const halo=document.createElementNS(NS,'circle');
+      halo.setAttribute('class','sp-halo');halo.setAttribute('cx',x.toFixed(1));halo.setAttribute('cy',y.toFixed(1));halo.setAttribute('r',8);
+      const dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('class','sp-dot');dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));dot.setAttribute('r',8);
+      dotsG.append(halo,dot);
+
+      /* A chip is far wider than it is tall, so centring it on a radial offset would lay it
+         across the spiral. Anchor its inner edge to the dot instead and let it run outward —
+         except near the top and bottom of the circle, where there is no "outward" horizontally
+         and the chip is centred and pushed clear vertically. */
+      const chip=document.createElement('button');
+      chip.type='button';chip.className='sp-chip';
+      chip.innerHTML='<span class="n">0'+(i+1)+'</span>'+steps[i].h;
+      chip.setAttribute('aria-label',steps[i].h+'. '+steps[i].d);
+      const upright=Math.abs(x)<r*0.42, out=Math.sign(y)||1;
+      const lx = upright ? x : x+Math.sign(x)*GAP;
+      const ly = upright ? y+out*(GAP+8) : y;
+      const tf = upright ? 'translate(-50%,'+(out>0?'0':'-100%')+')'
+                         : 'translate('+(x>0?'0':'-100%')+',-50%)';
+      chip.style.left=pct(lx);chip.style.top=pct(ly);
+      chip.style.setProperty('--sp-t',tf);
+      chip.style.transform=tf;
+      chip.style.setProperty('--sp-d',(i*0.8)+'s');
+      chipsEl.appendChild(chip);
+
+      const tick=document.createElement('button');
+      tick.type='button';tick.setAttribute('aria-label',steps[i].h);
+      ticksEl.appendChild(tick);
+
+      return {dot,halo,chip,tick,frac:lenAt(t)/total};
+    });
+
+    let open=-1;
+    function show(i){
+      if(i===open)return;open=i;
+      stage.classList.toggle('armed',i>=0);
+      nodes.forEach((nd,j)=>{
+        const on=j===i;
+        nd.dot.classList.toggle('on',on);
+        nd.halo.classList.toggle('on',on);
+        nd.halo.setAttribute('r',on?16:8);
+        nd.chip.classList.toggle('on',on);
+        nd.chip.setAttribute('aria-pressed',on?'true':'false');
+        nd.tick.classList.toggle('on',on);
+      });
+      trail.style.strokeDashoffset=i<0?1:(1-nodes[i].frac).toFixed(4);
+      panel.classList.toggle('open',i>=0);
+      if(i>=0){
+        detail.querySelector('.sp-detail-n').textContent='0'+(i+1);
+        detail.querySelector('h3').textContent=steps[i].h;
+        detail.querySelector('p').textContent=steps[i].d;
+      }
+    }
+
+    /* Until the first real interaction the chips breathe in sequence; the first
+       hover, focus or tap stops that for good, so the hint never fights the user. */
+    function settle(){stage.classList.remove('idle');}
+    nodes.forEach((nd,i)=>{
+      const open=()=>{settle();show(i);};
+      nd.chip.addEventListener('mouseenter',open);
+      nd.chip.addEventListener('focus',open);
+      nd.chip.addEventListener('click',open);
+      nd.tick.addEventListener('mouseenter',open);
+      nd.tick.addEventListener('focus',open);
+      nd.tick.addEventListener('click',open);
+    });
+    /* ============================================================
+       THE PULSE
+       Every few seconds a glow runs the spiral from the core outward — the cycle
+       showing itself in motion rather than only when someone points at it.
+       Three elements share one dash offset: a wide blurred band (the halo), a
+       narrow bright one (the core of the light) and a head at the leading edge.
+       It eases out of the centre and slows as it dissipates, fades in and out at
+       both ends rather than popping, and stands down whenever a step is open so
+       it never competes with the trail that hover draws.
+       ============================================================ */
+    (function(){
+      if(reduce)return;
+      const masked=document.getElementById('spMasked');
+      const d=trail.getAttribute('d');
+      const mk=(cls,tag)=>{const e=document.createElementNS(NS,tag||'path');e.setAttribute('class',cls);if(!tag)e.setAttribute('d',d);masked.appendChild(e);return e;};
+
+      /* A single dash would be as bright at its tail as at its head. Instead four
+         bands all *end* at the same leading edge and get shorter and brighter, so
+         the light falls away behind the head — a taper that follows the curve
+         exactly, which a linear gradient could not do on a spiral. */
+      const LAYERS=[
+        {k:1.00,a:0.30,cls:'sp-pulse halo'},
+        {k:1.00,a:0.20,cls:'sp-pulse'},
+        {k:0.52,a:0.42,cls:'sp-pulse'},
+        {k:0.20,a:0.95,cls:'sp-pulse'}
+      ].map(l=>({...l,el:mk(l.cls)}));
+      const head=mk('sp-pulse-head','circle');head.setAttribute('r',4.5);
+
+      /* measured off a path with no pathLength override, so these are real user units */
+      const L=LAYERS[0].el.getTotalLength(),BAND=L*0.085;
+      LAYERS.forEach(l=>{l.len=BAND*l.k;l.el.style.strokeDasharray=l.len+' '+(L+l.len);});
+
+      const TRAVEL=2900,REST=1700,JITTER=1800;
+      let start=performance.now()+1100,span=TRAVEL+REST,armed=0,seen=true;
+      /* rAF already idles on a hidden tab; this covers the spiral being scrolled past */
+      new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
+
+      requestAnimationFrame(function tick(now){
+        requestAnimationFrame(tick);
+        if(!seen){start=now;return;}
+        /* ease the stand-down so opening a step doesn't cut the light dead */
+        armed+=((stage.classList.contains('armed')?1:0)-armed)*0.12;
+        const e=now-start;
+        if(e<0)return;
+        if(e>span){start=now;span=TRAVEL+REST+Math.random()*JITTER;return;}
+        const u=e/TRAVEL;
+        if(u>=1){LAYERS.forEach(l=>l.el.style.opacity=0);head.style.opacity=0;return;}
+        const travelled=(1-Math.pow(1-u,2.4))*L;                 /* out of the core fast, dissipating slow */
+        const fade=Math.min(1,u/0.14)*Math.min(1,(1-u)/0.24)*(1-armed);
+        LAYERS.forEach(l=>{
+          l.el.style.strokeDashoffset=(l.len-travelled).toFixed(1);
+          l.el.style.opacity=(fade*l.a).toFixed(3);
+        });
+        const pt=LAYERS[0].el.getPointAtLength(travelled);
+        head.setAttribute('cx',pt.x.toFixed(1));head.setAttribute('cy',pt.y.toFixed(1));
+        head.style.opacity=(fade*0.9).toFixed(3);
+      });
+    })();
+
+    const m=location.hash.match(/^#step-([1-6])$/);if(m){settle();show(+m[1]-1);}
+    /* leaving the diagram clears it, but only if focus has not landed on a step */
+    stage.addEventListener('mouseleave',()=>{if(!stage.contains(document.activeElement))show(-1);});
+    stage.addEventListener('focusout',e=>{if(!stage.contains(e.relatedTarget)&&!ticksEl.contains(e.relatedTarget))show(-1);});
+    ticksEl.addEventListener('mouseleave',()=>{if(!ticksEl.contains(document.activeElement)&&!stage.matches(':hover'))show(-1);});
+  })();
+</script>
+
+</body>
+</html>
