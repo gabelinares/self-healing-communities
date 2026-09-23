@@ -1,0 +1,362 @@
+# SHCF Homepage — Backlog
+
+Source: client copy draft sent 2026-08-24 (`Web-landing-draft-SHCF-for-Awesomic-8-24-26...pdf`), reviewed 2026-08-26. Low-effort items from that round already shipped to `hero-versions.vercel.app` (see git log / commit history in `hero-versions/index.html`). Everything below is what's left.
+
+## 1. Book content expansion (`#why` section)
+The new draft turns the 3-leaf book into 4+ spreads and adds stat-heavy pages the current `.txtpage` layout (title + one quote + attribution) isn't built for. Needs a new page template before this can go in.
+
+- **"Risk can build over time"** page — Dr. Robert Anda quote ("Every experience teaches the body and brain what to expect next...") + ACEs-discoveries paragraph.
+- **"ACE-related risk has outgrown the systems built to manage it"** page — stat callouts (27% increase in average ACE score among adults 25–39 between 2009–2010 and 2023–2024; nearly 1 in 4 adults in that group now report 4+ ACEs, vs. ~1 in 6 a decade earlier) + Budget Director quote ("The bills show up in one place, the savings show up somewhere else...").
+- **"Our fragmented programmatic approach is too expensive"** page — $14.1 trillion/year economic-burden stat (with footnote marker in source doc) + explanatory paragraph + State Legislator quote.
+
+## 2. New "Flagship Case" section
+Doesn't exist anywhere in the current site. Content: two bodies of work (intellectual groundwork for life-course/intergenerational risk; governance and financing architecture), reference to the ACE Study and the films "Paper Tigers" and "Resilience," and a community-member quote ("For years no one asked what my childhood was like. The first time someone did, my life finally made sense." — rural health clinic). Client's draft places it after the How/compare section.
+
+## 3. Imagery
+- Replace the abstract network-diagram images with the family/path-in-nature illustration style shown in the client's doc. Client flagged their own reference images as "just AI generated ideas" — final art still needed, not just a swap.
+- Life-stage frame photos in the wayfinding section (`assets/infancy.jpg` → `elderhood.jpg`) are still placeholders per [[shcf-homepage]] hard constraints — need real contextual photography, not stock.
+
+## 3b. Open from the Sept 16 round
+- **Quote for book page four ("Good decisions require trustworthy evidence")** — asked Laura for one; every other spread pairs the argument with a named voice, so page four currently runs a visible `Placeholder — we need a quote here for parallelism` panel.
+- **Image for the page-three/four spread** — placeholder panel reading `Image to come` is live in the book.
+- **Wayfinding subhead now echoes its own headline.** The new client headline ends "…to restore them," and the line under it still reads "we can restore the conditions that let it." Flagged to Laura; awaiting her call on changing or cutting it.
+
+## 4. Explicitly "future," not this round (per client)
+- Pop-ups on key concepts (ACE, risk, other big ideas) triggered from within the page copy.
+- A Laura self-quote in the Act/closing section — authority + how she approaches the work, introduces team members, note on outcomes/confidence that communities can turn the corner and reduce costs.
+
+## 5. Process
+- Get client confirmation the low-effort round (scroll speed, wayfinding/How/Act copy) reads correctly before starting the bigger pass above.
+- Coordinate scope/timeline with Clara (account manager) — Laura already flagged to her that there's more work and info available.
+
+## 6. Sept 2026 client feedback round (email via Laura's team, 2026-09-14)
+Reference screenshots saved to `hero-versions/assets/reference/2026-09-14-client-feedback/`.
+
+- **Before/after path images (`#how` comparison section)**: client picked two path/subway-style diagrams — `path-before-ref.png` (add gaps in the pathways: interruptions in supports, confusion about where help leads) and `path-after-ref.png` (as-is). Confirmed direction: yes, rebuild this section with them. Client floated animating the SVG eventually — **explicitly future scope**, not this round.
+  - **Artwork DONE 2026-09-14** → `hero-versions/assets/path-friction.svg` and `path-flow.svg` (66K/53K gzipped). Built from the licensed stock EPS pair Gabriel downloaded; scripts that produced them are in the session scratchpad (`recolor.py`, `add_gaps.py`) — rerun those to re-tune rather than hand-editing the SVGs.
+    - *Colour*: the stock art is flattened (7 line colours × a grid-shadow variant × hand-set darker crossings = 66 colours), so it was remapped algorithmically in HSL — hue retargeted per colour family, lightness preserved so crossings stay dark. Friction → terracotta band (hue 3–38°, capped at 38 because past that it reads mustard); flow → emerald band (hue 150–184°). Lightness pulled down hard on the flow side: brand emerald lives at L 17–43% and the stock art at 55–65% read neon.
+    - *Background removed* (Gabriel, 2026-09-14): the squared paper ground and its grid are stripped — arrows only, on transparency. Two traps this exposed, both handled in `recolor.py`: (1) the grid is baked into the art twice, as a uniformly darker duplicate of every line *and* as a copy blended toward the paper where a grid line crosses a stroke — both fold back into their base colour or they show as plaid inside the strokes; (2) the art is sliced into tiles along the grid, so with no paper behind them the antialiased seams read as hairlines — each tile is grown by a 2-unit stroke in its own colour to close them.
+    - *Placement*: stock "before" left its right 30% empty. Each viewBox is now tight to its own artwork (friction 1868×1700, flow 2426×1700) so the arrows run right off the edge with no built-in padding, and the two share a viewBox *height* so stroke weights still match across the wipe. Flow is flush to the bottom of its box; friction fills its own. Display with `contain`, not `cover` — cover crops arrows off.
+    - *Gaps*: 8 cuts via an SVG mask, placed by detecting clean straight single-line runs (rejects junctions, dots and diagonal arrowheads). Sized 2.0 stroke widths along the line and only 1.2 across — wider than that and the rect bites dots and arrowheads passing close to the line, which reads as a broken mask rather than a break. Each candidate is also validated along the cut's full length plus margin: if the perpendicular width changes anywhere in that span (a dot, a crossing, an arrowhead) the position is rejected. Each cut fully severs its segment — the point is that lines read as *disconnected*, with some arrowheads left detached from their stems. Watch the mask coordinate space: it sits on an untransformed wrapper group around the translated artwork, because putting it on the transformed group itself applies the centring offset twice and the cuts land beside their lines as edge notches instead of breaks.
+  - **INTEGRATED 2026-09-14.** Panels stay dark (Gabriel's call — a light-panel variant was tried and rejected). The two `<canvas>` node-webs and their ~68 lines of `drawNet` code are gone, replaced by `<img class="cbg">` layers.
+    - Each artwork is mirrored (`transform:scaleX(-1)`) and anchored flush to the bottom and to the edge *opposite* its panel's copy, so the arrows run off that edge and never sit under the text. Note `object-position` is set to the **opposite** side of where the art should land, because `scaleX` flips the element after it is placed — friction uses `left bottom` to end up right, flow uses `right bottom` to end up left.
+    - `.cpanel.friction .cbg` is scaled to `height:110%`. Its composition is near-square, so at the 50% rest position a flush-right placement sat entirely inside the clipped half and the panel looked empty. The extra scale brings it into view and crops its sparse top rather than any arrowheads. The flow art is wide enough not to need this. **If either composition is ever re-cropped, re-check both the 50% rest state and a dragged state** — that interaction is where this breaks.
+- **Brighter orange reintroduced**: client's original site orange, sampled from their reference swatch = `#C36938` (current site terracotta `#C9442F` is more brick-red/muted by comparison). Added as `--terracotta-bright` in `hero-versions/index.html`. Decision: use it in exactly one place rather than scattering it, so it reads as deliberate. Landed it in the wayfinding section (see below) as that one place — flag to client explicitly when sharing the preview, since "one place" wasned't pinned to a location in the original feedback.
+- **Wayfinding section "doesn't stand out"**: shipped a first pass to test direction — `.lc-frame` enlarged 300px→340px desktop (196px→216px mobile), and the river-dot color at full gather changed from bright emerald to `--terracotta-bright` (was an emerald pop; now a warm one, echoing the "gather around" section's warm-tones treatment the client already loves). Not yet deployed/sent — Gabriel to preview and confirm the color transition still reads well (start color is already a muted terracotta, so the scatter→gather contrast is now more subtle than the old red→green swap) before sending to client as a direction check.
+
+## 7. Sept 2026 typography + Flagship round (Laura, 2026-09-18)
+
+Two separate deliverables from the same message. Reference screenshot of the type
+direction Laura wants to "play with": her own page-three layout (heavy condensed
+sans headline with the closing clause in a second colour, big warm stat, serif
+italic quote with a rule and an oversized mark, letterspaced caps attribution).
+
+### 7a. Flagship section — SHIPPED into `index.html` (and carried into the type version)
+Laura: *"feels a little plain compared with the rest because there aren't any photos or
+much color. I don't think it needs photos, but maybe we could bring some color into the
+background or the two boxes."* No photos added. Colour came from three places:
+- **The section field**: a cool wash from the top and a warm one from the bottom-left over
+  the cream→paper gradient, plus the shared `.grain-tex`. It sits between the dark compare
+  widget and the dark Act band, so it stays a light breather — going fully dark would have
+  put three heavy sections in a row.
+- **The arch**, which was a 2px hairline at .5 opacity and effectively invisible. Now a
+  drawn form: a 3px stroke on an emerald→terracotta gradient, over a tinted field that is
+  **masked to fade downward**. Without that mask the field terminated hard at the card tops
+  and read as a grey wedge in the gap between them.
+- **The two cards**, tinted rather than cream — cool for the intellectual body of work, warm
+  for governance/financing — each with a 5px accent cap, an accent number badge, an accent
+  rule under the heading, and a large arc in its own colour echoing the arch. A first pass
+  used an oversized cropped numeral there instead; it read as a rendering slip, not a mark.
+- The section eyebrow moved off "Flagship case" to "The work underway", because the apex
+  pill already says Flagship Case and the two sat one above the other.
+- The community quote picked up the reference treatment (rule, oversized mark, ranged left).
+
+### 7b. Version B — a new typographic identity: `index-type.html` + `approach-type.html`
+Built as a **separate version so Laura can compare**, not as a replacement. A version
+switcher (`.vswitch`, bottom-left, marked `<!-- version switch -->` in both homepages)
+flips between them; **delete that block and its CSS once a direction is chosen.**
+
+The identity is a straight inversion of the current one. Today: Fraunces serif display +
+Inter body. Version B: **Archivo** (variable, `wdth` + `wght`) carries everything —
+display, body, UI — and **Fraunces survives in italic only, for quoted voices**. That is
+exactly the split in Laura's reference, and it keeps the warmth of the book spreads and
+the pull-quotes, which she has already approved, while the argument type gets louder.
+
+- Display is set from two custom properties, `--disp-wdth` (90) and `--disp-wght` (700),
+  so the whole voice retunes from one place. Leading ~1.0, tracking -.03em.
+- **`em` inside a headline stops being an italic and becomes a colour break**, and
+  `em::before{content:"\A"}` forces it onto its own line so the shape holds at every
+  width rather than depending on where the text happens to wrap. `em` colours are
+  per-surface: emerald on paper, `--emerald-bright` on the flow panel, `#FFC9B4` on
+  friction, `--emerald-bright` on the Act band. Headlines that had no `em` got one.
+- Stats are now Archivo 800 in `--terracotta-bright`, not Fraunces in emerald. Page three
+  of the book got a `.wc-stats.solo` treatment so `$14.1 Trillion/Year` is the headline act
+  of its own page with the sentence under it as a subhead — i.e. Laura's reference, rebuilt.
+- **The canvas hero title**: `ctx.font` accepts `font-stretch` in the shorthand (Chrome
+  narrows the glyphs even though `ctx.font` reads back without it), so the emphasis line is
+  set `700 semi-condensed` to hold the same width axis as the CSS headlines. Without it the
+  one headline rendered in canvas sits visibly wider than every other headline on the site.
+
+### 7c. Approach page hero rebuilt (both versions)
+Gabriel, 2026-09-21: the spiral was below the fold and its copy below *that*, so the
+diagram and the words explaining it could never be seen together. Four changes:
+
+- **The spiral moved into the hero.** `.ap-hero` is now one `100svh` two-column grid —
+  headline and step copy left, spiral right — so nothing about the cycle needs a scroll.
+  An `.ap-more` cue at the bottom says there is more page below.
+- **The step labels stopped being tilted.** They were SVG `<text>` rotated to the spiral's
+  tangent (clamped to ±30° so they never stood on end). They are now **HTML buttons
+  absolutely positioned over the SVG**, converting viewBox units to stage percentages
+  (`(v+560)/1120`). Horizontal at every position, and they can carry a border, shadow and
+  hover state instead of the `paint-order:stroke` halo the SVG text needed to stay legible.
+  - *Placement trap*: a chip is far wider than it is tall, so centring it on a radial
+    offset lays it across the spiral. Each chip anchors its **inner edge** to its dot and
+    runs outward (`translate(0,-50%)` right side, `translate(-100%,-50%)` left). Near the
+    top and bottom of the circle there is no "outward" horizontally, so when
+    `|x| < r*0.42` the chip centres and is pushed clear vertically instead.
+  - The hover/active scale has to compose with that anchoring transform, so the anchor is
+    stored in `--sp-t` and every transform is written `var(--sp-t) scale(1.05)`.
+  - *Muting trap (Laura/Gabriel, 2026-09-21)*: dimming the unselected chips with
+    `opacity:.4` fades the **fill** along with the ink, so the spiral showed straight
+    through them. The fill is now flat `--cream` (the backdrop-blur went with it, being
+    pointless behind an opaque fill) and the recede happens in the ink, border and shadow
+    instead. Keep it that way — the curve has to terminate cleanly at a chip's edge.
+- **The copy appears in place.** `.ap-panel` sits in the left column with a fixed
+  `min-height`, so swapping steps never reflows the page. The six `.sp-ticks` are pinned to
+  its bottom edge — they read as position-in-set *and* work as a second way in for anyone
+  who never thinks to point at the diagram.
+- **It now looks interactive.** Chips are real `<button>`s with pill/border/shadow and a
+  pointer cursor; the dots gained an expanding halo on select; the resting panel shows a
+  pinging cue dot plus "Pick a step"; and until the first hover, focus or tap the chips
+  **breathe in sequence** (`.sp-stage.idle`, staggered via `--sp-d`), which stops for good
+  on first interaction so the hint never fights the user. All of it is off under
+  `prefers-reduced-motion`.
+
+- **A pulse runs the spiral every few seconds**, so the diagram is visibly alive before
+  anyone touches it. Built as four bands that all *end* on the same leading edge and get
+  progressively shorter and brighter (`LAYERS`, driven off one shared `strokeDashoffset`),
+  which tapers the light behind the head. A single dash would be as bright at its tail as
+  at its head, and a linear gradient cannot follow a spiral — stacking the bands is what
+  makes the falloff track the curve. The widest band is blurred through `#spGlowF` for the
+  halo; a small circle rides the leading edge via `getPointAtLength`.
+  - Travel eases as `1-(1-u)^2.4` (out of the core fast, dissipating slow) over 2.9s, then
+    rests 5.4s **plus up to 3.6s of jitter** so it never feels metronomic. Opacity ramps in
+    over the first 14% and out over the last 24% rather than popping at either end.
+  - It **stands down whenever a step is open** — `armed` is lerped, not switched, so
+    hovering a chip doesn't cut the light dead — and it is off entirely under
+    `prefers-reduced-motion` (the elements are never created). An IntersectionObserver
+    parks the loop when the spiral is scrolled past; rAF already handles a hidden tab.
+  - Measured at 121fps during travel with the pulse and the six chips both live.
+
+Verified on both versions at 1440x900, 1280x700 and 390x844: hero fits the viewport, zero
+rotated chips, tick clicks and keyboard focus both drive the panel, no console errors.
+Below 980px the chips and panel hide and the existing straight-read `.sp-steps` list takes
+over, as before.
+
+### 7d. A/B parity audit (2026-09-21)
+After the approach-page rebuild, checked that the two versions still differ in typography
+and nothing else. Diffing them with the cross-links normalised leaves only the `--disp`
+token block and the `em::before` rule — structure and JS are byte-identical. Two real gaps
+were found and closed:
+
+- **The chip numeral broke version A's own identity.** Every other small numeral on that
+  page is Fraunces (`.sp-detail-n`, `.fs-num`, the `.sp-steps` counter), but `.sp-chip .n`
+  had no `font-family` and fell through to Inter — so the same "01" rendered in two faces
+  at once, on the chip and in the panel beside it. A now sets it in Fraunces; B was already
+  on `var(--disp)`.
+- **The version switcher only existed on the two homepages.** Following "See our approach"
+  from version B landed on `approach-type.html` with no way back to A. Both approach pages
+  now carry it, pointing at each other (`approach.html` <-> `approach-type.html`) so
+  switching keeps you on the page you are reading.
+
+Computed styles confirmed per element — A: Fraunces display + Inter UI; B: Archivo
+throughout. `em::before` stays B-only by design; it is part of that identity, not a bug.
+
+### Open / not done in this round
+- **Deploy**: the Sept 18 round (7a + 7b) is live on `hero-versions.vercel.app`. The Sept 21
+  approach-page rebuild (7c/7d) is **not deployed yet**.
+- **The approach page's return cards never got the flagship card treatment.** `.fs-pillar`
+  and `.fs-num` are shared class names but have diverged: on the homepage they are the
+  redesigned Flagship cards (tinted fills, accent caps, badge numerals, arc motif), on the
+  approach page they are still plain cream cards with a bare numeral. Consistent between A
+  and B, so it is not a parity bug — but it is a visible inconsistency between the two
+  pages of the same site, and worth a decision before this goes to the client.
+- **Pre-existing bug, both versions**: on phones the drag-to-compare panels overlap — the
+  friction panel is clipped at 50% while the flow panel's right-ranged copy shows through,
+  so the two headlines collide. Present on the current live design too, not a regression
+  from this round. Needs a decision: stack the panels below ~720px, or keep the drag and
+  move each panel's copy out of the other's half.
+
+See project memory `shcf-aug24-copy-round`, `shcf-sep14-feedback`, `shcf-homepage`, `shcf-todo-jun16` for full design/interaction context behind these.
+
+---
+
+## 8 · Sept 22 — Laura's consolidated feedback round (`Feedback-to-Awesomic-9-21-26.docx`)
+
+Laura spent the weekend merging her team's conflicting feedback into one document. It
+contains nine images: two screenshots of the compare section, one of the closing paragraph,
+one of page four, the Awesomic illustrator's hand-drawn cascade slide, and three watermarked
+Getty comps. She also chose **version B** ("more color and variety in the font").
+
+I triaged the document into what could be built exactly as specified versus what is design
+exploration, and did the first group. **8a–8e below are done. 8f–8i are not started.**
+
+### 8a · The green box now carries her five conditions
+`index.html` / `index-type.html`. Was four items; "Health and connection flow" is gone,
+"Earlier action, less crisis" and "Learning and adapting together" are in. The green panel
+now has one more item than the red one — the two are absolutely positioned in the same box
+and sized by the taller of the two, so this does not clip on desktop or phone (checked).
+
+### 8b · The closing paragraph under the compare panels
+Her replacement text, verbatim. Two notes: it says "SHCF" where the old line said "The
+Fund", and it drops "make sure what works is what is done" — a phrase she wrote herself in
+an earlier round, so the new version is taken as superseding it. The `<b>` emphasis follows
+the old rhythm: the opening concept, then the closing claim.
+
+### 8c · Page four of the book, including the quote we had been waiting for
+`#why` article four: new headline `Find where change has <em>the greatest reach.</em>` and
+her two paragraphs. The Laura Porter quote from *Resilience: The Biology of Stress and the
+Science of Hope* replaces the `q-ph` placeholder on leaf 3 — that placeholder had been
+sitting in the book since Sept 16 precisely so the gap stayed visible.
+
+The film title needed a treatment that was not there before: `.q-attr .q-src` sets it in
+Fraunces italic under the speaker, in both versions. B keeps Fraunces for quoted voices, so
+this is the same rule in both files rather than a divergence.
+
+**The `ph-face` "Image to come" on the recto of that leaf is still there** — that is the gap
+Laura's three Getty comps are meant for.
+
+### 8d · The particle river reads much harder now
+Her note: "can you make more contrast so the dots/flow shows up more? We like that feeling
+a lot." Five changes in `tickWf`: density `/2400` → `/1950`, radius `2.8+1.4` → `3.2+1.8`,
+alpha `(0.42+0.5p)` → `(0.55+0.45p)` so it reaches full strength instead of topping out at
+.92, and the readability scrim under the copy softened from .97/.86/.50 to .94/.78/.38.
+
+The fifth is the one that mattered most: **the dots used to lighten as they gathered**
+(201,68,47 → 195,105,56), so the flow state — the thing the section is about — was the
+least visible thing on screen. They now deepen instead (→ 170,78,38).
+
+### 8e · The spiral: five steps, her copy, her centre
+Six steps → five, with her names and descriptions and `RISK STEWARDSHIP` in the core.
+
+**Geometry.** Five steps advancing 144° land exactly 72° apart, because 144×5 is two whole
+turns — the set closes on itself. `TMAX` moved 23.570 → 21.991, which is not cosmetic: it
+puts the *last* step (furthest out, so the one whose chip has least room) at the bottom of
+the stage, where the chip is centred and pushed clear vertically. At the old `TMAX` it
+landed dead-left and drove a 196px chip straight through the copy column.
+
+**Her copy is 3–5× longer than what it replaced** (up to 400 characters against one short
+sentence), and the whole point of the Sept 21 rebuild was the hero fitting on one screen
+with no scroll. Four changes absorb it without breaking that: panel `min-height`
+`clamp(258px,33vh,304px)` with `padding-bottom:20px` so the text can never reach the ticks,
+step heading capped by `3vh` as well as `2.2vw`, body `clamp(14px,1.65vh,15.2px)`, measure
+50ch. Verified: hero fits at 1440×760, 1280×800, 1440×900 and 1680×1050, and the longest
+step (02) does not overflow the panel at any of them.
+
+**Chips wrap now.** "Learn continuously across investments" is 36 characters; on one line it
+ran off the stage. `white-space:nowrap` is gone, `max-width:168px`. That value is load-
+bearing in both directions — wider and chip 03 collides with the step copy, narrower and the
+chips turn into four-line blocks. Measured ink clearance between the copy and every chip is
+positive at all four viewports (tightest: 18px).
+
+### 8f–8i · Not started
+- **8f · "EXPAND THE CIRCLE OF LEADERSHIP"** on the outer edge of the widening spiral,
+  visually distinct from the five steps so it does not read as a sixth. Her own idea and the
+  best note in the document. Text on an SVG path along the outer arc; expect iteration.
+- **8g · A river/stream variant of the compare graphic.** She asked for it *without losing
+  the current one*, so this is a third option, not a replacement.
+- **8h · The spiral built from clustered dots that densify outward.** Her idea, tying the
+  spiral to the wave section she likes. Keep the path for geometry and render dots along it
+  so hover, trail and pulse all still work. Prototype before promising it.
+- **8i · The Getty photos.** Watermarked comps, so nothing to implement. They are also
+  corporate stock meeting rooms against a site of documentary portraits — worth saying
+  before she spends money.
+
+**Cannot do: the hand-drawn cascade illustration.** That is the Awesomic illustrator's work
+and it lands the idea better than vector would. Either she sends the source, the illustrator
+finishes it, or it is skipped — not something to approximate.
+
+### Still open from round 7
+The approach page's return cards never got the flagship treatment (§7), and the phone
+drag-to-compare overlap is still there (§7). Neither is touched by this round.
+
+### 8j · Collapsed to version B (done)
+Laura picked B, so the A/B comparison is over. `index-type.html` and `approach-type.html`
+are now `index.html` and `approach.html`; the originals are deleted, the `-type` suffix is
+gone from every internal link, and the `.vswitch` stylesheet block and markup — both tagged
+`REVIEW ONLY` for exactly this moment — are removed.
+
+The site is now four files' worth of work in two: Archivo carries display and body, Fraunces
+survives italic only for quoted voices (the book pages, the wayfinding quote, the Laura
+Porter film citation). The `em::before` colour-break rule is no longer a B-only divergence —
+it is simply the house rule.
+
+Version A as it stood at the moment of the switch is archived in the session scratchpad as
+`versionA-index-final.html` / `versionA-approach-final.html`. `index.html` also has its
+pre-round-7 state in git history; `approach.html` never had a commit, so the scratchpad copy
+is the only record of version A's approach page. Worth a commit if that matters.
+
+Everything in §7d (the parity audit) is now moot — there is nothing left to keep parallel.
+
+### 8k · Clockwise reading order (done)
+The numbering did not follow the eye. With a 144-degree advance the five steps were evenly
+spaced and easy to fit, but the set wound twice round before closing, so sweeping the
+diagram clockwise met them **1 4 2 5 3**. Now it is 1 2 3 4 5 from any starting point.
+
+Getting there is not a matter of moving dots. A 72-degree advance is the only spacing that
+gives clockwise order, and five steps at 72 degrees occupy **exactly one turn** — which is
+the whole difficulty, because one turn inside a fixed radius cannot show the line passing
+inside itself. Two intermediate attempts are worth recording so they are not retried:
+
+- **K 46.26, TMAX 9.77** (steps spread 223 -> 456, line stopping at step 05). Clockwise, all
+  clearances fine, but with only 1.55 turns and the core fade hiding the lead-in it read as
+  a plain circle. Pulling the fade in from 118/224 units to 31/123 barely helped — at that K
+  the whole lead-in is packed into the masked centre.
+- **K 25.90, TMAX 17.45** (line continuing 280 degrees past 05). Two full turns, a proper
+  spiral — but the steps compressed into r 199..329 and sat crowded against the centre
+  label with a bare outer ring.
+
+**Superseded by 8l — see below. Was: K 29.855, TMAX 15.140, STEP_T [6.7735, 8.0301, 9.2867,
+10.5434, 11.8000].** The
+line runs ~190 degrees past step 05. That buys 1.78 visible turns (so it reads as a spiral)
+while keeping the steps spread over r 206..356.
+
+Parameters were chosen by sweeping `t5` and the overshoot against **real chip boxes**
+measured from the page, not estimates — chip widths, the centre label's true ink extents
+(144.6 x 82 units, much narrower than its 36% box) and the copy column's right edge. The
+chosen point sits in a feasible window 0.33 wide rather than on an edge. Verified at
+1280x800, 1440x760, 1440x900, 1680x1050 and 1920x1080: clockwise order `12345` at every
+size, radii strictly increasing, no chip overlaps, 54-147px of ink clearance to the copy
+(was 18px at its tightest before), hero still fits, trail lights progressively 0.21 -> 0.62,
+pulse running, no console errors.
+
+**Two useful side effects.** Hovering step 05 now lights only ~62% of the line, so the
+diagram visibly has somewhere left to go — and that unlit outer sweep is exactly where
+"EXPAND THE CIRCLE OF LEADERSHIP" belongs (§8f). It is the one part of the figure that is
+not a step, which is what the client asked for.
+
+Also in this round: the core fade now reveals from 123 units instead of 224 (it must clear
+the label ink, which the curve only crosses below ~118), and the track ribbon widens harder
+from hairline to 3.4 units, since a single-turn form has to carry the unfurl by thickness
+rather than by wrapping.
+
+### 8l · Step 01 rotated to centre-left (done, supersedes 8k's parameters)
+Step 01 was at 298 degrees — top-right — so the eye came off the headline on the left and had
+to travel across the diagram to find where the sequence began. It now sits at **192 degrees**,
+centre-left, level with the core label, and the rest follow clockwise from it.
+
+**Shipped: K 36.545, TMAX 12.368, STEP_T [4.9218, 6.1785, 7.4351, 8.6917, 9.9484].**
+Bearings 192 / 264 / 336 / 48 / 120. The line still runs ~140 degrees past step 05.
+
+The brief was "01 should be where the 5 is" (226 degrees). **That specific bearing has no
+solution.** The five bearings are locked 72 degrees apart, so fixing 01 fixes all of them, and
+putting 01 at 226 puts 05 — the largest radius, and so the widest chip — at 154 degrees, hard
+left, straight through the copy column. Every overshoot value from 0 to 360 degrees was swept:
+the copy-column gap is negative or single-digit throughout. 192 degrees is the closest the
+geometry allows to centre-left, and the feasible band runs 168..205 degrees, so it is not
+balanced on an edge.
+
+This is a better layout than 8k on every measure, not just the requested one: the steps now
+spread over r 184..368 (span 184, was 150) and the nearest chip ink is 133-263px from the
+copy (was 54-147). Verified at five viewport sizes: clockwise `12345`, radii strictly
+increasing, no chip collisions, hero fits, trail lights 0.18 -> 0.66, pulse running, no errors.
