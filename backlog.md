@@ -439,3 +439,26 @@ on the sweep the steps produce. It mutes when a step is open.
 
 That figure is a real gap, not decoration: it is one of the places Laura's photo choice can
 land, and it uses the same "Image to come" placeholder language as the book's page four.
+
+### 8o · Stand-in photography for the two open image gaps (Sept 24)
+Both placeholders are filled so the pages read as finished:
+- **Book, page four recto** — `gathering.jpg`, a group sitting together in a park in low sun.
+  It faces the Porter quote about getting the science "into the hands of the general
+  population," which is what the picture shows.
+- **Approach, the thesis band** — `deliberation.jpg`, a diverse group working a problem out
+  at a flipchart, one of them a wheelchair user. On message for "answering harder questions
+  together."
+
+Both StockSnap, CC0, commercial use, no attribution. Details in `assets/CREDITS.md`.
+
+**These are stand-ins and the reasons matter.** CC0 covers the photographer, not a model
+release, and both show identifiable people — which is exactly the release Getty sells and the
+real argument for Laura buying. They are also 960px on the long edge, the most StockSnap
+serves, against 1600px for the rest of `assets/`.
+
+And the honest note: the free CC0 pools have no community-deliberation documentary
+photography, so `deliberation.jpg` is a meeting-room picture — the same objection raised
+about Laura's own Getty shortlist. It strengthens rather than weakens the case for her
+choosing properly.
+
+The `ph-face` / `ph-mark` placeholder CSS is removed; it has no user left.

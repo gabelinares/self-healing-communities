@@ -212,14 +212,12 @@
      so nothing here carries a width of its own. */
   .ap-thesis{background:var(--paper);overflow:hidden}
   .ap-thesis-grid{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);align-items:stretch}
-  .ap-thesis-fig{position:relative;min-height:clamp(420px,58vh,660px);
-    background:linear-gradient(152deg,#EFE3CB 0%,#E2D2B2 58%,#D8C6A3 100%);
-    display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .ap-thesis-fig::before{content:"";position:absolute;inset:26px;border:1.5px dashed rgba(15,42,34,.26);border-radius:4px}
-  .ap-thesis-fig::after{content:"";position:absolute;right:-120px;bottom:-140px;width:360px;height:360px;
-    border-radius:50%;border:1.5px solid var(--emerald);opacity:.16}
-  .ap-thesis-fig .ph-mark{position:relative;font-size:11px;font-weight:600;letter-spacing:.22em;
-    text-transform:uppercase;color:rgba(15,42,34,.46)}
+  .ap-thesis-fig{position:relative;min-height:clamp(420px,58vh,660px);overflow:hidden;
+    background-color:#E2D2B2;background-size:cover;background-position:center 46%}
+  /* a warm wash so the photograph sits in the page's palette rather than on top of it */
+  .ap-thesis-fig::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(118deg,rgba(6,81,60,.22) 0%,rgba(6,81,60,0) 46%),
+               linear-gradient(0deg,rgba(244,236,220,.30) 0%,rgba(244,236,220,0) 42%)}
   .ap-thesis-say{display:flex;flex-direction:column;justify-content:center;
     padding:clamp(56px,7vh,96px) max(32px,calc((100vw - 1180px)/2 + 32px)) clamp(56px,7vh,96px) clamp(32px,4.4vw,74px)}
   .ap-thesis .lead{font-size:clamp(19px,2vw,25px);line-height:1.38;color:var(--ink);text-wrap:pretty}
@@ -345,9 +343,8 @@
 <!-- ===================== WHAT THE CYCLE IS FOR ===================== -->
 <section class="ap-thesis">
   <div class="ap-thesis-grid">
-    <div class="ap-thesis-fig" role="img" aria-label="Photograph to come">
-      <span class="ph-mark">Image to come</span>
-    </div>
+    <div class="ap-thesis-fig" role="img" aria-label="People sitting and talking together in a park"
+         style="background-image:url('assets/deliberation.jpg');background-image:image-set(url('assets/deliberation.avif') type('image/avif'),url('assets/deliberation.jpg') type('image/jpeg'))"></div>
     <div class="ap-thesis-say">
       <p class="lead reveal">SHCF is not another answer to the question, &ldquo;What should we fund upstream?&rdquo; It is <b>infrastructure for continually answering harder questions together</b>:</p>
       <p class="qs reveal">What is driving risk? Where can its course be changed? How do we know? What is strengthening the protective capacities that support health, safety, and prosperity? What should be adapted, sustained, or scaled? And how do we align leadership, resources, and financial incentives to act on what we learn?</p>

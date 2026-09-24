@@ -122,11 +122,6 @@
   #why .q-rule{width:44px;height:1px;background:var(--emerald);margin:calc(var(--q-fs,24px)*1.1) 0 calc(var(--q-fs,24px)*.7)}
   #why .q-attr{font-family:'Archivo',system-ui,sans-serif;font-size:max(10px,calc(var(--q-fs,24px)*.44));font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
   #why .q-attr .q-src{display:block;margin-top:.55em;font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:1.06em;letter-spacing:.005em;text-transform:none;color:rgba(15,42,34,.55)}
-  /* page four is written but unillustrated — the placeholders sit in the spread so the
-     gap is visible in review rather than silently filled with a stand-in photo */
-  #why .ph-face{background:linear-gradient(180deg,#F1E6CF 0%,#E4D5B6 100%);display:flex;align-items:center;justify-content:center}
-  #why .ph-face::before{content:"";position:absolute;inset:7%;border:1.5px dashed rgba(15,42,34,.28);border-radius:3px}
-  #why .ph-mark{position:relative;font-family:'Archivo',system-ui,sans-serif;font-size:max(9px,calc(var(--q-fs,24px)*.42));font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(15,42,34,.42)}
   #why .q-ph .q-text,#why .q-ph .qm{color:rgba(15,42,34,.34)}
   #why .q-ph .q-attr{color:rgba(15,42,34,.42)}
   /* the words sit beside the book (below it on phones) and change as the pages turn; fitWhy sets the base font-size */
@@ -473,9 +468,7 @@
               </div>
             </div>
             <div class="leaf" data-i="3">
-              <div class="face recto ph-face">
-                <div class="ph-mark">Image to come</div>
-              </div>
+              <div class="face recto" style="background-image:url('assets/gathering.jpg');background-image:image-set(url('assets/gathering.avif') type('image/avif'),url('assets/gathering.jpg') type('image/jpeg'));background-position:center 42%"></div>
               <div class="face verso qpage">
                 <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>If we can weave the science through these different professions and get it into the hands of the general population, they will invent very wise actions.</blockquote>
                 <div class="q-rule"></div>
