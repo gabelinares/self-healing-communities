@@ -1,21 +1,23 @@
 # Image credits
 
-## Stand-ins (replace before launch)
-Both are **StockSnap.io, CC0** — free for commercial use, no attribution required. They are
-placeholders so the pages read as finished in review, not final art.
+## Getty Images, supplied by SHCF (2026-09-25)
+Both were downloaded by SHCF from Getty Images (the "SHCF" comp files) and replace the two
+StockSnap CC0 stand-ins that held these slots for review. Getty licensing carries the model
+release the stand-ins lacked, which was the reason to buy.
 
-| File | Source | StockSnap ID |
-|---|---|---|
-| `gathering.jpg` / `.avif` | StockSnap (CC0) | `SV3NUPH51L` |
-| `deliberation.jpg` / `.avif` | StockSnap (CC0) | `L8FHGPJ8RX` |
+| File | Where | Getty | Title |
+|---|---|---|---|
+| `gathering.jpg` / `.webp` | Home, the book's third leaf | `877344324` | Group business plan with flip chart |
+| `deliberation.jpg` / `.webp` | Approach, the thesis figure | `1178603113` | Group green room comparing pages |
 
-**Why they are stand-ins, not final.** CC0 covers the photographer's copyright. It does not
-carry a model release, and both pictures show identifiable people — which matters for a fund
-that will put these in front of funders. Anything licensed from Getty comes with that
-release, which is the real reason to buy rather than to keep these.
+Each was extracted at full resolution from the comp PDF (1538×1949 and 1689×1774) and saved
+at 1600px on the long edge, the rest of the folder's standard, as JPEG (q88) with a WebP
+beside it (q82; no AVIF encoder on this machine, so the `image-set` for these two names WebP).
+The flip chart is a tall picture, the shape of a book leaf; the green room is near-square,
+the shape of the Approach figure - that is how they were placed.
 
-Both are 960px on the long edge, the largest StockSnap serves. That is below the 1600px the
-rest of `assets/` uses, so they are slightly soft on a retina screen at full width.
+⚠ Confirm the licence tier before launch: a comp download is for layout; the licensed file
+is what ships.
 
 ## Everything else in this folder
 Existing site assets — see project memory `shcf-homepage` for the standing constraint that
