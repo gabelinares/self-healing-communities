@@ -462,3 +462,62 @@ about Laura's own Getty shortlist. It strengthens rather than weakens the case f
 choosing properly.
 
 The `ph-face` / `ph-mark` placeholder CSS is removed; it has no user left.
+
+---
+
+## 9 · The cycle joins the landing sequence, and every view fits one screen (Sept 25)
+
+Two notes arrived together.
+
+**Laura:** *"I like the new draft of the approach page. I think the spiral could be more
+dominant because it catches the eye and is helpful for conveying our cyclic way of working.
+I wasn't thinking of this as a separate approach page. I was thinking of it as the second to
+last view in the landing page sequence. Then, the approach page could be a document or an
+interview or a video."*
+
+**Her colleague:** *"I'd like to see the last two sections ... each fit within one screen, as
+the other two sections do ... you know how we stop everything on the screen while we scroll?
+do the same with the fit, but without the scroll."*
+
+### 9a · The spiral moved, and grew
+The whole cycle view — copy column, step panel, ticks, spiral, flow canvas, outer band — moved
+out of `approach.html` and into `index.html` as `<section class="cycle" id="cycle">`, sitting
+between the Flagship case and Get Involved. Scope was confirmed as **the spiral view only**:
+the thesis band and the three returns stay on `approach.html`, which is now the stub for the
+document, interview or video she has in mind.
+
+It is `.cycle` rather than `.ap-hero` now, because it is no longer a hero. All JS references
+were already by id, so nothing in the behaviour had to change.
+
+**Dominance.** The stage went from 560px to **756px at 1440x900** — 35% wider — by giving the
+copy column less of the grid (`.88fr` -> `.56fr`) and letting this one view run wider than the
+page wrap (1180 -> 1320). Ink clearance between the chips and the copy actually *improved*,
+from 265px to 344-436px, because the copy column narrowed faster than the chips moved out.
+
+Links: nav, footer and the compare section's hand-off now point at `#cycle`. `approach.html`
+has no inbound links from the landing page and no self-links; it is reachable by URL only,
+which is what a page awaiting new content should be.
+
+### 9b · One screen per view
+`.how`, `.flagship` and `.act` are each `min-height:100svh` with their contents centred. **Not**
+scroll-jacked: the book and the river get their full-screen feel from a sticky child inside a
+tall scroll-area, and the colleague explicitly asked for the fit without the scroll.
+
+Every internal measurement is now capped against viewport **height** as well as width, so on a
+short laptop the contents shrink rather than overflow. Verified at 1440x760, 1440x900 and
+1680x1050: all four views are exactly one viewport tall, and every section head clears the
+fixed nav (tightest: 11px on Flagship at 760).
+
+`.act` was not in the brief but was the one section left breaking the rhythm — 842px against a
+760px viewport — so it got the same treatment.
+
+**Two traps worth recording.**
+- A flex item with `margin:0 auto` shrink-wraps to its content. Making these sections flex
+  columns silently cut `.wrap` from 1180px to 607px and took the compare box down with it.
+  Fixed with `width:100%` on the direct `.wrap` children.
+- The padding could not simply be reduced to make room. The nav is fixed and ~65px tall, so
+  landing on a view put its eyebrow underneath it. The padding was *moved* to the top rather
+  than trimmed, and the difference clawed back from the compare height and the arch.
+
+Below 820px none of this applies — a phone screen cannot hold either section, and pretending
+otherwise only crops the content, so they flow at their natural height again.

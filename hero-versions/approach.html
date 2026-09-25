@@ -102,103 +102,6 @@
   body{padding-top:0}
   .nav{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
 
-  /* ============================================================
-     HERO — the spiral and the copy it explains share the first screen.
-     Nothing here scrolls: picking a step swaps the panel on the left, so the
-     diagram and the words about it are never separated by a scroll.
-     ============================================================ */
-  .ap-hero{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;
-    padding:clamp(92px,12vh,126px) 0 clamp(26px,4vh,46px);
-    background:radial-gradient(ellipse 132% 80% at 66% 6%,#FBF6EA 0%,#F2E7CF 46%,#E8D6B8 100%)}
-  .ap-hero .wrap{position:relative;z-index:2;width:100%}
-  .ap-grid{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1fr);align-items:center;gap:clamp(26px,4.4vw,70px)}
-
-  /* ---------- left: the headline, then whichever step is open ---------- */
-  .ap-say{min-width:0}
-  .ap-say .h2{margin-top:13px;font-size:clamp(23px,2.5vw,37px);line-height:1.08}
-  .ap-panel{position:relative;margin-top:clamp(20px,3vh,32px);padding-top:clamp(18px,2.4vh,26px);
-    border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px)}
-  .ap-panel>.sp-prompt,.ap-panel>.sp-detail{position:absolute;left:0;right:0;top:clamp(18px,2.4vh,26px);
-    transition:opacity .34s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
-  /* the resting state says what to do, and shows it — the dot mimics a cursor
-     arriving on a step, which is the one gesture the page depends on */
-  .sp-prompt .cue{display:inline-flex;align-items:center;gap:11px;font-size:11px;font-weight:600;
-    letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep)}
-  .sp-prompt .cue i{position:relative;width:11px;height:11px;border-radius:50%;background:var(--terracotta-bright);flex:0 0 auto}
-  .sp-prompt .cue i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid var(--terracotta-bright);opacity:0;animation:cuePing 2.4s cubic-bezier(.2,.7,.2,1) infinite}
-  @keyframes cuePing{0%{transform:scale(.55);opacity:.85}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
-  .sp-prompt p{margin-top:15px;font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:42ch}
-  .sp-detail{opacity:0;transform:translateY(10px);pointer-events:none}
-  .ap-panel.open .sp-prompt{opacity:0;transform:translateY(-10px);pointer-events:none}
-  .ap-panel.open .sp-detail{opacity:1;transform:none;pointer-events:auto}
-  .sp-detail-n{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--terracotta-bright);margin-bottom:9px}
-  .sp-detail h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,min(2.3vw,3.15vh),29px);line-height:1.04;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:11px}
-  .sp-detail p{font-size:clamp(14px,1.65vh,15.2px);line-height:1.56;color:var(--ink-soft);text-wrap:pretty;max-width:50ch}
-  /* five ticks double as the readout of where you are and as a second way in,
-     for anyone who never thinks to point at the diagram */
-  .sp-ticks{position:absolute;left:0;bottom:0;display:flex;gap:8px}
-  .sp-ticks button{width:30px;height:4px;padding:0;border:0;border-radius:2px;background:rgba(15,42,34,.17);
-    cursor:pointer;transition:background .3s,transform .2s;outline-offset:5px}
-  .sp-ticks button:hover{background:rgba(15,42,34,.34);transform:scaleY(1.6)}
-  .sp-ticks button.on{background:var(--terracotta-bright)}
-
-  /* ---------- right: the spiral ---------- */
-  .sp-stage{position:relative;width:min(100%,64vh,600px);aspect-ratio:1;margin:0 auto}
-  .sp-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-  /* the line is a current of dots now, drawn on canvas underneath the SVG. 400+ dots
-     redrawn every frame is four attribute writes each as SVG and janks a mid laptop;
-     on canvas it is one fill per dot. */
-  .sp-flow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-  /* the outer sweep is the one part of the figure that is not a step, so it is
-     labelled as a band rather than given a numbered chip */
-  .sp-band{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:.17em;
-    text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
-    font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
-  .sp-stage.armed .sp-band{opacity:.2}
-  .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
-    stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
-  .sp-dot{fill:var(--cream);stroke:var(--emerald);stroke-width:2.4;transition:fill .3s,stroke .3s,r .3s}
-  .sp-dot.on{fill:var(--terracotta-bright);stroke:var(--terracotta-bright)}
-  .sp-halo{fill:none;stroke:var(--terracotta-bright);stroke-width:2;opacity:0;transition:opacity .3s,r .35s cubic-bezier(.2,.7,.2,1)}
-  .sp-halo.on{opacity:.5}
-  .sp-seed{fill:rgba(15,42,34,.3)}
-
-  /* the steps are HTML over the SVG, not SVG text: they read horizontally at every
-     position on the curve, and they can look like the buttons they are */
-  .sp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;max-width:168px;text-align:left;line-height:1.28;
-    padding:8px 15px 8px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink);
-    background:var(--cream);
-    border:1px solid rgba(15,42,34,.16);box-shadow:0 7px 18px -9px rgba(15,42,34,.5);
-    cursor:pointer;outline:none;font-family:inherit;
-    transition:transform .26s cubic-bezier(.2,.7,.2,1),background .26s,border-color .26s,box-shadow .26s,color .26s,opacity .26s}
-  .sp-chip .n{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.05em;color:var(--emerald)}
-  .sp-chip:hover,.sp-chip:focus-visible{border-color:var(--emerald);
-    box-shadow:0 12px 26px -10px rgba(15,42,34,.55);transform:var(--sp-t) scale(1.05)}
-  .sp-chip.on{background:var(--emerald-deep);color:var(--cream);border-color:var(--emerald-deep);
-    box-shadow:0 14px 30px -10px rgba(6,81,60,.6);transform:var(--sp-t) scale(1.05)}
-  .sp-chip.on .n{color:var(--emerald-bright)}
-  .sp-stage.armed .sp-chip:not(.on){color:rgba(15,42,34,.42);border-color:rgba(15,42,34,.08);
-    box-shadow:0 4px 11px -9px rgba(15,42,34,.4)}
-  .sp-stage.armed .sp-chip:not(.on) .n{color:rgba(0,145,105,.45)}
-  /* until someone points at it, the chips breathe in sequence so the page is
-     visibly something you operate rather than something you read */
-  .sp-stage.idle .sp-chip{animation:chipBreathe 4.8s ease-in-out infinite;animation-delay:var(--sp-d)}
-  @keyframes chipBreathe{0%,74%,100%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5)}
-    84%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5),0 0 0 6px rgba(195,105,56,.16)}}
-  @media (prefers-reduced-motion:reduce){.sp-stage.idle .sp-chip{animation:none}.sp-prompt .cue i::after{animation:none;opacity:.5}}
-
-  /* the core of the spiral holds the point of the whole cycle, and never moves */
-  .sp-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36%;text-align:center;pointer-events:none;z-index:3}
-  .sp-core-b{display:block;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(18px,2.15vw,28px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--emerald-deep)}
-
-  /* the same six steps, read straight through — the only form that works without hover */
-  .sp-steps{display:none;list-style:none;max-width:616px;margin:0 auto;padding:0 28px;counter-reset:sp}
-  .sp-steps li{counter-increment:sp;border-top:1px solid var(--rule);padding:22px 0}
-  .sp-steps li:last-child{border-bottom:1px solid var(--rule)}
-  .sp-steps h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:20px;line-height:1.1;letter-spacing:-.025em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:8px}
-  .sp-steps h3::before{content:"0" counter(sp);font-weight:600;font-size:13px;color:var(--emerald);margin-right:11px}
-  .sp-steps p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
-
   /* ---------- the three returns ---------- */
   .ap-value{background:linear-gradient(180deg,#E8D6B8 0%,var(--paper) 18%,var(--paper-warm) 100%);padding:clamp(80px,10vw,130px) 0}
   .ap-value .head{text-align:center;max-width:680px;margin:0 auto}
@@ -210,7 +113,7 @@
      The image now runs off the left edge of the screen with no margin at all, and the
      words take the column beside it. The column is what gives the prose its measure,
      so nothing here carries a width of its own. */
-  .ap-thesis{background:var(--paper);overflow:hidden}
+  .ap-thesis{background:var(--paper);overflow:hidden;padding-top:clamp(64px,8vh,92px)}
   .ap-thesis-grid{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);align-items:stretch}
   .ap-thesis-fig{position:relative;min-height:clamp(420px,58vh,660px);overflow:hidden;
     background-color:#E2D2B2;background-size:cover;background-position:center 46%}
@@ -239,24 +142,8 @@
   .ap-value .tie b{color:var(--ink);font-weight:600}
   .ap-back{text-align:center;margin-top:34px}
 
-  /* a cue that there is more page below, since the hero now fills the screen exactly */
-  .ap-more{position:absolute;left:50%;bottom:clamp(14px,2.4vh,26px);transform:translateX(-50%);z-index:3;
-    display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:600;
-    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
-  .ap-more:hover{color:var(--ink)}
-  .ap-more span{font-size:14px;line-height:1;animation:apBob 2.2s ease-in-out infinite}
-  @keyframes apBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
   @media (max-width:980px){
-    .ap-hero{min-height:0;display:block;padding:clamp(104px,14vh,132px) 0 clamp(40px,6vh,64px)}
-    .ap-grid{grid-template-columns:1fr;gap:34px}
-    .ap-say{text-align:center}
-    .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
-    .ap-panel,.ap-more{display:none}
-    .sp-chip{display:none}
-    .sp-stage{width:min(400px,76vw);margin-bottom:8px}
-    .sp-center{width:56%}
-    .sp-steps{display:block}
     .ap-returns{grid-template-columns:1fr;gap:18px;margin-top:40px}
   }
 </style>
@@ -269,76 +156,13 @@
     <a class="brand" href="index.html"><img src="logo.svg" alt="Self-Healing Communities Fund" /></a>
     <div class="nav-links">
       <a href="index.html#why">The Science</a>
-      <a href="approach.html" aria-current="page">Our Approach</a>
+      <a href="index.html#cycle">Our Approach</a>
       <a href="#">Community Stories</a>
       <a href="#">About</a>
       <a class="cta" href="index.html#act">Get Involved</a>
     </div>
   </div>
 </nav>
-
-<!-- ===================== HERO — the cycle, explained in place ===================== -->
-<div class="ap-hero">
-  <div class="grain-tex"></div>
-  <div class="wrap">
-    <div class="ap-grid">
-
-      <div class="ap-say">
-        <div class="eyebrow reveal">A different way of working</div>
-        <h2 class="h2 reveal">SHCF brings evidence, community knowledge, learning, and financing together in <em>a continuing cycle.</em></h2>
-
-        <div class="ap-panel" id="apPanel">
-          <div class="sp-prompt">
-            <span class="cue"><i></i> Pick a step</span>
-            <p>Five steps wind outward from the core. Choose any one and the path lights from the centre out to it &mdash; what it means appears here.</p>
-          </div>
-          <div class="sp-detail" id="spDetail">
-            <div class="sp-detail-n"></div>
-            <h3></h3>
-            <p></p>
-          </div>
-          <div class="sp-ticks" id="spTicks" role="tablist" aria-label="The five steps"></div>
-        </div>
-      </div>
-
-      <div class="sp-stage reveal idle" id="spStage">
-        <canvas class="sp-flow" id="spFlow" aria-hidden="true"></canvas>
-        <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120" aria-hidden="true">
-          <defs>
-            <!-- the core fade: it has to clear the centre label (ink reaches 145 units) but reveal
-                 enough of the inner curl that the form reads as a spiral and not a ring.
-                 Fully hidden below 31 units, fully visible from 123. -->
-            <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
-              <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
-            </radialGradient>
-            <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
-          </defs>
-          <g mask="url(#spMask)" id="spMasked">
-            <path class="sp-trail" id="spTrail" pathLength="1" />
-          </g>
-          <path id="spBandPath" fill="none" stroke="none" />
-          <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
-          <g id="spDots"></g>
-        </svg>
-        <div class="sp-center">
-          <span class="sp-core-b">Risk<br>Stewardship</span>
-        </div>
-        <div id="spChips"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <ol class="sp-steps" id="spSteps">
-    <li><h3>Find leverage</h3><p>See connected risk and healing trajectories across systems, the life course, and generations. Use rigorous evidence and community knowledge to identify where change may have the greatest reach.</p></li>
-    <li><h3>Build effective portfolios</h3><p>Bring together community knowledge, lived experience, research, practice, public-system authority, and resources to build locally tailored portfolios that change underlying risk trajectories and strengthen protective capacity. Investments work together across the places where risk develops, building on the relationships, assets, and capacities already present.</p></li>
-    <li><h3>Learn continuously across investments</h3><p>Create shared feedback so communities and partners can learn together whether risk is changing, which benefits cascade across systems, where public costs change, and what should adapt, be sustained, or scale.</p></li>
-    <li><h3>Finance differently</h3><p>Finance portfolios that reduce risk earlier, strengthen community capacity, support learning, and create benefits across systems. Track the human, economic, and fiscal value created &mdash; and align incentives so public systems are rewarded for reducing risk earlier, not only responding to its consequences.</p></li>
-    <li><h3>Make improvement durable</h3><p>Connect learning, public financing, provider sustainability, and reinvestment so successful change does not disappear when a grant ends. Create mechanisms to reinvest financial gains from improved outcomes into risk reduction and community capacity.</p></li>
-  </ol>
-
-  <a class="ap-more" href="#value">What success returns <span>&darr;</span></a>
-</div>
 
 <!-- ===================== WHAT THE CYCLE IS FOR ===================== -->
 <section class="ap-thesis">
@@ -387,7 +211,7 @@
     <div class="foot-inner">
       <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" />
       <div class="foot-links">
-        <a href="index.html#why">The Science</a><a href="approach.html">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="index.html#act">Get Involved</a>
+        <a href="index.html#why">The Science</a><a href="index.html#cycle">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="index.html#act">Get Involved</a>
       </div>
     </div>
     <div class="copy">&copy; 2026 Self-Healing Communities Fund &mdash; a fund by ACE Interface. Founded on the ACE Study by Dr. Robert Anda and Laura Porter.</div>
@@ -418,269 +242,6 @@
     });
   }
 
-  /* ============================================================
-     THE SPIRAL
-     An Archimedean spiral r = R0 + K*t, drawn outward from the core so the cycle
-     reads as widening rather than closing. The six steps sit at fixed angles on it.
-     The step labels are HTML positioned over the SVG rather than SVG text: they stay
-     horizontal wherever they land on the curve, and they can carry the border,
-     shadow and hover state that make them read as buttons.
-     ============================================================ */
-  (function(){
-    const svg=document.getElementById('spSvg');if(!svg)return;
-    const stage=document.getElementById('spStage');
-    const trail=document.getElementById('spTrail');
-    const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips');
-    const panel=document.getElementById('apPanel'),detail=document.getElementById('spDetail'),ticksEl=document.getElementById('spTicks');
-    const steps=[...document.querySelectorAll('#spSteps li')].map(li=>({
-      h:li.querySelector('h3').textContent.trim(),
-      d:li.querySelector('p').textContent.trim()
-    }));
-    const R0=4,K=36.545,TMAX=12.368,GAP=26;
-    /* The steps advance 72 degrees each, so reading the diagram clockwise from any step
-       gives 01 02 03 04 05 in order. A 144-degree advance also spaced them evenly and was
-       easier to fit, but it wound twice round before closing, so the eye met them 1 4 2 5 3.
-       Sharing the numbering with the eye costs radial room: five steps at 72 degrees occupy
-       exactly ONE turn, and one turn inside a fixed radius cannot show the line passing
-       inside itself — it just reads as a circle. So the curve no longer stops at the last
-       step. It carries on for another 140 degrees past 05, which buys a second visible turn
-       and makes the form read as a spiral again.
-       That outer sweep is also where "expand the circle of leadership" belongs: it is the
-       one part of the figure that is not a step, which is exactly what the client asked for.
-       TMAX, K and the step span are not independent — TMAX sets every bearing at once, K
-       follows from the 456-unit outer radius, and a chip is up to 168px wide next to a 560px
-       stage with the copy column immediately left of it. Swept against real chip boxes:
-       step 01 sits at 192 degrees — centre-left, the first thing the eye lands on coming off the
-       headline — and the rest follow clockwise from there. 1.45 turns visible, steps spread
-       206 -> 390, 88 units of curve left beyond 05, no chip within 26px of the copy column, the
-       centre label or another chip. Step 01's bearing has a feasible band of 168..205 degrees,
-       so this is not balanced on an edge.
-       Note 01 cannot sit exactly where 05 used to (226 degrees): that puts the LARGEST radius,
-       and so the widest chip, at 154 degrees — hard left, straight through the copy column. No
-       overshoot value rescues it. 192 is the closest the geometry allows to centre-left. */
-    const STEP_T=[4.9218,6.1785,7.4351,8.6917,9.9484];
-    const pt=t=>{const r=R0+K*t,a=t-Math.PI/2;return[r*Math.cos(a),r*Math.sin(a),r,a];};
-
-    /* sample the curve once; the same points give us the path and the arc length at each step */
-    const N=900,pts=[],cum=[0];
-    for(let i=0;i<=N;i++)pts.push(pt(TMAX*i/N));
-    for(let i=1;i<=N;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
-    const total=cum[N];
-    trail.setAttribute('d','M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'));
-    const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
-    const NS='http://www.w3.org/2000/svg';
-
-    /* ============================================================
-       THE FLOW — the line, made of moving water
-       The spiral's line is not a line any more. It is a current of dots running
-       outward from the core, widening and fading as the radius grows. A dot that
-       reaches the end of the sweep dissolves there and surfaces again in the core,
-       under the label's fade, so the cycle reads without a drawn way back.
-       ⚠ THERE IS NO RETURN STREAM (Gabriel, 2026-09-23: "this part in red is weird,
-       remove the dots on that path"). The first version drew the way back as a
-       quieter Bézier rising from under the bottom edge into the core; on the page it
-       read as a stray dotted tail hanging off the centre, competing with the
-       spiral's own line. The route between the end and the core is underground now,
-       which is what a returning current does.
-       ============================================================ */
-    /* The spiral as one polyline with cumulative length, so a dot's progress is a
-       single number in 0..1. */
-    const FP=[],FL=[0];
-    for(let i=0;i<=N;i++){const p=pt(TMAX*i/N);FP.push([p[0],p[1],p[2]]);}
-    for(let i=1;i<FP.length;i++)FL.push(FL[i-1]+Math.hypot(FP[i][0]-FP[i-1][0],FP[i][1]-FP[i-1][1]));
-    const FTOT=FL[FL.length-1],SPIRAL_U=1;
-
-    /* u -> point, plus the unit normal, so a dot can sit off the centreline */
-    function atU(u){
-      const target=u*FTOT;
-      let lo=0,hi=FL.length-1;
-      while(lo<hi-1){const mid=(lo+hi)>>1;if(FL[mid]<=target)lo=mid;else hi=mid;}
-      const seg=FL[hi]-FL[lo]||1,k=(target-FL[lo])/seg;
-      const a=FP[lo],b=FP[hi];
-      const x=a[0]+(b[0]-a[0])*k,y=a[1]+(b[1]-a[1])*k;
-      let tx=b[0]-a[0],ty=b[1]-a[1];const m=Math.hypot(tx,ty)||1;tx/=m;ty/=m;
-      return [x,y,-ty,tx,a[2]+(b[2]-a[2])*k];
-    }
-
-    (function(){
-      const cv=document.getElementById('spFlow'),cx=cv.getContext('2d');
-      /* 820, not the 1050 the loop carried: about a fifth of those spent their time on
-         the return leg, so with the leg gone the same density on the spiral needs fewer. */
-      const NDOT=820;
-      const drops=[];
-      for(let i=0;i<NDOT;i++)drops.push({
-        u:(i+Math.random()*0.85)/NDOT,
-        off:(Math.random()*2-1),                 /* where in the width of the stream */
-        sp:0.78+Math.random()*0.5,               /* the current is not uniform */
-        sz:0.5+Math.pow(Math.random(),1.5)*1.6,   /* skewed small: many fine, a few coarse */
-        ph:Math.random()*6.283,
-        tone:Math.random()
-      });
-      let W=0,H=0,dpr=1;
-      function size(){
-        dpr=Math.min(2,window.devicePixelRatio||1);
-        const r=cv.getBoundingClientRect();W=r.width;H=r.height;
-        cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
-        cx.setTransform(dpr,0,0,dpr,0,0);
-      }
-      size();window.addEventListener('resize',size);
-      const X=v=>(v+560)/1120*W, Y=v=>(v+560)/1120*H, S=v=>v/1120*W;
-
-      /* the same core fade the SVG mask applies, so the flow dissolves into the
-         centre instead of colliding with the label */
-      const core=r=>Math.max(0,Math.min(1,(r-31)/(123-31)));
-
-      let armed=0,seen=true,t0=performance.now();
-      new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
-
-      /* THE SWELL. The old pulse was its own set of SVG bands riding the line; with the
-         line gone it read as a smear. It is now a brightening that travels along the
-         current itself — the same event, carried by the water instead of drawn over it.
-         It runs out of the core, slows as it widens, rests, and stands down while a step
-         is open so it never competes with the trail hover draws. */
-      const SW_TRAVEL=3400,SW_REST=2100,SW_JIT=1900;
-      let swStart=performance.now()+900,swSpan=SW_TRAVEL+SW_REST,swU=-1,swAmp=0;
-
-      function draw(now){
-        const t=(now-t0)/1000;
-        cx.clearRect(0,0,W,H);
-        armed+=((stage.classList.contains('armed')?1:0)-armed)*0.08;
-        const mute=1-0.5*armed;
-
-        const e=now-swStart;
-        if(e>swSpan){swStart=now;swSpan=SW_TRAVEL+SW_REST+Math.random()*SW_JIT;swU=-1;swAmp=0;}
-        else if(e>=0&&e<SW_TRAVEL){
-          const k=e/SW_TRAVEL;
-          swU=(1-Math.pow(1-k,2.4))*SPIRAL_U;
-          swAmp=Math.min(1,k/0.13)*Math.min(1,(1-k)/0.26)*(1-armed);
-        } else { swU=-1;swAmp=0; }
-
-        for(const d of drops){
-          let u=d.u+t*0.035*d.sp; u-=Math.floor(u);
-          const [x,y,nx,ny,r]=atU(u);
-          const onSpiral=u<SPIRAL_U;
-          const wob=Math.sin(t*0.9*d.sp+d.ph)*0.3+d.off*0.8;
-          const width=onSpiral?(2.2+6.5*(r/456)):11;
-          const px=x+nx*wob*width, py=y+ny*wob*width;
-          let a;
-          if(onSpiral){
-            const k=u/SPIRAL_U;
-            a=0.34*Math.min(1,k/0.09)*(1-Math.pow(Math.max(0,(k-0.74)/0.26),1.6));
-          }else{
-            const k=(u-SPIRAL_U)/(1-SPIRAL_U);
-            a=0.26*Math.min(1,k/0.16)*Math.min(1,(1-k)/0.30);   /* the return is quieter, not absent */
-          }
-          /* the swell: a soft band around its position, brightest at the centre of it */
-          let lift=0;
-          if(swAmp>0&&onSpiral){
-            const dd=Math.abs(u-swU);
-            if(dd<0.075) lift=swAmp*Math.pow(1-dd/0.075,1.8);
-          }
-          a=(a+lift*0.5)*core(Math.hypot(px,py))*mute;
-          if(a<=0.004)continue;
-          const rad=S((onSpiral?(0.85+1.9*(r/456)):1.5)*d.sz*(1+lift*0.7));
-          cx.globalAlpha=Math.min(1,a);
-          /* water, not dust: the current carries the Fund's green, deepening as it widens,
-             and the swell pushes the dots it passes toward the bright end of it */
-          cx.fillStyle = lift>0.38 ? '#00DBB6' : (lift>0.06 ? '#009169' : (d.tone<0.62 ? '#0F2A22' : '#009169'));
-          cx.beginPath();cx.arc(X(px),Y(py),Math.max(0.55,rad),0,6.2832);cx.fill();
-        }
-        cx.globalAlpha=1;
-      }
-      if(reduce){draw(performance.now());window.addEventListener('resize',()=>{size();draw(performance.now());});return;}
-      requestAnimationFrame(function tick(now){requestAnimationFrame(tick);if(seen)draw(now);});
-    })();
-
-    /* THE OUTER BAND. It follows the spiral's own curve, offset outward, and runs past
-       where the line stops so the words sit across the TOP of the stage where they read
-       horizontally. The client asked for this to follow the widening edge; she also
-       asked, earlier, that step names never tilt. Both hold here because this is not a
-       step — it is the label on the sweep the steps produce. */
-    {
-      const bp=document.getElementById('spBandPath'),seg=[];
-      for(let i=0;i<=200;i++){
-        const t=11.40+(13.70-11.40)*i/200,r=R0+K*t+38,a=t-Math.PI/2;
-        seg.push((r*Math.cos(a)).toFixed(1)+' '+(r*Math.sin(a)).toFixed(1));
-      }
-      bp.setAttribute('d','M'+seg.join('L'));
-    }
-    const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
-
-    const nodes=STEP_T.map((t,i)=>{
-      const [x,y,r,a]=pt(t);
-      const halo=document.createElementNS(NS,'circle');
-      halo.setAttribute('class','sp-halo');halo.setAttribute('cx',x.toFixed(1));halo.setAttribute('cy',y.toFixed(1));halo.setAttribute('r',8);
-      const dot=document.createElementNS(NS,'circle');
-      dot.setAttribute('class','sp-dot');dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));dot.setAttribute('r',8);
-      dotsG.append(halo,dot);
-
-      /* A chip is far wider than it is tall, so centring it on a radial offset would lay it
-         across the spiral. Anchor its inner edge to the dot instead and let it run outward —
-         except near the top and bottom of the circle, where there is no "outward" horizontally
-         and the chip is centred and pushed clear vertically. */
-      const chip=document.createElement('button');
-      chip.type='button';chip.className='sp-chip';
-      chip.innerHTML='<span class="n">0'+(i+1)+'</span>'+steps[i].h;
-      chip.setAttribute('aria-label',steps[i].h+'. '+steps[i].d);
-      const upright=Math.abs(x)<r*0.42, out=Math.sign(y)||1;
-      const lx = upright ? x : x+Math.sign(x)*GAP;
-      const ly = upright ? y+out*(GAP+8) : y;
-      const tf = upright ? 'translate(-50%,'+(out>0?'0':'-100%')+')'
-                         : 'translate('+(x>0?'0':'-100%')+',-50%)';
-      chip.style.left=pct(lx);chip.style.top=pct(ly);
-      chip.style.setProperty('--sp-t',tf);
-      chip.style.transform=tf;
-      chip.style.setProperty('--sp-d',(i*0.8)+'s');
-      chipsEl.appendChild(chip);
-
-      const tick=document.createElement('button');
-      tick.type='button';tick.setAttribute('aria-label',steps[i].h);
-      ticksEl.appendChild(tick);
-
-      return {dot,halo,chip,tick,frac:lenAt(t)/total};
-    });
-
-    let open=-1;
-    function show(i){
-      if(i===open)return;open=i;
-      stage.classList.toggle('armed',i>=0);
-      nodes.forEach((nd,j)=>{
-        const on=j===i;
-        nd.dot.classList.toggle('on',on);
-        nd.halo.classList.toggle('on',on);
-        nd.halo.setAttribute('r',on?16:8);
-        nd.chip.classList.toggle('on',on);
-        nd.chip.setAttribute('aria-pressed',on?'true':'false');
-        nd.tick.classList.toggle('on',on);
-      });
-      trail.style.strokeDashoffset=i<0?1:(1-nodes[i].frac).toFixed(4);
-      panel.classList.toggle('open',i>=0);
-      if(i>=0){
-        detail.querySelector('.sp-detail-n').textContent='0'+(i+1);
-        detail.querySelector('h3').textContent=steps[i].h;
-        detail.querySelector('p').textContent=steps[i].d;
-      }
-    }
-
-    /* Until the first real interaction the chips breathe in sequence; the first
-       hover, focus or tap stops that for good, so the hint never fights the user. */
-    function settle(){stage.classList.remove('idle');}
-    nodes.forEach((nd,i)=>{
-      const open=()=>{settle();show(i);};
-      nd.chip.addEventListener('mouseenter',open);
-      nd.chip.addEventListener('focus',open);
-      nd.chip.addEventListener('click',open);
-      nd.tick.addEventListener('mouseenter',open);
-      nd.tick.addEventListener('focus',open);
-      nd.tick.addEventListener('click',open);
-    });
-
-    const m=location.hash.match(/^#step-([1-6])$/);if(m){settle();show(+m[1]-1);}
-    /* leaving the diagram clears it, but only if focus has not landed on a step */
-    stage.addEventListener('mouseleave',()=>{if(!stage.contains(document.activeElement))show(-1);});
-    stage.addEventListener('focusout',e=>{if(!stage.contains(e.relatedTarget)&&!ticksEl.contains(e.relatedTarget))show(-1);});
-    ticksEl.addEventListener('mouseleave',()=>{if(!ticksEl.contains(document.activeElement)&&!stage.matches(':hover'))show(-1);});
-  })();
 </script>
 
 </body>
