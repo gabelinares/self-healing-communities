@@ -521,3 +521,24 @@ fixed nav (tightest: 11px on Flagship at 760).
 
 Below 820px none of this applies — a phone screen cannot hold either section, and pretending
 otherwise only crops the content, so they flow at their natural height again.
+
+### 9c · "Flagship Case" renamed (Sept 28)
+Laura: *"several people are concerned with the heading 'Flagship Case'"*. The heading is now
+**Building a model that can work in practice**, followed by her sentence about the detailed
+implementation case.
+
+Two judgment calls worth knowing about:
+- **Sentence case, not her Title Case.** Every other heading on the site is sentence case with
+  a full stop; hers would have been the only one in caps. Her words, house typography. Easy to
+  put back.
+- **The arch pill said "Flagship Case" too.** Changing the heading while leaving the phrase on
+  the pill directly under it would have defeated the point, so it now reads "Implementation
+  case". She only asked about the heading, so this one is flagged to her.
+
+Her sentence is half as long again as the line it replaced, which broke the one-screen fit from
+§9b (flagship went to 925px against 900). It buys the room back across rather than down — the
+head runs to 840px and the lede is uncapped inside it, so the sentence sets in two lines rather
+than four. All four views are one viewport again at 760, 900 and 1050.
+
+The `.flagship` class and `#flagship` id are unchanged — internal names, not visible, and
+renaming them is churn with no benefit to her.

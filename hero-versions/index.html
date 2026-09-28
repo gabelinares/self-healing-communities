@@ -503,6 +503,11 @@
   .how .head,.flagship .head{margin-bottom:clamp(14px,2.4vh,40px)}
   .how .head .h2,.flagship .head .h2{font-size:clamp(27px,min(4.6vw,5.3vh),60px)}
   .how .head .lede,.flagship .head .lede{font-size:clamp(15px,1.9vh,19px);margin-top:clamp(10px,1.6vh,18px)}
+  /* the client's implementation sentence is half as long again as the line it replaced.
+     It buys its room back across rather than down: the head runs wider and the lede is
+     not capped inside it, so the sentence takes three lines instead of five. */
+  .flagship .head{max-width:840px}
+  .flagship .head .lede{max-width:none}
 
   /* the compare box and everything inside it */
   .compare{height:clamp(288px,42vh,560px)}
@@ -732,8 +737,8 @@
   <div class="wrap">
     <div class="head">
       <div class="eyebrow reveal">The work underway</div>
-      <h2 class="h2 reveal">A Flagship Case, <em>ready for implementation.</em></h2>
-      <p class="lede reveal">Much of the work underway is building the foundation necessary to do that well. It falls into two major bodies of work:</p>
+      <h2 class="h2 reveal">Building a model <em>that can work in practice.</em></h2>
+      <p class="lede reveal">We are developing a detailed implementation case that brings the research, partnerships, governance, financing, and measures together in a model that communities and states can put to work.</p>
     </div>
     <div class="fs-arch reveal" id="fsArch">
       <svg class="fs-line" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
@@ -752,7 +757,7 @@
         <path class="fs-fill" mask="url(#fsFade)" d="M200,200 C200,72 330,22 400,22 C470,22 600,72 600,200 Z"/>
         <path class="fs-stroke" pathLength="1" d="M200,190 C200,70 330,20 400,20 C470,20 600,70 600,190"/>
       </svg>
-      <div class="fs-key">Flagship Case</div>
+      <div class="fs-key">Implementation case</div>
       <div class="fs-pillar p1" data-n="1">
         <div class="fs-num">01</div>
         <h3>Intellectual groundwork</h3>
