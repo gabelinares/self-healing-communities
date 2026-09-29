@@ -71,9 +71,17 @@
   /* ============================================================
      OPENING — the book is the cover (eyes + intro) and turns into the cascades
      ============================================================ */
-  #why{position:relative}
+  #why{position:relative;background:#E8D6B8}
   #why .scroll-area{height:820vh;position:relative}
-  #why .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  /* ⚠ svh, NOT vh. On iOS Safari `vh` means the viewport with the URL bar HIDDEN, while
+     window.innerHeight — which every JS placement inside this sticky is computed from —
+     means the viewport as it actually is right now. With the bar showing, the two differ
+     by ~85px, so the whole composition was laid out for a frame taller than the one on
+     screen: the intro paragraph landed on top of the photo and the bottom was cropped.
+     `svh` is the small viewport and never changes as the bar comes and goes, so it agrees
+     with the measured height at every moment. See stickyH() below — nothing in here may
+     use window.innerHeight again. */
+  #why .sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:
       radial-gradient(58% 50% at 12% 12%,rgba(0,145,105,.15),transparent 70%),
       radial-gradient(54% 56% at 90% 92%,rgba(201,68,47,.12),transparent 70%),
@@ -110,7 +118,12 @@
   #why .book-bar.flat{height:4px}
   #why .book-bar.flat i{transform:scaleX(0);transform-origin:left center}
   #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform;container-type:inline-size}
-  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 32%;overflow:hidden}
+  /* No backface-visibility. iOS Safari applies it unreliably inside a preserve-3d subtree that
+     is being scaled — sometimes leaking the verso through, sometimes culling the recto at 0deg
+     so you see straight past the leaf to the page under it. Which face is showing is decided in
+     tickWhy from the angle instead; the verso starts hidden because that is the state at rest. */
+  #why .leaf .face{position:absolute;inset:0;background-size:cover;background-position:center 32%;overflow:hidden}
+  #why .leaf .verso{visibility:hidden}
   #why .leaf .recto{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.18)}
   #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2) 0%,transparent 14%);pointer-events:none}
   #why .leaf .verso{transform:rotateY(180deg);box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.18)}
@@ -171,14 +184,16 @@
      WAYFINDING — scatter → flow (particle river)
      ============================================================ */
   #wayfinding .scroll-area{height:620vh;position:relative}
-  #wayfinding .sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
+  #wayfinding .sticky{position:sticky;top:0;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
   #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
   #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.58fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
   #wayfinding .lc-frame{position:relative;width:var(--lc-w,340px);max-width:100%;transition:width .7s cubic-bezier(.2,.7,.2,1);aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:8px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
   #wayfinding .lc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .7s ease}
   #wayfinding .lc-img.show{opacity:1}
   #wayfinding .lc-cap{position:absolute;left:0;right:0;bottom:0;padding:32px 16px 13px;background:linear-gradient(0deg,rgba(6,81,60,.82),transparent);color:rgba(251,246,234,.78);font-size:10px;letter-spacing:.22em;text-transform:uppercase;z-index:2;display:flex;align-items:baseline;gap:10px}
-  #wayfinding .lc-cap span{font-family:var(--disp);font-weight:700;font-variation-settings:'wdth' var(--disp-wdth);text-transform:none;letter-spacing:-.02em;font-size:20px;color:var(--cream)}
+  #wayfinding .lc-cap .lc-lab{font-family:'Archivo',system-ui,sans-serif;font-weight:400;letter-spacing:.22em;text-transform:uppercase;font-size:10px;color:inherit}
+  #wayfinding .lc-cap .lc-lab::after{content:"\00b7";margin-left:10px;opacity:.75}
+  #wayfinding .lc-cap span#lcStage{font-family:var(--disp);font-weight:700;font-variation-settings:'wdth' var(--disp-wdth);text-transform:none;letter-spacing:-.02em;font-size:20px;color:var(--cream)}
   /* fills across each life stage and resets on change, so the scroll distance to
      the next image is visible rather than guessed */
   #wayfinding .lc-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(15,42,34,.25);z-index:3;overflow:hidden}
@@ -194,8 +209,17 @@
   #wayfinding .corners{position:absolute;inset:26px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
   #wayfinding .corners .r{text-align:right}
   @media (max-width:820px){
-    #wayfinding .wf-layout{grid-template-columns:1fr;align-content:center;gap:26px;padding:0 28px}
-    #wayfinding .lc-frame{width:var(--lc-w,216px)}
+    /* the fixed nav overlays this sticky, so the view's own top padding has to clear it —
+       without it the card's head was under the bar from the very first life stage */
+    #wayfinding .wf-layout{grid-template-columns:1fr;align-content:center;gap:22px;
+      padding:calc(var(--navh,62px) + 12px) 26px 16px}
+    /* The frame grows as the life unfolds. On a phone it grows ACROSS ONLY: a portrait card
+       that also grew taller pushed its own top under the nav and squeezed the closing quote
+       off the bottom of the screen. Height is fixed here and the crop simply widens. */
+    #wayfinding .lc-frame{width:var(--lc-w,216px);aspect-ratio:auto;height:clamp(172px,25svh,214px);border-width:6px}
+    #wayfinding .lc-cap{flex-direction:column;align-items:flex-start;gap:2px;padding:26px 13px 11px}
+    #wayfinding .lc-cap .lc-lab::after{content:none}
+    #wayfinding .lc-cap span#lcStage{font-size:19px;line-height:1.1}
     #wayfinding .copy{text-align:center;max-width:none}
     #wayfinding .copy .lede{margin-left:auto;margin-right:auto}
     #wayfinding .copy .wf-subhead{margin-left:auto;margin-right:auto}
@@ -354,7 +378,10 @@
   footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
   .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
   footer img{height:30px}
-  .foot-links{display:flex;gap:22px;font-size:13px}
+  /* wraps, and each label stays whole: at 360px the five links overran the page by 14px and
+     broke across words */
+  .foot-links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px}
+  .foot-links a{white-space:nowrap}
   .foot-links a{color:rgba(251,246,234,.7);text-decoration:none;transition:color .2s}
   .foot-links a:hover{color:var(--cream)}
   footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.6)}
@@ -419,6 +446,11 @@
     text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
     font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
   .sp-stage.armed .sp-band{opacity:.2}
+  .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
+  .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
+    fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
+    paint-order:stroke;stroke:#F7EFDE;stroke-width:7px;stroke-linejoin:round}
+  .sp-num.on{fill:var(--terracotta-bright)}
   .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
     stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
   .sp-dot{fill:var(--cream);stroke:var(--emerald);stroke-width:2.4;transition:fill .3s,stroke .3s,r .3s}
@@ -470,16 +502,57 @@
   .ap-more:hover{color:var(--ink)}
   .ap-more span{font-size:14px;line-height:1;animation:apBob 2.2s ease-in-out infinite}
   @keyframes apBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  /* ============================================================
+     THE CYCLE ON A PHONE
+     The desktop diagram does not survive being shrunk. 820 dots across a 300px stage read
+     as grain rather than a current, the labelled chips have nowhere to go so they are
+     hidden, and what is left is five unlabelled rings with a list underneath that has no
+     visible connection to them — a decoration, when the client's whole reason for wanting
+     the spiral bigger was that it "conveys our cyclic way of working".
+     So at this size it becomes a different, simpler instrument with the same geometry:
+       · the curve is DRAWN, one continuous line, instead of implied by moving dots;
+       · every step is numbered on the curve, so the order is readable standing still;
+       · the diagram STICKS while the five steps scroll past under it, and each step lights
+         its own node as it arrives. The order is then taught twice — by the numerals and
+         by the reading.
+     The steps stay below the diagram, which is what the client asked for.
+     ============================================================ */
   @media (max-width:980px){
-    .cycle{min-height:0;display:block;padding:clamp(72px,10vh,104px) 0 clamp(40px,6vh,64px)}
-    .ap-grid{grid-template-columns:1fr;gap:34px}
-    .ap-say{text-align:center}
+    /* `clip`, not `hidden`: overflow:hidden makes this section its own scroll container, and a
+       sticky child of a box that never scrolls never sticks. `clip` trims the same overhang
+       without creating one. */
+    .cycle{min-height:0;display:block;overflow:clip;padding:clamp(72px,10vh,104px) 0 clamp(40px,6vh,64px)}
+    .ap-grid{display:contents}                 /* so the stage can stick against .wrap, which holds the list too */
+    .ap-say{text-align:center;margin-bottom:26px}
     .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
     .ap-panel,.ap-more{display:none}
     .sp-chip{display:none}
-    .sp-stage{width:min(400px,76vw);margin-bottom:8px}
-    .sp-center{width:56%}
-    .sp-steps{display:block}
+    .sp-stage{position:sticky;top:calc(var(--navh,62px) + 8px);z-index:2;
+      width:min(340px,80vw);margin:0 auto 10px}
+    /* the pinned diagram needs paper under it, or the steps scroll straight through it.
+       A full-width band in the section's own tone, fading out at the foot so the step
+       arriving underneath is not cut off by a hard edge. */
+    .sp-stage::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+      left:50%;transform:translateX(-50%);width:100vw;
+      top:calc(-1 * (var(--navh,62px) + 8px));bottom:-48px;
+      background:linear-gradient(180deg,#F7EFDE 0%,#F7EFDE 89%,rgba(247,239,222,0) 100%)}
+    /* On desktop the core label is a quarter of an 800px stage. Shrunk to a phone it kept its
+       share of the width and so grew, relative to the figure, until it sat on top of steps
+       01-03 — a large part of why the diagram read as a tangle. It is a caption here. */
+    .sp-center{width:46%}
+    .sp-core-b{font-size:14px;line-height:1.08}
+    .sp-base{display:block}
+    .sp-flow{display:none}                     /* the drawn line replaces the current at this size */
+    .sp-num{display:block}
+    .sp-band{font-size:44px;letter-spacing:.13em}
+    .sp-steps{display:block;padding:0;margin-top:4px}
+    /* the step being read is the one lit on the diagram above it */
+    .sp-steps li{transition:opacity .35s ease}
+    .sp-steps li.dim{opacity:.42}
+    .sp-steps li.on h3{color:var(--emerald-deep)}
+    .sp-steps li.on h3::before{color:var(--terracotta-bright)}
+    /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
+    .sp-stage.armed .sp-band{opacity:1}
   }
   /* ============================================================
      ONE SCREEN PER VIEW (2026-09-25)
@@ -682,7 +755,7 @@
           <div class="lc-img" style="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
           <div class="lc-img" style="background-image:url('assets/parenthood.jpg');background-image:image-set(url('assets/parenthood.avif') type('image/avif'),url('assets/parenthood.jpg') type('image/jpeg'))"></div>
           <div class="lc-img" style="background-image:url('assets/elderhood.jpg');background-image:image-set(url('assets/elderhood.avif') type('image/avif'),url('assets/elderhood.jpg') type('image/jpeg'))"></div>
-          <div class="lc-cap">Lives unfold&nbsp;&middot;&nbsp;<span id="lcStage">Infancy</span></div>
+          <div class="lc-cap"><span class="lc-lab">Lives unfold</span><span id="lcStage">Infancy</span></div>
           <div class="lc-bar"><i id="lcBar"></i></div>
         </div>
         <div class="copy">
@@ -811,6 +884,9 @@
             <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
           </defs>
           <g mask="url(#spMask)" id="spMasked">
+            <!-- the curve as an actual line. Off on desktop, where the dot current IS the line;
+                 on at phone sizes, where 820 dots across a 300px stage read as grain, not water. -->
+            <path class="sp-base" id="spBase" />
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
           <path id="spBandPath" fill="none" stroke="none" />
@@ -824,7 +900,6 @@
       </div>
 
     </div>
-  </div>
 
   <ol class="sp-steps" id="spSteps">
     <li><h3>Find leverage</h3><p>See connected risk and healing trajectories across systems, the life course, and generations. Use rigorous evidence and community knowledge to identify where change may have the greatest reach.</p></li>
@@ -833,6 +908,7 @@
     <li><h3>Finance differently</h3><p>Finance portfolios that reduce risk earlier, strengthen community capacity, support learning, and create benefits across systems. Track the human, economic, and fiscal value created &mdash; and align incentives so public systems are rewarded for reducing risk earlier, not only responding to its consequences.</p></li>
     <li><h3>Make improvement durable</h3><p>Connect learning, public financing, provider sustainability, and reinvestment so successful change does not disappear when a grant ends. Create mechanisms to reinvest financial gains from improved outcomes into risk reduction and community capacity.</p></li>
   </ol>
+  </div>
 
   <a class="ap-more" href="#act">Get involved <span>&darr;</span></a>
 </section>
@@ -870,6 +946,15 @@
   setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* The nav is fixed, so anything laid out inside a full-height sticky has to clear it by hand.
+     Publish its real height once rather than guessing it in four different places. */
+  (function(){
+    const nav=document.querySelector('nav');if(!nav)return;
+    const set=()=>document.documentElement.style.setProperty('--navh',nav.offsetHeight+'px');
+    set();window.addEventListener('resize',set);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(set);
+  })();
+
   /* FLAGSHIP CASE — pillar cards tilt toward the cursor, like a light object held up to the light */
   if(!reduce){
     const TILT=6; /* max degrees */
@@ -903,7 +988,10 @@
   })();
 
   /* helpers */
-  function progressOf(el){const r=el.getBoundingClientRect(),h=window.innerHeight,total=el.offsetHeight-h,passed=Math.min(Math.max(-r.top,0),total);return total>0?passed/total:0;}
+  /* how far a tall scroll-area has run under its pinned child. `h` is that child's height —
+     pass the measured sticky, because with 100svh it no longer equals window.innerHeight on iOS. */
+  function progressOf(el,h){h=h||(el.firstElementChild&&el.firstElementChild.offsetHeight)||window.innerHeight;
+    const r=el.getBoundingClientRect(),total=el.offsetHeight-h,passed=Math.min(Math.max(-r.top,0),total);return total>0?passed/total:0;}
   function inView(el){const r=el.getBoundingClientRect();return r.bottom>-200&&r.top<window.innerHeight+200;}
   function lerp(a,b,t){return a+(b-a)*t}
   function easeOut(t){return 1-Math.pow(1-t,3)}
@@ -915,18 +1003,26 @@
   const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow'),scrollCue=document.getElementById('scrollCue');
   const whyCopy=document.getElementById('whyCopy'),whyStates=document.querySelectorAll('#whyCopy .wc');
   const bookBar=document.getElementById('bookBar'),bookBarFill=bookBar&&bookBar.firstElementChild;
+  const whySticky=document.querySelector('#why .sticky');
+  /* The frame everything in the opening is placed inside. Measured, never window.innerHeight:
+     on iOS those are two different numbers and mixing them is what put the intro paragraph
+     over the photograph. */
+  function stickyH(){return (whySticky&&whySticky.offsetHeight)||window.innerHeight;}
   const OPEN=0.18;   /* 0 → OPEN: the wide box opens out to the full frame */
   const SETTLE=0.36; /* OPEN → SETTLE: the same face settles from the zoom into the open book */
   const SHIFT=0.44;  /* SETTLE → SHIFT: the book slides aside (right; up on phones) and the copy fades in */
   const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
   const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
   /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
-  function curBox(){return window.innerWidth<=720?{t:44,r:6,b:31,l:6,rad:20}:{t:48,r:16,b:25,l:16,rad:44};}
+  /* The resting frame, in % of the sticky. On a phone the top used to sit at 44%, which left a
+     dead band the depth of the photograph between the headline and the picture, and stacked the
+     slack at one end of the view. 37/28 closes that gap and gives the frame back the height. */
+  function curBox(){return window.innerWidth<=720?{t:37,r:6,b:28,l:6,rad:20}:{t:48,r:16,b:25,l:16,rad:44};}
   /* where the book ends up once it has slid aside, and the room that leaves for the copy */
   let whyLay={tx:0,ty:0,s:1};
   function layoutWhy(){
     if(!bookEl||!whyCopy)return;
-    const vw=window.innerWidth,vh=window.innerHeight,bw=bookEl.offsetWidth,bh=bw*2/3;
+    const vw=window.innerWidth,vh=stickyH(),bw=bookEl.offsetWidth,bh=bw*2/3;
     const navH=(document.querySelector('nav')||{}).offsetHeight||0;  /* the fixed nav overlaps the sticky frame */
     if(vw<=720){
       const top=Math.max(navH+14,vh*0.07);
@@ -958,13 +1054,13 @@
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
     if(!inView(whySection))return;
-    whySmooth=lerp(whySmooth,progressOf(whySection),0.14);
+    whySmooth=lerp(whySmooth,progressOf(whySection,stickyH()),0.14);
     const p=whySmooth;
     const BOX=curBox();
     /* phase A — the wide box opens out; the title dissolves into dots */
     const pc=Math.min(1,p/OPEN),ec=easeInOut(pc);
     if(clipWin){
-      const vw=window.innerWidth,vh=window.innerHeight;
+      const vw=window.innerWidth,vh=stickyH();
       const it=BOX.t*(1-ec)/100*vh,ib=BOX.b*(1-ec)/100*vh,il=BOX.l*(1-ec)/100*vw,rad=BOX.rad*(1-ec);
       clipWin.style.clipPath='inset('+it.toFixed(1)+'px '+il.toFixed(1)+'px '+ib.toFixed(1)+'px '+il.toFixed(1)+'px round '+rad.toFixed(1)+'px)';
     }
@@ -978,7 +1074,7 @@
       const bw=bookEl.offsetWidth||600,bh=bw*2/3;
       const boxW=window.innerWidth*(1-(BOX.l+BOX.r)/100);
       const fz=Math.max(1.8,boxW/(bw/2)*OVERSCAN);  /* zoom so only the face fills the box, at any width */
-      const boxOff=(BOX.t-BOX.b)/200*window.innerHeight;  /* the box centre sits below the viewport centre when t>b */
+      const boxOff=(BOX.t-BOX.b)/200*stickyH();  /* the box centre sits below the viewport centre when t>b */
       const ty0=(0.5-EYE)*bh*fz+boxOff;             /* lift the eyes to the box centre at rest */
       const S=lerp(fz,1,es)*lerp(1,whyLay.s,esh),TX=lerp(bw/4,0,es)+whyLay.tx*esh,TY=lerp(ty0,0,es)+whyLay.ty*esh;
       bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
@@ -987,7 +1083,24 @@
     if(ctaRow){ctaRow.style.opacity=esh.toFixed(2);ctaRow.style.visibility=esh<0.01?'hidden':'visible';}
     /* phase D — turn the pages, with a pause on each spread so the copy beside it can be read */
     const N=whyLeaves.length,u=Math.max(0,(p-SHIFT)/(1-SHIFT))*(N+0.5),turn=[];
-    whyLeaves.forEach((leaf,i)=>{const local=easeInOut(Math.max(0,Math.min(1,(u-i-0.3)/0.55)));turn.push(local);leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;});
+    /* ⚠ The back of a turning leaf is hidden HERE, not by backface-visibility alone.
+       iOS Safari does not reliably cull back faces inside a preserve-3d subtree that is
+       itself being scaled (book-zoom is, every frame), so the verso bleeds through the
+       recto and you see two pictures at once, flickering as the leaf swings — which is
+       exactly the "wrong images as you scroll" on a phone. Driving it from the angle we
+       already know is deterministic. Written only when the side actually changes, so this
+       stays one style write per turn rather than two per frame. */
+    whyLeaves.forEach((leaf,i)=>{
+      const local=easeInOut(Math.max(0,Math.min(1,(u-i-0.3)/0.55)));turn.push(local);
+      leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;
+      const side=local<0.5?'front':'back';
+      if(leaf.dataset.side!==side){
+        leaf.dataset.side=side;
+        const recto=leaf.querySelector('.recto'),verso=leaf.querySelector('.verso');
+        if(recto)recto.style.visibility=side==='front'?'visible':'hidden';
+        if(verso)verso.style.visibility=side==='front'?'hidden':'visible';
+      }
+    });
     /* the bar fills across the current spread; a spread hands over when its page is halfway turned (u = i+0.575) */
     if(bookBar){
       const s=turn.filter(t=>t>=0.5).length,start=s===0?0:s-0.425,end=s<N?s+0.575:N+0.5;
@@ -1067,17 +1180,27 @@
     emphFs=Math.min(titleCv.offsetWidth*(tm?0.07:0.046),tm?44:54)*tDpr;
     eyebrowFs=logoBigH()*tDpr;  /* the logo now occupies the band the eyebrow used to */
     measureNav();
-    /* shrink the lead + payoff so the headline stays two lines with no forced breaks */
-    {const probe=document.createElement('canvas').getContext('2d');
-     const maxLeadW=tcw*(tm?0.94:0.9);
-     leadFont(probe);let lw=0;for(const s of TITLE_LEAD)lw=Math.max(lw,probe.measureText(s).width);if(lw>maxLeadW)leadFs*=maxLeadW/lw;
-     const maxEmphW=tcw*(tm?0.94:0.92);
-     emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}
+    /* Shrink the lead + payoff so the headline stays two lines with no forced breaks.
+       Twice, not once: a variable font's advance width is not exactly linear in size, and
+       one pass left the payoff a few per cent over on a phone — which is a clipped line,
+       not a tight one. Measured against the SAME context that draws, and only once the real
+       Archivo has loaded (see the fonts.load call under buildTitle) — measuring the fallback
+       and then rendering Archivo is what ran the headline off both edges. */
+    {/* ⚠ measure on the context that DRAWS, never a detached canvas. A canvas in the page
+        inherits font-variation-settings:'wdth' 100 from body, and that overrides the
+        `semi-condensed` in the font shorthand; a detached one inherits nothing, keeps the
+        condensation, and so reports a string ~12% narrower than the one that gets painted.
+        That gap is exactly what ran the payoff off both edges of a phone. */
+     const probe=titleCtx||titleCv.getContext('2d');
+     const maxLeadW=tcw*(tm?0.88:0.9);
+     for(let i=0;i<2;i++){leadFont(probe);let lw=0;for(const s of TITLE_LEAD)lw=Math.max(lw,probe.measureText(s).width);if(lw>maxLeadW)leadFs*=maxLeadW/lw;}
+     const maxEmphW=tcw*(tm?0.88:0.92);
+     for(let i=0;i<2;i++){emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}}
     eyebrowGap=leadFs*0.8;  /* breathing room under the logo lockup */
     leadLh=leadFs*1.18;emphGap=leadFs*0.32;
     titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
     /* the intro paragraph sits below the photo box, so the opening reads statement → image → what we're building */
-    if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*window.innerHeight+(tm?14:24))+'px';}
+    if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*stickyH()+(tm?14:24))+'px';}
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
     const data=o.getImageData(0,0,tcw,tch).data;
@@ -1122,7 +1245,14 @@
       }
     }
   }
-  buildTitle();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(buildTitle);
+  buildTitle();
+  /* The webfont stylesheet is loaded lazily (media="print" then swapped), so fonts.ready can
+     resolve before Archivo has even been requested. Ask for the two weights the headline
+     actually draws in, and only re-measure once they are really here. */
+  if(document.fonts&&document.fonts.load){
+    Promise.all([document.fonts.load('700 40px Archivo'),document.fonts.load('500 40px Archivo')])
+      .then(()=>document.fonts.ready).then(buildTitle).catch(()=>{});
+  }else if(document.fonts&&document.fonts.ready){document.fonts.ready.then(buildTitle);}
   window.addEventListener('resize',buildTitle);
 
   /* OPENING BACKDROP — slow organic colour behind the frame; each blob follows the cursor by a different amount */
@@ -1184,7 +1314,9 @@
   const lcFrame=document.querySelector('#wayfinding .lc-frame');
   const STAGES=['Infancy','Childhood','Adolescence','Adulthood','Parenthood','Elderhood'];
   /* the frame grows as the person ages, so the span of a life is felt and not just captioned */
-  function lcWidth(i){const m=window.innerWidth<=820,a=m?168:252,b=m?232:362;return a+(b-a)*(i/(STAGES.length-1));}
+  /* On a phone the height is pinned by CSS and only this width moves, so it can travel further
+     than the old 168-232 without costing any vertical room. Capped by the frame's own max-width. */
+  function lcWidth(i){const m=window.innerWidth<=820,a=m?180:252,b=m?300:362;return a+(b-a)*(i/(STAGES.length-1));}
   let particles=[],wfW=0,wfH=0,wfDpr=1;
   const FLOW_SPEED=0.05;  /* how fast the current carries a dot down the river (fraction of width per second) */
   function flowY(u){return wfH*0.46+Math.sin(u*Math.PI*2.4+0.4)*wfH*0.09;}  /* the river's gentle meander */
@@ -1269,20 +1401,44 @@
     const ctx=cv.getContext('2d');let W=0,H=0,dots=[];
     const cols=['164,214,198','251,246,234','232,168,142','0,219,182','214,235,225'];/* varied = different people */
     const rings=[{r:0.26,n:6,sp:0.05},{r:0.40,n:9,sp:0.038},{r:0.56,n:11,sp:0.029}];
+    /* The copy's own box, in canvas coordinates. The orbits are sized from the SHORT side, so on
+       a phone every ring passes straight through the words — which is what made this section hard
+       to read on a handset. The dots are not moved; they fade out as they cross the text and come
+       back on the other side, so the gathering still reads as a gathering. */
+    let keep=null;
+    function measureKeep(){
+      const inner=cv.parentElement&&cv.parentElement.querySelector('.inner');
+      if(!inner){keep=null;return;}
+      const a=cv.getBoundingClientRect(),b=inner.getBoundingClientRect();
+      keep={l:b.left-a.left,t:b.top-a.top,r:b.right-a.left,b:b.bottom-a.top};
+    }
+    const FADE=34;      /* px over which a dot dims as it approaches the copy */
+    const FLOOR=0.10;   /* never quite nothing: a dot behind the words is a faint presence, not a hole */
+    function keepOut(x,y){
+      if(!keep)return 1;
+      const dx=Math.max(keep.l-x,x-keep.r,0),dy=Math.max(keep.t-y,y-keep.b,0);
+      const d=Math.sqrt(dx*dx+dy*dy);
+      return FLOOR+(1-FLOOR)*Math.min(1,d/FADE);
+    }
     function size(){const dpr=window.devicePixelRatio||1;W=cv.offsetWidth;H=cv.offsetHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-      const base=Math.min(W,H);dots=[];
+      /* widest side on a narrow screen, so the rings orbit around the column instead of sitting on it */
+      const base=W<760?Math.max(W,H)*0.62:Math.min(W,H);dots=[];
       rings.forEach((rg,ri)=>{for(let i=0;i<rg.n;i++)dots.push({ang:(i/rg.n)*Math.PI*2+ri*0.7,r:rg.r*base,sp:rg.sp,size:2.6+Math.random()*2.8,col:cols[(i+ri)%cols.length],ph:Math.random()*6.28});});
+      measureKeep();
     }
     function draw(){
       const t=Date.now()*0.001,cx=W/2,cy=H/2;ctx.clearRect(0,0,W,H);
       dots.forEach(d=>{const ang=d.ang+t*d.sp,wob=Math.sin(t*0.45+d.ph)*6;
         const x=cx+Math.cos(ang)*(d.r+wob),y=cy+Math.sin(ang)*(d.r+wob);
-        const tw=(0.45+Math.sin(t*0.8+d.ph)*0.2+0.2).toFixed(2);
-        ctx.beginPath();ctx.arc(x,y,d.size,0,7);ctx.fillStyle='rgba('+d.col+','+tw+')';
-        ctx.shadowColor='rgba('+d.col+',0.5)';ctx.shadowBlur=10;ctx.fill();});
+        const tw=(0.45+Math.sin(t*0.8+d.ph)*0.2+0.2)*keepOut(x,y);
+        if(tw<0.02)return;
+        ctx.beginPath();ctx.arc(x,y,d.size,0,7);ctx.fillStyle='rgba('+d.col+','+tw.toFixed(3)+')';
+        ctx.shadowColor='rgba('+d.col+','+(tw*0.7).toFixed(3)+')';ctx.shadowBlur=10;ctx.fill();});
       ctx.shadowBlur=0;requestAnimationFrame(draw);
     }
-    size();window.addEventListener('resize',size);requestAnimationFrame(draw);
+    size();window.addEventListener('resize',size);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureKeep);  /* the copy reflows when Archivo lands */
+    requestAnimationFrame(draw);
   })();
 
   /* master loop */
@@ -1343,7 +1499,9 @@
     for(let i=0;i<=N;i++)pts.push(pt(TMAX*i/N));
     for(let i=1;i<=N;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
     const total=cum[N];
-    trail.setAttribute('d','M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L'));
+    const spiralD='M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
+    trail.setAttribute('d',spiralD);
+    {const base=document.getElementById('spBase');if(base)base.setAttribute('d',spiralD);}
     const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
     const NS='http://www.w3.org/2000/svg';
 
@@ -1514,8 +1672,32 @@
       tick.type='button';tick.setAttribute('aria-label',steps[i].h);
       ticksEl.appendChild(tick);
 
-      return {dot,halo,chip,tick,frac:lenAt(t)/total};
+      /* The numeral sits OUTWARD of its node, not inside it: at phone scale a marker big
+         enough to hold a legible numeral would reach back into the centre label's ink.
+         Outward there is room to spare — the stage runs to 560 and the last step is at 367. */
+      const num=document.createElementNS(NS,'text');
+      num.setAttribute('class','sp-num');
+      num.setAttribute('x',(Math.cos(a)*(r+58)).toFixed(1));
+      num.setAttribute('y',(Math.sin(a)*(r+58)).toFixed(1));
+      num.textContent='0'+(i+1);
+      svg.appendChild(num);
+
+      return {dot,halo,chip,tick,num,frac:lenAt(t)/total};
     });
+
+    /* At phone sizes the markers have to carry the diagram on their own — the chips are gone.
+       Set in script rather than CSS because `r` on an SVG circle is only an attribute here. */
+    const narrow=window.matchMedia('(max-width:980px)');
+    function sizeNodes(){
+      const big=narrow.matches;
+      nodes.forEach(nd=>{
+        const on=nd.dot.classList.contains('on');
+        nd.dot.setAttribute('r',big?15:8);
+        nd.halo.setAttribute('r',on?(big?26:16):(big?15:8));
+        nd.dot.style.strokeWidth=big?4.5:'';
+      });
+    }
+    sizeNodes();window.addEventListener('resize',sizeNodes);
 
     let open=-1;
     function show(i){
@@ -1529,7 +1711,9 @@
         nd.chip.classList.toggle('on',on);
         nd.chip.setAttribute('aria-pressed',on?'true':'false');
         nd.tick.classList.toggle('on',on);
+        if(nd.num)nd.num.classList.toggle('on',on);
       });
+      sizeNodes();
       trail.style.strokeDashoffset=i<0?1:(1-nodes[i].frac).toFixed(4);
       panel.classList.toggle('open',i>=0);
       if(i>=0){
@@ -1557,6 +1741,42 @@
     stage.addEventListener('mouseleave',()=>{if(!stage.contains(document.activeElement))show(-1);});
     stage.addEventListener('focusout',e=>{if(!stage.contains(e.relatedTarget)&&!ticksEl.contains(e.relatedTarget))show(-1);});
     ticksEl.addEventListener('mouseleave',()=>{if(!ticksEl.contains(document.activeElement)&&!stage.matches(':hover'))show(-1);});
+
+    /* THE READING LINE (phone only).
+       There is no hover on a phone and no room for the chips, so the link between the list and
+       the diagram is the scroll itself: the diagram is pinned, the steps pass under it, and
+       whichever step you are reading lights its node and the arc of spiral that leads to it.
+       That is the same gesture as the desktop hover — pick a step, watch the path reach it —
+       carried by the one input a phone always has. */
+    {
+      const lis=[...document.querySelectorAll('#spSteps li')];
+      let cur=-2,queued=false;
+      function pick(){
+        queued=false;
+        if(!narrow.matches){
+          if(cur!==-2){cur=-2;lis.forEach(li=>li.classList.remove('on','dim'));show(-1);}
+          return;
+        }
+        /* the line sits below the pinned diagram, where the step you are actually reading is */
+        const line=window.innerHeight*0.62;
+        let best=-1,bestD=1e9;
+        lis.forEach((li,i)=>{
+          const r=li.getBoundingClientRect();
+          if(r.bottom<8||r.top>window.innerHeight-8)return;
+          const d=Math.abs(r.top+Math.min(r.height,220)/2-line);
+          if(d<bestD){bestD=d;best=i;}
+        });
+        if(best===cur)return;
+        cur=best;
+        lis.forEach((li,i)=>{li.classList.toggle('on',i===best);li.classList.toggle('dim',best>=0&&i!==best);});
+        if(best>=0)settle();
+        show(best);
+      }
+      const onScroll=()=>{if(!queued){queued=true;requestAnimationFrame(pick);}};
+      window.addEventListener('scroll',onScroll,{passive:true});
+      window.addEventListener('resize',onScroll);
+      pick();
+    }
   })();
 </script>
 </body>

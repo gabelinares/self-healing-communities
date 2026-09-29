@@ -542,3 +542,105 @@ than four. All four views are one viewport again at 760, 900 and 1050.
 
 The `.flagship` class and `#flagship` id are unchanged — internal names, not visible, and
 renaming them is churn with no benefit to her.
+
+---
+
+## 10 · The phone pass (Sept 29)
+
+Gabriel, with six screenshots off an iPhone: the hero's text sat on the photograph, the
+margins and gaps were wrong, the book's pages flickered and showed the wrong pictures, the
+life-course caption was cut off and its card ran under the nav, the Gather Around dots sat on
+the words, and "the spiral is weird. I don't know what to do. Do you have any suggestions?"
+
+### 10a · One root cause under three of them: `vh` is not `innerHeight`
+`#why .sticky` and `#wayfinding .sticky` were `height:100vh`, and every JS placement inside
+them — the clip box, the book, the copy column, the intro paragraph — was computed from
+`window.innerHeight`. On iOS Safari those are **two different numbers**: `vh` means the
+viewport with the URL bar hidden, `innerHeight` means the viewport as it is right now. With
+the bar showing they differ by ~85px, so the whole opening was laid out for a frame taller
+than the one on screen. The intro paragraph landed on the photograph, the bottom was cropped,
+and the life-course card was pushed up under the fixed nav.
+
+Both stickies are `100svh` now — the small viewport, which never changes as the bar comes and
+goes — and the script reads `stickyH()`, the measured element, never `innerHeight` again.
+`progressOf` takes the pinned child's height for the same reason. **Do not put `vh` back.**
+
+### 10b · The headline ran off both edges of a phone
+Two faults stacked. The size was measured on a **detached** probe canvas: a canvas in the page
+inherits `font-variation-settings:'wdth' 100` from `body`, which overrides the `semi-condensed`
+in the canvas font shorthand, but a detached one inherits nothing and keeps the condensation —
+so the probe reported a string 12% narrower than the one actually painted. And the measuring
+happened before Archivo had loaded at all, because the webfont stylesheet is deliberately lazy
+(`media="print"` then swapped) and `fonts.ready` can resolve before it is even requested.
+
+Now measured on `titleCtx` itself, twice (a variable font's advance is not linear in size), and
+only after an explicit `document.fonts.load()` for the two weights the headline draws in.
+The phone side margin went 0.94 -> 0.88 of the canvas, which matches the photo box's 6vw.
+
+The resting frame also moved: `curBox()` on a phone was `t:44,b:31`, which left a dead band the
+depth of the photograph between the headline and the picture. Now `t:37,b:28`.
+
+### 10c · The book showed two pictures at once
+`backface-visibility:hidden` is not reliable on iOS inside a `preserve-3d` subtree that is
+itself being scaled — and `book-zoom` is scaled every frame. Sometimes the verso bled through
+the recto; sometimes the recto was culled at 0deg and you saw straight past the leaf to the
+page beneath, which is why page one showed the base photographs instead of its quote.
+
+`backface-visibility` is **gone**. Which face is showing is decided in `tickWhy` from the angle
+we already have, written only when the side actually changes. Verified across the turn: exactly
+one face visible per leaf at every sampled position, sides advancing cleanly 1 -> 4.
+
+### 10d · The life-course card
+Caption overflowed its frame by 27px on the longest stage name. The label is its own element
+now and stacks above the name on a phone, with the separator dropped.
+
+The card also grew in both directions as the life unfolded, so it climbed under the nav (top
+went 47 -> 7 against a 61px bar). On a phone the **height is fixed and only the width moves**,
+which is what Gabriel asked for — there is no vertical room to spend. The travel widened to
+180 -> 300px to compensate. `--navh` is published from the real nav height and the view pads
+itself clear of it. Top is now a constant 89 at every stage.
+
+### 10e · Gather Around
+The orbits are sized from the SHORT side of the section, so on a phone all three rings ran
+straight through the copy. The dots are not moved: they fade over the copy's measured box and
+come back on the other side, so the gathering still reads as a gathering. On narrow screens
+the rings are also sized from the long side so they orbit around the column rather than sit on
+it.
+
+### 10f · The spiral at phone size — what it became
+The desktop diagram does not survive being shrunk. 820 dots across a 300px stage read as grain
+rather than a current; the labelled chips have nowhere to go so they are hidden; what was left
+was five unlabelled rings over a list with no visible connection to them. Decoration — when the
+client's whole reason for wanting it bigger was that it "conveys our cyclic way of working".
+
+Same geometry, different instrument below 980px:
+- the curve is **drawn** (`.sp-base`), one continuous line, instead of implied by moving dots;
+- every step is **numbered on the curve**, set outward of its node and knocked out of the line
+  behind it, so the clockwise 01-05 order is readable standing still — which is the entire
+  reason the 72-degree spacing was fought for in §8k;
+- the diagram **sticks** while the five steps scroll under it, and the step being read lights
+  its own node and the arc leading to it. Same gesture as the desktop hover, carried by the one
+  input a phone always has.
+
+The steps stay below the diagram — Gabriel: "I like the idea of letting the text below".
+
+Two things that had to change to make it work:
+- `.cycle` is `overflow:clip`, not `hidden`, on a phone. `hidden` makes the section its own
+  scroll container and a sticky child of a box that never scrolls never sticks.
+- The core label kept its share of the width when shrunk, so relative to the figure it GREW
+  until it sat on top of steps 01-03. It is a caption at this size (46% / 14px), not a headline.
+  This was a large part of why the diagram read as a tangle.
+
+The `<ol>` moved inside `.wrap` so the pinned stage has a parent tall enough to stick against,
+and `.ap-grid` is `display:contents` on a phone. Desktop is untouched — verified: chips, dot
+current, hover trail and ticks all unchanged, and the four one-screen views are still exactly
+one viewport at 900 and 760.
+
+### 10g · Also found
+The footer links overran a 360px screen by 14px and broke across words. They wrap now, with
+each label whole. Fixed on both pages.
+
+### Not verified on a real device
+All of the above is verified in Chrome at 1440/820/390/360 and by measurement. The iOS-specific
+faults (10a, 10c) are fixed **by construction** — by removing the dependency on the browser
+behaviour that differs — rather than by reproducing them here. Worth one pass on a real handset.
