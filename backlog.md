@@ -658,6 +658,22 @@ need to fade, all of them can be normal colors"*. Three things, all fair:
   stage was still in flow, before it had pinned. It fades at both ends now and only reaches
   26px above the stage: once pinned the stage sits at navh+8 and the nav covers the rest.
 
+### 10i · One tone behind the diagram (Sept 29)
+Gabriel: *"can you change the background color of the spiral to match the background color
+below?"* Measured: the pinned band was `#F7EFDE` (247,239,222) and the paper the steps sit on
+was `#E8D6B8` (232,214,184) — a 15-point step.
+
+The cause is that `.cycle` carries a radial gradient sized to the SECTION, and on a phone the
+section is ~1690px tall, so the gradient has already reached its last stop long before you get
+to the diagram. Matching the band to a moving gradient would mean recolouring it on scroll, so
+the section is simply **flat `#E8D6B8` at phone widths** and the band and the numerals' knockout
+stroke use the same value. Sampled top to bottom afterwards: uniformly (232,214,184), +/-1 from
+the grain. The band is no longer visible as a band — text just fades as it passes behind the
+diagram. Desktop keeps its gradient, where there is no band at all.
+
+**If you retune any one of these three, retune all three:** `.cycle` background, `.sp-stage::after`
+and `.sp-num`'s stroke.
+
 ### Not verified on a real device
 All of the above is verified in Chrome at 1440/820/390/360 and by measurement. The iOS-specific
 faults (10a, 10c) are fixed **by construction** — by removing the dependency on the browser

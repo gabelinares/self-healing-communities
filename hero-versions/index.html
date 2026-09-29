@@ -449,7 +449,7 @@
   .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
   .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
     fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
-    paint-order:stroke;stroke:#F7EFDE;stroke-width:7px;stroke-linejoin:round}
+    paint-order:stroke;stroke:#E8D6B8;stroke-width:7px;stroke-linejoin:round}
   .sp-num.on{fill:var(--terracotta-bright)}
   .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
     stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
@@ -521,7 +521,13 @@
     /* `clip`, not `hidden`: overflow:hidden makes this section its own scroll container, and a
        sticky child of a box that never scrolls never sticks. `clip` trims the same overhang
        without creating one. */
-    .cycle{min-height:0;display:block;overflow:clip;padding:clamp(72px,10vh,104px) 0 clamp(40px,6vh,64px)}
+    /* Flat, not the desktop gradient. The section is ~1690px tall here, so the gradient has
+       already run out to its last stop (#E8D6B8) long before you reach the diagram — which left
+       the pinned band sitting 15 RGB points lighter than the paper the steps sit on. One tone
+       means the band cannot mismatch at any scroll position. Keep this in step with the band
+       and the numerals' knockout below. */
+    .cycle{min-height:0;display:block;overflow:clip;background:#E8D6B8;
+      padding:clamp(72px,10vh,104px) 0 clamp(40px,6vh,64px)}
     .ap-grid{display:contents}                 /* so the stage can stick against .wrap, which holds the list too */
     .ap-say{text-align:center;margin-bottom:26px}
     .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
@@ -538,7 +544,7 @@
       /* soft at BOTH ends. A hard top edge sliced the headline clean through while the stage
          was still in flow, before it had pinned. It only has to reach up 26px: once pinned,
          the stage sits at navh+8 and the nav itself covers everything above it. */
-      background:linear-gradient(180deg,rgba(247,239,222,0) 0%,#F7EFDE 22%,#F7EFDE 90%,rgba(247,239,222,0) 100%)}
+      background:linear-gradient(180deg,rgba(232,214,184,0) 0%,#E8D6B8 22%,#E8D6B8 90%,rgba(232,214,184,0) 100%)}
     /* On desktop the core label is a quarter of an 800px stage. Shrunk to a phone it kept its
        share of the width and so grew, relative to the figure, until it sat on top of steps
        01-03 — a large part of why the diagram read as a tangle. It is a caption here. */
