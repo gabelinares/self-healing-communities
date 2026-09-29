@@ -534,23 +534,27 @@
        arriving underneath is not cut off by a hard edge. */
     .sp-stage::after{content:"";position:absolute;z-index:-1;pointer-events:none;
       left:50%;transform:translateX(-50%);width:100vw;
-      top:calc(-1 * (var(--navh,62px) + 8px));bottom:-48px;
-      background:linear-gradient(180deg,#F7EFDE 0%,#F7EFDE 89%,rgba(247,239,222,0) 100%)}
+      top:-26px;bottom:-48px;
+      /* soft at BOTH ends. A hard top edge sliced the headline clean through while the stage
+         was still in flow, before it had pinned. It only has to reach up 26px: once pinned,
+         the stage sits at navh+8 and the nav itself covers everything above it. */
+      background:linear-gradient(180deg,rgba(247,239,222,0) 0%,#F7EFDE 22%,#F7EFDE 90%,rgba(247,239,222,0) 100%)}
     /* On desktop the core label is a quarter of an 800px stage. Shrunk to a phone it kept its
        share of the width and so grew, relative to the figure, until it sat on top of steps
        01-03 — a large part of why the diagram read as a tangle. It is a caption here. */
     .sp-center{width:46%}
     .sp-core-b{font-size:14px;line-height:1.08}
-    .sp-base{display:block}
-    .sp-flow{display:none}                     /* the drawn line replaces the current at this size */
+    /* The current stays. Dropping it for a plain line lost the best thing about the figure —
+       the dots are scaled up instead (see sizeBoost) so they read at this width. The drawn
+       line is kept only as a faint thread holding the form together between them. */
+    .sp-base{display:block;stroke:rgba(0,145,105,.16);stroke-width:4}
     .sp-num{display:block}
     .sp-band{font-size:44px;letter-spacing:.13em}
     .sp-steps{display:block;padding:0;margin-top:4px}
     /* the step being read is the one lit on the diagram above it */
-    .sp-steps li{transition:opacity .35s ease}
-    .sp-steps li.dim{opacity:.42}
-    .sp-steps li.on h3{color:var(--emerald-deep)}
-    .sp-steps li.on h3::before{color:var(--terracotta-bright)}
+    /* The steps are NOT dimmed or recoloured — every one reads in its normal colour. Which
+       step you are on is shown on the diagram above, by the lit node and the path drawn to it,
+       and that is enough; greying out four fifths of the copy to say it was too heavy a hand. */
     /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
     .sp-stage.armed .sp-band{opacity:1}
   }
@@ -1560,6 +1564,11 @@
       }
       size();window.addEventListener('resize',size);
       const X=v=>(v+560)/1120*W, Y=v=>(v+560)/1120*H, S=v=>v/1120*W;
+      /* A dot's radius is in viewBox units, so it shrinks with the stage: at 760px across it
+         draws 0.3-3.9px, but on a 310px phone stage the same dots are a third of a pixel and
+         the current disappears into grain. Scale them back up to roughly the apparent size they
+         have on a desktop. Capped, so it cannot run away on a very narrow screen. */
+      const sizeBoost=()=>Math.min(2.6,Math.max(1,700/(W||700)));
 
       /* the same core fade the SVG mask applies, so the flow dissolves into the
          centre instead of colliding with the label */
@@ -1578,6 +1587,7 @@
 
       function draw(now){
         const t=(now-t0)/1000;
+        const BOOST=sizeBoost();
         cx.clearRect(0,0,W,H);
         armed+=((stage.classList.contains('armed')?1:0)-armed)*0.08;
         const mute=1-0.5*armed;
@@ -1613,7 +1623,7 @@
           }
           a=(a+lift*0.5)*core(Math.hypot(px,py))*mute;
           if(a<=0.004)continue;
-          const rad=S((onSpiral?(0.85+1.9*(r/456)):1.5)*d.sz*(1+lift*0.7));
+          const rad=S((onSpiral?(0.85+1.9*(r/456)):1.5)*d.sz*(1+lift*0.7))*BOOST;
           cx.globalAlpha=Math.min(1,a);
           /* water, not dust: the current carries the Fund's green, deepening as it widens,
              and the swell pushes the dots it passes toward the bright end of it */
@@ -1754,7 +1764,7 @@
       function pick(){
         queued=false;
         if(!narrow.matches){
-          if(cur!==-2){cur=-2;lis.forEach(li=>li.classList.remove('on','dim'));show(-1);}
+          if(cur!==-2){cur=-2;lis.forEach(li=>li.classList.remove('on'));show(-1);}
           return;
         }
         /* the line sits below the pinned diagram, where the step you are actually reading is */
@@ -1768,7 +1778,7 @@
         });
         if(best===cur)return;
         cur=best;
-        lis.forEach((li,i)=>{li.classList.toggle('on',i===best);li.classList.toggle('dim',best>=0&&i!==best);});
+        lis.forEach((li,i)=>li.classList.toggle('on',i===best));
         if(best>=0)settle();
         show(best);
       }

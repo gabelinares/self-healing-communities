@@ -640,6 +640,24 @@ one viewport at 900 and 760.
 The footer links overran a 360px screen by 14px and broke across words. They wrap now, with
 each label whole. Fixed on both pages.
 
+### 10h · Corrections after the second phone pass (same day)
+Gabriel, on a screenshot of 10f: *"text being cut, and you lost completely the dots flowing,
+everything that is nice. adjust the size to make the dots bigger. besides, the text below dont
+need to fade, all of them can be normal colors"*. Three things, all fair:
+
+- **The current is back.** Replacing it with a plain drawn line threw out the best thing about
+  the figure. The real problem was never the dots, it was their SIZE: a dot's radius is in
+  viewBox units, so on a 310px stage the same dots that draw 0.3-3.9px on a 760px desktop stage
+  drew a third of a pixel and vanished into grain. `sizeBoost()` scales them back to roughly
+  their desktop apparent size (capped at 2.6x). `.sp-base` survives only as a very faint thread
+  at .16 alpha, holding the form together between the dots.
+- **No fading of the steps.** Every step reads in its normal colour. Which one you are on is
+  carried entirely by the lit node and the path drawn to it on the diagram above — greying out
+  four fifths of the copy to say the same thing was too heavy a hand.
+- **The sticky band had a hard top edge**, which sliced the headline clean through while the
+  stage was still in flow, before it had pinned. It fades at both ends now and only reaches
+  26px above the stage: once pinned the stage sits at navh+8 and the nav covers the rest.
+
 ### Not verified on a real device
 All of the above is verified in Chrome at 1440/820/390/360 and by measurement. The iOS-specific
 faults (10a, 10c) are fixed **by construction** — by removing the dependency on the browser
