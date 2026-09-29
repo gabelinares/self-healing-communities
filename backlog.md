@@ -674,6 +674,44 @@ diagram. Desktop keeps its gradient, where there is no band at all.
 **If you retune any one of these three, retune all three:** `.cycle` background, `.sp-stage::after`
 and `.sp-num`'s stroke.
 
+### 10j · The book, second attempt (Sept 29)
+Gabriel: *"the book bugs on mobile are still happening, the images changes abruptly and the
+images are wrong sometimes, make sure this doesnt happen"*. §10c had only hidden the back face
+by hand; it had not removed the reasons the mechanism was fragile. Three separate defects:
+
+**1. `container-type:inline-size` on `.leaf` — dead code that cancels the 3D context.**
+Nothing in this file uses an `@container` query or a `cq` unit; it was left behind. But
+containment removes the preserve-3d rendering context a page-turn depends on, so
+`backface-visibility` had nothing to cull against. Chrome tolerated it (verified in an isolated
+test — both faces render correctly at 0deg with and without it), which is exactly why it only
+ever showed on a handset. **Removed. Do not put it back.** With a real 3D context,
+`backface-visibility:hidden` is correct again and is back as a second guard.
+
+**2. The face state was cached on the element.** §10c only wrote visibility when the side
+changed. If one style write were ever dropped — a recomposite, a frame lost to a momentum
+scroll — that leaf stayed wrong permanently, showing the other page's picture. It is written
+every frame now; the same value twice is a no-op for the style system, so it costs nothing.
+Verified across the whole scroll range on a touch-emulated device: **204 leaf states sampled,
+exactly one face visible per leaf at every one, always the geometrically correct one.**
+
+**3. The easing was the "abrupt" part.** `whySmooth` chases the scroll with `lerp(...,0.14)`.
+That smooths a mouse wheel's coarse steps, but on iOS requestAnimationFrame can be starved
+during a momentum flick: the target runs away while `whySmooth` sits still, and when frames
+resume the book races through several page-turns at once. A finger already supplies the
+smoothing, so on a coarse pointer the book now tracks the scroll exactly, and `scroll` — which
+keeps firing through a flick where rAF does not — drives the tick as well as rAF.
+
+Measured, jumping from 30% to 80% of the opening in one step:
+
+| | frames until the book settles |
+|---|---|
+| touch (before) | never settles inside 40 |
+| touch (after) | **1** |
+| pointer (after) | 27 — the wheel easing is unchanged |
+
+Note for testing: `html` has `scroll-behavior:smooth`, so `scrollTo(0,y)` in a probe animates
+the scroll and hides exactly this measurement. Use `scrollTo({top:y,behavior:'instant'})`.
+
 ### Not verified on a real device
 All of the above is verified in Chrome at 1440/820/390/360 and by measurement. The iOS-specific
 faults (10a, 10c) are fixed **by construction** — by removing the dependency on the browser

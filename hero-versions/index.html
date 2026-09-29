@@ -117,12 +117,17 @@
   #why .book-bar i{display:block;width:100%;height:100%;background:var(--terracotta-bright);transform:scaleY(0);transform-origin:center top}
   #why .book-bar.flat{height:4px}
   #why .book-bar.flat i{transform:scaleX(0);transform-origin:left center}
-  #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform;container-type:inline-size}
-  /* No backface-visibility. iOS Safari applies it unreliably inside a preserve-3d subtree that
-     is being scaled — sometimes leaking the verso through, sometimes culling the recto at 0deg
-     so you see straight past the leaf to the page under it. Which face is showing is decided in
-     tickWhy from the angle instead; the verso starts hidden because that is the state at rest. */
-  #why .leaf .face{position:absolute;inset:0;background-size:cover;background-position:center 32%;overflow:hidden}
+  /* ⚠ No container-type here. It was `container-type:inline-size` and nothing in this file
+     uses an @container query or a cq unit — but containment cancels the preserve-3d context,
+     which is what a page-turn depends on. Chrome tolerated it; Safari's handling of that
+     conflict is its own. Do not reintroduce it. */
+  #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+  /* Two independent guards, because one of them is browser behaviour we cannot test here.
+     backface-visibility is the correct mechanism and now has a real 3D context to work in
+     (see the container-type note above). tickWhy ALSO sets visibility from the angle every
+     frame, so if an engine culls the wrong face we are still right. The verso starts hidden
+     because that is the state at rest, before the first frame runs. */
+  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 32%;overflow:hidden}
   #why .leaf .verso{visibility:hidden}
   #why .leaf .recto{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.18)}
   #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2) 0%,transparent 14%);pointer-events:none}
@@ -955,6 +960,7 @@
   document.documentElement.classList.remove('no-js');
   setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE = window.matchMedia('(hover: none)').matches;   /* a finger, not a pointer */
 
   /* The nav is fixed, so anything laid out inside a full-height sticky has to clear it by hand.
      Publish its real height once rather than guessing it in four different places. */
@@ -1064,7 +1070,13 @@
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
   function tickWhy(){
     if(!inView(whySection))return;
-    whySmooth=lerp(whySmooth,progressOf(whySection,stickyH()),0.14);
+    /* No easing on touch. The lerp exists to smooth a mouse wheel's coarse steps, but on iOS
+       requestAnimationFrame can be starved during a momentum scroll: the target runs away while
+       whySmooth sits still, and when frames resume the book races through several page-turns at
+       once. That is the "images change abruptly". A finger already supplies the smoothing, so
+       the book tracks the scroll exactly. */
+    const target=progressOf(whySection,stickyH());
+    whySmooth=COARSE?target:lerp(whySmooth,target,0.14);
     const p=whySmooth;
     const BOX=curBox();
     /* phase A — the wide box opens out; the title dissolves into dots */
@@ -1103,13 +1115,14 @@
     whyLeaves.forEach((leaf,i)=>{
       const local=easeInOut(Math.max(0,Math.min(1,(u-i-0.3)/0.55)));turn.push(local);
       leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;
-      const side=local<0.5?'front':'back';
-      if(leaf.dataset.side!==side){
-        leaf.dataset.side=side;
-        const recto=leaf.querySelector('.recto'),verso=leaf.querySelector('.verso');
-        if(recto)recto.style.visibility=side==='front'?'visible':'hidden';
-        if(verso)verso.style.visibility=side==='front'?'hidden':'visible';
-      }
+      /* Written EVERY frame, not only when the side changes. Caching it on the element meant
+         that if a single style write was ever dropped — a recomposite, a frame lost to a
+         momentum scroll — the leaf stayed wrong for good, showing the other page's picture.
+         Same value twice is a no-op for the style system, so this costs nothing. */
+      const front=local<0.5;
+      if(!leaf._f){leaf._f=leaf.querySelector('.recto');leaf._b=leaf.querySelector('.verso');}
+      if(leaf._f)leaf._f.style.visibility=front?'visible':'hidden';
+      if(leaf._b)leaf._b.style.visibility=front?'hidden':'visible';
     });
     /* the bar fills across the current spread; a spread hands over when its page is halfway turned (u = i+0.575) */
     if(bookBar){
@@ -1461,6 +1474,14 @@
     tickWf();requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
+  /* Belt and braces for iOS, and ONLY there: `scroll` keeps firing through a momentum flick
+     even where rAF is throttled, so the opening and the river stay pinned to the scroll
+     position rather than catching up in a lurch once the finger lifts. Not on a pointer, where
+     it would step the wheel easing twice per frame and change how the opening feels. */
+  if(COARSE)window.addEventListener('scroll',()=>{
+    if(inView(whySection))tickWhy();else placeBrand(1);
+    tickWf();
+  },{passive:true});
   /* ============================================================
      THE SPIRAL
      An Archimedean spiral r = R0 + K*t, drawn outward from the core so the cycle
