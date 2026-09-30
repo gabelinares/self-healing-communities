@@ -716,3 +716,41 @@ the scroll and hides exactly this measurement. Use `scrollTo({top:y,behavior:'in
 All of the above is verified in Chrome at 1440/820/390/360 and by measurement. The iOS-specific
 faults (10a, 10c) are fixed **by construction** — by removing the dependency on the browser
 behaviour that differs — rather than by reproducing them here. Worth one pass on a real handset.
+
+---
+
+## 11 · Housekeeping the substantive backlog left behind (Sept 30)
+
+Everything from Laura's September document is built and the rest is blocked on her, so this is
+the two things that were still genuinely missing rather than invented work.
+
+### 11a · The link had no share preview
+Neither page carried a single `og:`, `twitter:` or `description` tag. Pasted into an email,
+Slack or a post, `hero-versions.vercel.app` rendered as a bare grey URL — and Laura is
+circulating it (her Sept 28 note, "several people are concerned with the heading", is a person
+forwarding a link). That bare URL was the first thing a board member saw.
+
+Both pages now carry a description, canonical, theme-colour, the full Open Graph set and
+`twitter:card=summary_large_image`.
+
+The card itself is generated, not a photograph: `assets/share-card.jpg`, 1200x630, built from
+the site's own gradient, logo, fonts and headline so the preview and the page are obviously the
+same object. The source is `scratchpad/card.html` — **regenerate it from there if the headline
+ever changes**, rather than editing the JPEG.
+
+**⚠ Four hard-coded absolute URLs.** `og:image` will not resolve a relative path — scrapers do
+not run the page — so the domain is written out in `canonical`, `og:url` and `og:image` on both
+pages. All four need changing the day this moves off the preview domain.
+
+### 11b · Half a megabyte arriving before anything that needed it
+Measured on a throttled phone connection (4 Mbps, 150ms RTT): 1.74 MB over 20 requests, load
+event at 3.69s. The two heaviest items were `path-flow.svg` (241 KB) and `path-friction.svg`
+(223 KB) — the drag-compare artwork, which lives in the third section and cannot be seen for a
+long scroll. They are `<img>`, so `loading="lazy" decoding="async"` was the whole fix. Same for
+the footer mark on both pages.
+
+**1.74 MB -> 1.24 MB, 3.69s -> 2.67s.** First contentful paint was already 300ms and is
+unchanged; this is the tail, not the opening.
+
+Not deferred: the life-course photographs and the book's pages. They are needed within the
+first scroll and popping in would be worse than arriving early.
