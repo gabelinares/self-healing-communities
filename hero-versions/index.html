@@ -213,17 +213,22 @@
   #wayfinding .sticky{position:sticky;top:0;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
   #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
   #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.58fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
-  #wayfinding .lc-frame{position:relative;width:var(--lc-w,340px);max-width:100%;transition:width .7s cubic-bezier(.2,.7,.2,1);aspect-ratio:4/5;justify-self:center;border-radius:5px;overflow:hidden;border:8px solid var(--cream);box-shadow:0 55px 95px -38px rgba(15,42,34,.5),0 14px 32px -12px rgba(15,42,34,.22);background:var(--paper-warm)}
-  #wayfinding .lc-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .7s ease}
-  #wayfinding .lc-img.show{opacity:1}
-  #wayfinding .lc-cap{position:absolute;left:0;right:0;bottom:0;padding:32px 16px 13px;background:linear-gradient(0deg,rgba(6,81,60,.82),transparent);color:rgba(251,246,234,.78);font-size:10px;letter-spacing:.22em;text-transform:uppercase;z-index:2;display:flex;align-items:baseline;gap:10px}
-  #wayfinding .lc-cap .lc-lab{font-family:'Archivo',system-ui,sans-serif;font-weight:400;letter-spacing:.22em;text-transform:uppercase;font-size:10px;color:inherit}
-  #wayfinding .lc-cap .lc-lab::after{content:"\00b7";margin-left:10px;opacity:.75}
-  #wayfinding .lc-cap span#lcStage{font-family:var(--disp);font-weight:700;font-variation-settings:'wdth' var(--disp-wdth);text-transform:none;letter-spacing:-.02em;font-size:20px;color:var(--cream)}
-  /* fills across each life stage and resets on change, so the scroll distance to
-     the next image is visible rather than guessed */
-  #wayfinding .lc-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(15,42,34,.25);z-index:3;overflow:hidden}
-  #wayfinding .lc-bar i{display:block;height:100%;background:var(--terracotta-bright);transform:scaleX(0);transform-origin:left center}
+  /* ---------- the life course, all four stages at once ----------
+     This was one framed photograph that swapped and grew as you scrolled. Two of the client's
+     reviewers could not tell that it was changing at all, so the sequence is gone: the stages
+     sit side by side and the comparison is simply there to be looked at. */
+  #wayfinding .lc-grid{justify-self:center;width:100%;max-width:520px;z-index:5}
+  #wayfinding .lc-lead{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:500;margin-bottom:clamp(10px,1.6vh,16px);text-align:center}
+  #wayfinding .lc-rail{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(10px,1.5vw,16px)}
+  #wayfinding .lc-tile{margin:0;position:relative;border-radius:5px;overflow:hidden;
+    border:5px solid var(--cream);background:var(--paper-warm);
+    box-shadow:0 34px 60px -32px rgba(15,42,34,.46),0 8px 20px -10px rgba(15,42,34,.2)}
+  #wayfinding .lc-shot{aspect-ratio:4/5;background-size:cover;background-position:center}
+  #wayfinding .lc-tile figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+    padding:26px 12px 9px;background:linear-gradient(0deg,rgba(6,81,60,.86),transparent);
+    font-family:var(--disp);font-weight:700;font-variation-settings:'wdth' var(--disp-wdth);
+    letter-spacing:-.02em;font-size:clamp(14px,1.25vw,18px);color:var(--cream)}
   #wayfinding .copy{position:relative;text-align:left;max-width:620px;z-index:5;pointer-events:none}
   #wayfinding .copy .eyebrow{margin-bottom:16px}
   /* a 22-word headline can't ride the display scale the old six-word one did */
@@ -242,10 +247,17 @@
     /* The frame grows as the life unfolds. On a phone it grows ACROSS ONLY: a portrait card
        that also grew taller pushed its own top under the nav and squeezed the closing quote
        off the bottom of the screen. Height is fixed here and the crop simply widens. */
-    #wayfinding .lc-frame{width:var(--lc-w,216px);aspect-ratio:auto;height:clamp(172px,25svh,214px);border-width:6px}
-    #wayfinding .lc-cap{flex-direction:column;align-items:flex-start;gap:2px;padding:26px 13px 11px}
-    #wayfinding .lc-cap .lc-lab::after{content:none}
-    #wayfinding .lc-cap span#lcStage{font-size:19px;line-height:1.1}
+    /* On a phone the four slide sideways rather than stacking: a 2x2 grid at this width makes
+       each stage too small to read a face in, and four stacked eats the whole view. The next
+       tile stays half in frame, which is what says it scrolls.
+       ⚠ min-width:0 on both, or the flex rail's content width wins the `1fr` column's auto
+       minimum, the column grows to 900px and shoves the copy off the side of the screen. */
+    #wayfinding .lc-grid{max-width:none;min-width:0;width:100%}
+    #wayfinding .lc-rail{display:flex;min-width:0;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+    #wayfinding .lc-rail::-webkit-scrollbar{display:none}
+    #wayfinding .lc-tile{flex:0 0 auto;width:min(56vw,196px);scroll-snap-align:start;border-width:4px}
+    #wayfinding .lc-tile figcaption{font-size:15px;padding:20px 10px 8px}
     #wayfinding .copy{text-align:center;max-width:none}
     #wayfinding .copy .lede{margin-left:auto;margin-right:auto}
     #wayfinding .copy .wf-subhead{margin-left:auto;margin-right:auto}
@@ -262,19 +274,16 @@
   .how .head .lede{margin:18px auto 0;text-align:center}
   .compare{position:relative;max-width:1120px;margin:0 auto;height:clamp(560px,76vh,720px);border-radius:18px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 40px 80px -50px rgba(15,42,34,.5);user-select:none}
   .cpanel{position:absolute;inset:0;padding:clamp(32px,5.5vw,70px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-  .cpanel .ctag{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:16px}
-  .cpanel h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(31px,3.9vw,53px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);max-width:15ch;text-shadow:0 1px 16px rgba(0,0,0,.22)}
-  .cpanel ul{list-style:none;margin-top:26px;display:flex;flex-direction:column;gap:14px;max-width:34ch}
-  .cpanel li{font-size:18px;line-height:1.4;display:flex;gap:12px;align-items:flex-start;text-shadow:0 1px 12px rgba(0,0,0,.2)}
-  .cpanel li::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;margin-top:6px}
+  .cpanel h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(25px,2.9vw,40px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);max-width:15ch;text-shadow:0 1px 16px rgba(0,0,0,.22)}
+  .cpanel ul{list-style:none;margin-top:clamp(18px,2.6vh,30px);display:flex;flex-direction:column;gap:clamp(13px,1.8vh,19px);max-width:34ch}
+  .cpanel li{font-size:clamp(17px,min(1.5vw,2.2vh),23px);line-height:1.34;font-weight:450;display:flex;gap:13px;align-items:flex-start;text-shadow:0 1px 12px rgba(0,0,0,.2)}
+  .cpanel li::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:.5em}
   .cpanel.flow{background:radial-gradient(ellipse at 72% 28%,#0c6b50 0%,var(--emerald-deep) 72%);color:var(--cream);align-items:flex-end;text-align:right;z-index:0}
-  .cpanel.flow .ctag{color:var(--emerald-bright)}
   .cpanel.flow h3 em{font-style:normal;color:var(--emerald-bright)}
   .cpanel.flow ul{margin-left:auto}
   .cpanel.flow li{justify-content:flex-end;text-align:right}
   .cpanel.flow li::before{order:2;margin-top:6px;background:var(--emerald-bright)}
   .cpanel.friction{background:radial-gradient(ellipse at 28% 30%,#bb3c27 0%,#963019 82%);color:#fff;z-index:1;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
-  .cpanel.friction .ctag{color:#ffd9cd}
   .cpanel.friction h3 em{font-style:normal;color:#FFC9B4}
   .cpanel.friction li::before{background:#ffd9cd}
   .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
@@ -621,10 +630,10 @@
   /* the compare box and everything inside it */
   .compare{height:clamp(288px,42vh,560px)}
   .cpanel{padding:clamp(20px,3.1vh,44px) clamp(26px,4.2vw,62px)}
-  .cpanel .ctag{font-size:clamp(10.5px,1.4vh,13px);margin-bottom:clamp(7px,1.3vh,16px)}
-  .cpanel h3{font-size:clamp(24px,min(3.9vw,5.2vh),50px)}
-  .cpanel ul{margin-top:clamp(12px,2.2vh,26px);gap:clamp(6px,1.25vh,14px)}
-  .cpanel li{font-size:clamp(13.5px,1.8vh,18px)}
+  /* two words, not a sentence — the heading labels the panel and the list carries it */
+  .cpanel h3{font-size:clamp(22px,min(2.9vw,4.1vh),38px)}
+  .cpanel ul{margin-top:clamp(14px,2.4vh,30px);gap:clamp(9px,1.7vh,19px)}
+  .cpanel li{font-size:clamp(15px,min(1.5vw,2.35vh),22px)}
   .how .tie{margin:clamp(16px,2.6vh,40px) auto 0;font-size:clamp(13.5px,1.7vh,16px)}
   .how .more{margin-top:clamp(12px,2vh,30px)}
 
@@ -684,7 +693,7 @@
           <article class="wc">
             <div class="wc-eyebrow">Self-Healing Communities Fund</div>
             <h2 class="wc-title">It begins with <em>seeing differently.</em></h2>
-            <p class="wc-body">We keep treating and financing connected problems as separate ones. Homelessness, behavioral health, chronic disease, addiction, family instability, violence, and problems at school and work are shaped by common causes.</p>
+            <p class="wc-body">We keep treating and financing connected public problems as separate ones. Homelessness, behavioral health, chronic disease, addiction, family instability, violence, and problems at school and work are shaped by common causes.</p>
           </article>
           <article class="wc">
             <div class="wc-eyebrow">Page one</div>
@@ -784,21 +793,34 @@
     <div class="sticky">
       <canvas id="wf-canvas"></canvas>
       <div class="wf-layout">
-        <div class="lc-frame" id="lcFrame">
-          <div class="lc-img show" style="background-image:url('assets/infancy.jpg');background-image:image-set(url('assets/infancy.avif') type('image/avif'),url('assets/infancy.jpg') type('image/jpeg'))"></div>
-          <div class="lc-img" style="background-image:url('assets/childhood.jpg');background-image:image-set(url('assets/childhood.avif') type('image/avif'),url('assets/childhood.jpg') type('image/jpeg'))"></div>
-          <div class="lc-img" style="background-image:url('assets/adolescence.jpg');background-image:image-set(url('assets/adolescence.avif') type('image/avif'),url('assets/adolescence.jpg') type('image/jpeg'))"></div>
-          <div class="lc-img" style="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
-          <div class="lc-img" style="background-image:url('assets/parenthood.jpg');background-image:image-set(url('assets/parenthood.avif') type('image/avif'),url('assets/parenthood.jpg') type('image/jpeg'))"></div>
-          <div class="lc-img" style="background-image:url('assets/elderhood.jpg');background-image:image-set(url('assets/elderhood.avif') type('image/avif'),url('assets/elderhood.jpg') type('image/jpeg'))"></div>
-          <div class="lc-cap"><span class="lc-lab">Lives unfold</span><span id="lcStage">Infancy</span></div>
-          <div class="lc-bar"><i id="lcBar"></i></div>
+        <!-- Four stages, all on screen at once. Two reviewers could not make the scrolling
+             sequence reveal its changes, so there is nothing to operate here: the whole life
+             course is visible in one look. On a phone the four slide sideways instead of
+             stacking, which keeps them comparable without costing vertical room. -->
+        <div class="lc-grid" id="lcGrid">
+          <div class="lc-lead">Lives unfold</div>
+          <div class="lc-rail">
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/infancy.jpg');background-image:image-set(url('assets/infancy.avif') type('image/avif'),url('assets/infancy.jpg') type('image/jpeg'))"></div>
+            <figcaption>Infancy</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/childhood.jpg');background-image:image-set(url('assets/childhood.avif') type('image/avif'),url('assets/childhood.jpg') type('image/jpeg'))"></div>
+            <figcaption>Childhood</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/adolescence.jpg');background-image:image-set(url('assets/adolescence.avif') type('image/avif'),url('assets/adolescence.jpg') type('image/jpeg'))"></div>
+            <figcaption>Adolescence</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
+            <figcaption>Adulthood</figcaption>
+          </figure>
+          </div>
         </div>
         <div class="copy">
-          <div class="eyebrow">Like water finding its way</div>
           <h2 class="h2">In Self-Healing Communities people see what is disrupting the conditions for wellbeing &mdash; <em>and build the knowledge, capacity and financing to restore them.</em></h2>
-          <p class="wf-subhead">We can&rsquo;t force a river to flow; we can restore the conditions that let it.</p>
-          <p class="wf-quote">&ldquo;We kept fighting the smoke instead of putting out the fire. Every group was doing its part, but now we are helping the whole community solve the problem together.&rdquo;<span class="wf-attr">Founder, Family Philanthropy</span></p>
+          <p class="wf-quote">&ldquo;We kept fighting the smoke instead of putting out the fire. Every group was doing its part, but now the whole community is working to solve the problem together.&rdquo;<span class="wf-attr">Founder, Family Philanthropy</span></p>
         </div>
       </div>
     </div>
@@ -818,8 +840,7 @@
         <div class="grain-tex"></div>
         <img class="cbg" src="assets/path-flow.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <div style="position:relative;z-index:2">
-          <div class="ctag">A healthy community approach</div>
-          <h3>Conditions that let <em>wellbeing flow.</em></h3>
+          <h3>New Way</h3>
           <ul><li>Healthy relationships, durable resources</li><li>Earlier action, less crisis</li><li>Learning and adapting together</li><li>People grow stronger together</li><li>Stronger with each generation</li></ul>
         </div>
       </div>
@@ -827,8 +848,7 @@
         <div class="grain-tex" style="mix-blend-mode:multiply;opacity:.2"></div>
         <img class="cbg" src="assets/path-friction.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <div style="position:relative;z-index:2">
-          <div class="ctag">One fix at a time</div>
-          <h3>Leaning on <em>constant rescue.</em></h3>
+          <h3>Old Way</h3>
           <ul><li>People adapt to what's wrong</li><li>Effort scatters, barriers remain</li><li>Help arrives after harm</li><li>Adversity carries forward</li></ul>
         </div>
       </div>
@@ -954,13 +974,11 @@
   <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
   <canvas id="orbitCanvas"></canvas>
   <div class="wrap"><div class="inner">
-    <div class="eyebrow reveal">Gather around</div>
     <h2 class="h2 reveal">Each generation will leave the next <em>stronger.</em></h2>
     <div class="fund-label reveal">Self-Healing Communities Fund</div>
-    <div class="tags reveal"><div>Technically rigorous data</div><div>Deeply hopeful action</div><div>Stewardship for impact</div></div>
+    <div class="tags reveal"><div>Stewardship for impact</div><div>Technically rigorous data</div><div>Deeply hopeful action</div></div>
     <p class="reveal">Get the briefing and we'll keep you close to the work as it grows.</p>
     <a class="btn light reveal" href="#">Get the briefing <span class="arrow">→</span></a>
-    <div class="note reveal">A short read · no obligation · unsubscribe anytime</div>
   </div></div>
 </section>
 
@@ -1153,7 +1171,14 @@
     }
     /* each copy state fades out as its page lifts and the next fades in as the new spread lands */
     whyStates.forEach((el,s)=>{
-      const inA=s===0?smooth(0.6,1,esh):smooth(0.55,1,turn[s-1]),outA=s<N?smooth(0,0.45,turn[s]):0,o=inA*(1-outA);
+      /* The first state leads. It used to come up at the very END of the book's slide (0.6..1),
+         so the book had already landed before "It begins with seeing differently" was readable.
+         The client wants that line read first — it is the core thing she wants remembered — so
+         it now rises while the book is still moving aside and is at full strength the moment the
+         book clears the copy column (measured: esh 0.86), so the words are read first and the
+         book settles in beside them. It cannot start earlier than this — the book's path crosses
+         this column, and bringing the text up sooner simply prints it under the photograph. */
+      const inA=s===0?smooth(0.45,0.86,esh):smooth(0.55,1,turn[s-1]),outA=s<N?smooth(0,0.45,turn[s]):0,o=inA*(1-outA);
       el.style.opacity=o.toFixed(3);el.style.transform='translateY('+((1-inA)*18-outA*18).toFixed(1)+'px)';el.style.visibility=o<0.01?'hidden':'visible';
     });
   }
@@ -1354,13 +1379,9 @@
 
   /* WAYFINDING — scatter → gentle flow, with a life-course frame that advances on scroll */
   const wfSection=document.querySelector('#wayfinding .scroll-area'),cvs=document.getElementById('wf-canvas'),ctx=cvs.getContext('2d');
-  const lcImgs=document.querySelectorAll('#wayfinding .lc-img'),lcStage=document.getElementById('lcStage'),lcBar=document.getElementById('lcBar');
-  const lcFrame=document.querySelector('#wayfinding .lc-frame');
-  const STAGES=['Infancy','Childhood','Adolescence','Adulthood','Parenthood','Elderhood'];
-  /* the frame grows as the person ages, so the span of a life is felt and not just captioned */
-  /* On a phone the height is pinned by CSS and only this width moves, so it can travel further
-     than the old 168-232 without costing any vertical room. Capped by the frame's own max-width. */
-  function lcWidth(i){const m=window.innerWidth<=820,a=m?180:252,b=m?300:362;return a+(b-a)*(i/(STAGES.length-1));}
+  /* The life course used to be one framed photograph that swapped and grew with the scroll, and
+     all of its state lived here. It is four static tiles now — nothing to drive. The river's
+     own scroll (scatter -> flow) is untouched. */
   let particles=[],wfW=0,wfH=0,wfDpr=1;
   const FLOW_SPEED=0.05;  /* how fast the current carries a dot down the river (fraction of width per second) */
   function flowY(u){return wfH*0.46+Math.sin(u*Math.PI*2.4+0.4)*wfH*0.09;}  /* the river's gentle meander */
@@ -1402,19 +1423,9 @@
       wg.addColorStop(0,'rgba(244,236,220,0.94)');wg.addColorStop(0.45,'rgba(244,236,220,0.78)');wg.addColorStop(0.75,'rgba(244,236,220,0.38)');wg.addColorStop(1,'rgba(244,236,220,0)');
       ctx.fillStyle=wg;ctx.fillRect(0,0,wfW,wfH);
     }
-    /* life-course frame advances with scroll. Equal spans per stage (rather than the
-       old rounding, which gave the first and last images half a span) so the bar
-       below the frame measures the real distance to the next image. */
-    const seg=1/STAGES.length;
-    const idx=Math.max(0,Math.min(STAGES.length-1,Math.floor(p/seg)));
-    lcImgs.forEach((im,i)=>im.classList.toggle('show',i===idx));
-    if(lcFrame&&lcFrame.dataset.idx!==String(idx)){lcFrame.dataset.idx=String(idx);lcFrame.style.setProperty('--lc-w',lcWidth(idx).toFixed(1)+'px');}
-    if(lcStage&&lcStage.textContent!==STAGES[idx]) lcStage.textContent=STAGES[idx];
-    if(lcBar) lcBar.style.transform='scaleX('+Math.max(0,Math.min(1,(p-idx*seg)/seg)).toFixed(4)+')';
   }
   sizeWf();
-  window.addEventListener('resize',()=>{sizeWf();if(lcFrame&&lcFrame.dataset.idx!=null)lcFrame.style.setProperty('--lc-w',lcWidth(+lcFrame.dataset.idx).toFixed(1)+'px');});
-  if(lcFrame)lcFrame.style.setProperty('--lc-w',lcWidth(0).toFixed(1)+'px');
+  window.addEventListener('resize',sizeWf);
 
   /* HOW — drag to compare */
   (function(){

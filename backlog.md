@@ -754,3 +754,64 @@ unchanged; this is the tail, not the opening.
 
 Not deferred: the life-course photographs and the book's pages. They are needed within the
 first scroll and popping in would be worse than arriving early.
+
+---
+
+## 12 · Laura's Oct 1 round — part one (Oct 1)
+
+Her list ran to 18 items; these eleven were confirmed to build. The spiral work (step names on
+phone, the double loop, moving the diagram and its explanation together), the opening headline,
+"new normal" and the film clip are not in this pass.
+
+### 12a · Copy, straightforward
+- **"public"** added: "We keep treating and financing connected **public** problems as separate
+  ones."
+- **Both water references deleted** from the river view — the eyebrow "Like water finding its
+  way" and the line "We can't force a river to flow; we can restore the conditions that let it."
+  She considers the rest of that view strong and the metaphor a distraction. This also closes the
+  subhead-echo question that had been open since §8i.
+- **The founder quote** now ends "…but now **the whole community is working to solve the problem
+  together**", putting the community at the centre rather than the Fund.
+- **Closing view**: Stewardship for impact leads the three lines; "A short read · no obligation ·
+  unsubscribe anytime" and the "Gather around" eyebrow are gone (the ring of dots already says it).
+
+### 12b · "Old Way" / "New Way"
+The two compare panels carried an eyebrow AND a display headline ("One fix at a time" + "Leaning
+on constant rescue"). Both are replaced by a single two-word label. The friction panel is the one
+clipped from the left, so the drag reads left-to-right as old -> new.
+
+Her reason was that it "would put the lists below in a more dominant place — and we like those
+lists", so this is not only a deletion: the heading drops from clamp(24,…,50) to
+clamp(22,…,38) and the list rises from clamp(13.5,…,18) to clamp(15,…,22) with the gaps opened
+out. `.ctag` and its three colour rules are deleted; nothing used them.
+
+### 12c · The life course is a grid, not a sequence
+*"two reviewers still find it difficult to do the scrolling and seeing the change"* — so the
+scroll-driven sequence is gone. Four stages (infancy, childhood, adolescence, adulthood) sit
+side by side and the comparison is simply there to be looked at. All of its state —
+`lcImgs/lcFrame/lcStage/lcBar/STAGES/lcWidth`, the growth curve, the per-stage progress bar —
+is deleted. **The river's own scroll (scatter -> flow) is untouched**; only the photographs
+changed. Parenthood and elderhood are no longer used on the page.
+
+On a phone they slide sideways rather than stacking (Gabriel's call): a 2x2 grid at 390px makes
+each stage too small to read a face in, and four stacked eats the whole view. The next tile stays
+half in frame, which is what says it scrolls.
+
+**⚠ `min-width:0` on both `.lc-grid` and `.lc-rail`.** Without it the flex rail's content width
+(814px) wins the `1fr` column's auto minimum, the column grows to fit, and the copy is shoved off
+the side of the screen. That is exactly what happened on the first attempt.
+
+### 12d · "It begins with seeing differently" leads
+*"can you open with the left side so the first thing that people read is 'It begins with seeing
+differently'… that would be consistent with the other page turning."* **This instruction is
+ambiguous and the reading here is a judgement call** — that line is already the first copy in the
+book, so it cannot be about ordering. What it was not doing is being read *first*: it came up at
+the very end of the book's slide (esh 0.6..1), by which time the book had landed and taken the eye.
+
+It now rises during the slide and is at full strength the moment the book clears the copy column
+(measured: esh 0.86, book left 545 against a column ending at 541). The words are read, then the
+book settles in beside them.
+
+It cannot start earlier than that. The book's path crosses this column, so bringing the text up
+sooner just prints it under the photograph — which is what the first attempt at this did.
+**If Laura meant something else, this is one constant.**
