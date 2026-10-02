@@ -1,0 +1,1852 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Self-Healing Communities Fund</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<meta name="description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta name="theme-color" content="#F4ECDC" />
+<link rel="canonical" href="https://hero-versions.vercel.app/" />
+<!-- How the link looks when it is pasted into an email, a message or a post. Without these a
+     shared link renders as a bare grey URL, which is the first thing a board member sees.
+     ⚠ og:image must be an ABSOLUTE url — scrapers do not resolve relative paths — so the
+     domain is hard-coded here and in canonical/og:url. Change all four when the site moves
+     off the preview domain. The card itself is generated to match the hero; see backlog 11a. -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Self-Healing Communities Fund" />
+<meta property="og:title" content="Self-Healing Communities Fund" />
+<meta property="og:description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta property="og:url" content="https://hero-versions.vercel.app/" />
+<meta property="og:image" content="https://hero-versions.vercel.app/assets/share-card.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Self-Healing Communities Fund — from crisis response to lasting community capacity, to leave each generation stronger." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Self-Healing Communities Fund" />
+<meta name="twitter:description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta name="twitter:image" content="https://hero-versions.vercel.app/assets/share-card.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap"></noscript>
+<style>
+  :root{
+    --emerald:#009169;--emerald-bright:#00DBB6;--emerald-deep:#06513C;--emerald-soft:#A4D6C6;
+    --paper:#F4ECDC;--paper-warm:#EFE2CB;--cream:#FBF6EA;--terracotta:#C9442F;--terracotta-soft:#E8A88E;--terracotta-bright:#C36938;
+    --ink:#0F2A22;--ink-soft:#4A5F58;
+    /* display axis settings — one place to retune the whole voice */
+    --disp:'Archivo','Archivo Narrow',system-ui,sans-serif;--disp-wdth:90;--disp-wght:700;--rule:rgba(15,42,34,.16);--rule-soft:rgba(15,42,34,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;font-variation-settings:'wdth' 100;-webkit-font-smoothing:antialiased;line-height:1.5}
+  body{min-height:100vh;overflow-x:hidden}
+  section{scroll-margin-top:80px}
+  img{max-width:100%;display:block}
+
+  /* ---------- atoms ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--ink-soft);font-weight:600}
+  .h1{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(42px,6vw,82px);line-height:.98;letter-spacing:-.032em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h1 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  /* the second colour starts its own line, as it does in the client's reference —
+     the break is set, not left to wrapping, so the shape holds at every width */
+  .h1 em::before,.h2 em::before,#why .wc-title em::before,.cpanel h3 em::before{content:"\A";white-space:pre}
+  .h2{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(32px,4.6vw,60px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h2 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  .lede{font-size:19px;line-height:1.52;color:var(--ink-soft);max-width:48ch;letter-spacing:-.005em}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--emerald);color:var(--cream);text-decoration:none;padding:15px 26px;border-radius:999px;font-weight:500;font-size:14.5px;transition:transform .2s,background .2s;border:1px solid transparent}
+  .btn:hover{transform:translateY(-1px);background:var(--emerald-deep)}
+  .btn .arrow{display:inline-block;transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(3px)}
+  .btn.alt{background:transparent;color:var(--cream);border:1px solid rgba(251,246,234,.5)}
+  .btn.alt:hover{background:rgba(251,246,234,.12)}
+  .btn.dark{background:transparent;color:var(--emerald-deep);border:1px solid var(--rule)}
+  .btn.dark:hover{background:rgba(0,145,105,.08);border-color:var(--emerald)}
+  .pagelink{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;color:var(--emerald-deep);text-decoration:none;transition:gap .2s}
+  .pagelink:hover{gap:14px}
+  .pagelink .arrow{transition:transform .2s}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  .no-js .reveal{opacity:1;transform:none}
+
+  /* ---------- NAV ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;background:transparent;border-bottom:1px solid transparent;transition:background .4s ease,box-shadow .4s ease,border-color .4s ease,backdrop-filter .4s ease,-webkit-backdrop-filter .4s ease}
+  .nav.solid{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
+  .nav-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav .brand img{height:30px}
+  .nav-links{display:flex;align-items:center;gap:2px}
+  .nav-links a{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:999px;transition:all .2s}
+  .nav-links a:hover{color:var(--ink);background:rgba(0,145,105,.08)}
+  .nav-links a.cta{background:var(--emerald);color:var(--cream);margin-left:8px}
+  .nav-links a.cta:hover{background:var(--emerald-deep)}
+  .nav-preview{max-width:1280px;margin:0 auto;height:0;overflow:hidden;transition:height .3s}
+  .nav-preview.open{height:36px}
+  .nav-preview .pv{padding:9px 32px;font-size:13px;color:var(--ink-soft);font-family:'Archivo',system-ui,sans-serif}
+  @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px}}
+
+  /* ============================================================
+     OPENING — the book is the cover (eyes + intro) and turns into the cascades
+     ============================================================ */
+  #why{position:relative;background:#E8D6B8}
+  #why .scroll-area{height:820vh;position:relative}
+  /* ⚠ svh, NOT vh. On iOS Safari `vh` means the viewport with the URL bar HIDDEN, while
+     window.innerHeight — which every JS placement inside this sticky is computed from —
+     means the viewport as it actually is right now. With the bar showing, the two differ
+     by ~85px, so the whole composition was laid out for a frame taller than the one on
+     screen: the intro paragraph landed on top of the photo and the bottom was cropped.
+     `svh` is the small viewport and never changes as the bar comes and goes, so it agrees
+     with the measured height at every moment. See stickyH() below — nothing in here may
+     use window.innerHeight again. */
+  #why .sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:
+      radial-gradient(58% 50% at 12% 12%,rgba(0,145,105,.15),transparent 70%),
+      radial-gradient(54% 56% at 90% 92%,rgba(201,68,47,.12),transparent 70%),
+      radial-gradient(46% 40% at 84% 14%,rgba(0,219,182,.10),transparent 72%),
+      radial-gradient(ellipse at 50% 34%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
+  #why .grain-tex{z-index:1}
+  /* organic drifting colour behind the frame — greens and the brighter orange, nudged by the cursor (drawGlow) */
+  #why .hero-glow{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  /* the book opens from a wide box (whitespace + title) into the full frame — one continuous image */
+  #why .clip-window{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;
+    clip-path:inset(24vh 16vw 26vh 16vw round 16px);will-change:clip-path}
+  .no-js #why .clip-window{clip-path:none}
+  /* the nav's own logo IS the hero lockup: placeBrand blows it up into the opening view and returns it to the bar on scroll */
+  .nav .brand{transform-origin:0 0;will-change:transform}
+  #why .progress{position:absolute;top:6vh;right:6vw;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
+  #why .stage{display:flex;flex-direction:column;align-items:center;gap:30px;z-index:4}
+  #why .book-zoom{transform-origin:25% 50%;will-change:transform}
+  #why .book{position:relative;width:min(92vw,1200px,calc((100vh - 240px)*1.5));aspect-ratio:3/2;perspective:2800px;transform-style:preserve-3d;flex-shrink:0}
+  #why .book::after{content:"";position:absolute;left:5%;right:5%;bottom:-20px;height:26px;background:radial-gradient(ellipse at center,rgba(42,30,21,.42),transparent 70%);filter:blur(12px);z-index:0}
+  #why .book .edge{position:absolute;top:1.5%;bottom:1.5%;width:8px;background:repeating-linear-gradient(180deg,#EFE2CB 0 1.5px,#D8C8A6 1.5px 3px);z-index:1;border-radius:1px;box-shadow:0 4px 8px -3px rgba(0,0,0,.4)}
+  #why .book .edge.left{left:-8px;border-radius:2px 0 0 2px}
+  #why .book .edge.right{right:-8px;border-radius:0 2px 2px 0}
+  #why .book-base{position:absolute;inset:0;display:flex;z-index:2;box-shadow:0 44px 90px -34px rgba(42,30,21,.5);border-radius:3px;overflow:hidden}
+  #why .page{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%)}
+  #why .page.page-left{box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.26)}
+  #why .page.page-right{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.22)}
+  #why .photo-face{position:absolute;inset:0;background-size:cover;background-position:center 32%}
+  #why .spine{position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:linear-gradient(90deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.3) 100%);z-index:60;pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.4)}
+  #why .leaves{position:absolute;inset:0;transform-style:preserve-3d;z-index:5}
+  /* same progress bar as the life-course frame: fills across each spread, restarts when the page turns.
+     It sits off the book (the turning leaf is 3D and would pass over it) — upright beside it, flat under it on phones; layoutWhy places it */
+  #why .book-bar{position:absolute;width:4px;background:rgba(15,42,34,.25);z-index:6;overflow:hidden;opacity:0;pointer-events:none}
+  #why .book-bar i{display:block;width:100%;height:100%;background:var(--terracotta-bright);transform:scaleY(0);transform-origin:center top}
+  #why .book-bar.flat{height:4px}
+  #why .book-bar.flat i{transform:scaleX(0);transform-origin:left center}
+  /* ⚠ No container-type here. It was `container-type:inline-size` and nothing in this file
+     uses an @container query or a cq unit — but containment cancels the preserve-3d context,
+     which is what a page-turn depends on. Chrome tolerated it; Safari's handling of that
+     conflict is its own. Do not reintroduce it. */
+  #why .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+  /* Two independent guards, because one of them is browser behaviour we cannot test here.
+     backface-visibility is the correct mechanism and now has a real 3D context to work in
+     (see the container-type note above). tickWhy ALSO sets visibility from the angle every
+     frame, so if an engine culls the wrong face we are still right. The verso starts hidden
+     because that is the state at rest, before the first frame runs. */
+  #why .leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-size:cover;background-position:center 32%;overflow:hidden}
+  #why .leaf .verso{visibility:hidden}
+  #why .leaf .recto{box-shadow:inset 30px 0 44px -18px rgba(0,0,0,.18)}
+  #why .leaf .recto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.2) 0%,transparent 14%);pointer-events:none}
+  #why .leaf .verso{transform:rotateY(180deg);box-shadow:inset -30px 0 44px -18px rgba(0,0,0,.18)}
+  /* text pages (cover intro + cascade text) */
+  /* the pages carry only the quotes — one shared size (set by fitWhy as --q-fs) so every spread reads the same */
+  #why .qpage{background:linear-gradient(180deg,#FBF6EA 0%,#F1E6CF 100%);display:flex;flex-direction:column;justify-content:safe center;padding:12% 13%}
+  #why .q-text{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:var(--q-fs,24px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);text-wrap:pretty;margin:0}
+  #why .q-text .qm{display:block;font-style:normal;font-size:2.6em;line-height:.8;height:.5em;color:var(--emerald-soft)}
+  #why .q-rule{width:44px;height:1px;background:var(--emerald);margin:calc(var(--q-fs,24px)*1.1) 0 calc(var(--q-fs,24px)*.7)}
+  #why .q-attr{font-family:'Archivo',system-ui,sans-serif;font-size:max(10px,calc(var(--q-fs,24px)*.44));font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+  #why .q-attr .q-src{display:block;margin-top:.55em;font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:1.06em;letter-spacing:.005em;text-transform:none;color:rgba(15,42,34,.55)}
+  #why .q-ph .q-text,#why .q-ph .qm{color:rgba(15,42,34,.34)}
+  #why .q-ph .q-attr{color:rgba(15,42,34,.42)}
+  /* the words sit beside the book (below it on phones) and change as the pages turn; fitWhy sets the base font-size */
+  #why .why-copy{position:absolute;z-index:6;display:flex;flex-direction:column;justify-content:safe center;gap:1.8em;overflow:hidden;font-size:20px}
+  #why .wc-stack{display:grid}
+  #why .wc{grid-area:1/1;align-self:center;opacity:0;will-change:opacity,transform}
+  .no-js #why .wc:first-child{opacity:1}
+  #why .wc>:last-child{margin-bottom:0}
+  #why .wc-eyebrow{font-family:'Archivo',system-ui,sans-serif;font-size:.6em;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:1.1em}
+  #why .wc-title{font-family:var(--disp);font-weight:var(--disp-wght);font-size:2.15em;line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin:0 0 .6em;text-wrap:balance}
+  #why .wc-title em{font-style:normal;color:var(--emerald)}
+  #why .wc-body{font-family:'Archivo',system-ui,sans-serif;font-size:1em;line-height:1.55;color:var(--ink);margin:0 0 1em;text-wrap:pretty}
+  #why .wc-stats{display:flex;gap:1.4em;flex-wrap:wrap;margin:.3em 0 1.2em}
+  #why .wc-stats .stat{flex:1 1 0;min-width:0;max-width:17em;border-top:1px solid rgba(15,42,34,.18);padding-top:.75em}
+  #why .wc-stats .num{display:block;font-family:var(--disp);font-weight:800;font-size:2.5em;line-height:.95;color:var(--terracotta-bright);letter-spacing:-.035em;font-variation-settings:'wdth' var(--disp-wdth);margin-bottom:.3em}
+  #why .wc-stats .lbl{display:block;font-family:'Archivo',system-ui,sans-serif;font-size:.74em;line-height:1.4;color:var(--ink-soft)}
+  /* a single stat is the page's headline act — no rule above it, no column to
+     share, and the sentence under it reads as its subhead */
+  #why .wc-stats.solo{display:block;margin:.1em 0 1em}
+  #why .wc-stats.solo .stat{max-width:none;border-top:0;padding-top:0}
+  #why .wc-stats.solo .num{font-size:2.55em;text-wrap:nowrap}
+  #why .wc-stats.solo .lbl{font-size:.88em;line-height:1.35;color:var(--ink)}
+  #why .wc-stats .num .per{font-weight:700}
+  #why .why-copy .cta-row{justify-content:flex-start;opacity:0;font-size:14px}
+  #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
+  #why canvas#heroTitle{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
+  #why .hero-lede{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:6;width:min(720px,82vw);text-align:center;font-family:'Archivo',system-ui,sans-serif;font-weight:400;font-size:15px;line-height:1.5;color:#12120F;pointer-events:none;opacity:0}
+  /* near-true-black body, with the Fund's name carrying the only colour — per the client's note on grey text */
+  #why .hero-lede b{font-weight:600;color:var(--emerald-deep)}
+  #why .cover-meta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+  #why .scrollcue{position:absolute;bottom:4.5vh;left:50%;transform:translateX(-50%);z-index:7;width:24px;height:38px;border:2px solid rgba(15,42,34,.38);border-radius:14px;display:flex;justify-content:center;transition:opacity .4s}
+  #why .scrollcue span{width:4px;height:8px;border-radius:2px;background:var(--emerald);margin-top:6px;animation:scrolld 1.8s infinite}
+  @keyframes scrolld{0%{opacity:0;transform:translateY(0)}30%{opacity:1}65%{opacity:1;transform:translateY(13px)}100%{opacity:0;transform:translateY(13px)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  @media (max-width:720px){
+    #why .book{width:94vw}
+    #why .progress{display:none}
+    #why .qpage{padding:9% 10%}
+    #why .why-copy{gap:1.2em;justify-content:safe flex-start}
+    #why .wc-title{font-size:1.65em}
+    #why .wc{align-self:start}
+    #why .why-copy .btn.dark{display:none}  /* the nav already carries Get Involved; one CTA fits under the copy */
+    #why .hero-lede{font-size:13px;line-height:1.5;width:86vw}
+  }
+
+  /* ============================================================
+     WAYFINDING — scatter → flow (particle river)
+     ============================================================ */
+  #wayfinding .scroll-area{height:620vh;position:relative}
+  #wayfinding .sticky{position:sticky;top:0;height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 32%,#FBF6EA 0%,#F2E7CF 55%,#E8D6B8 100%)}
+  #wayfinding canvas{position:absolute;inset:0;width:100%;height:100%}
+  #wayfinding .wf-layout{position:absolute;inset:0;display:grid;grid-template-columns:0.58fr 1fr;align-items:center;gap:clamp(24px,5vw,72px);padding:0 clamp(28px,7vw,116px);z-index:5}
+  /* ---------- the life course, all four stages at once ----------
+     This was one framed photograph that swapped and grew as you scrolled. Two of the client's
+     reviewers could not tell that it was changing at all, so the sequence is gone: the stages
+     sit side by side and the comparison is simply there to be looked at. */
+  #wayfinding .lc-grid{justify-self:center;width:100%;max-width:520px;z-index:5}
+  #wayfinding .lc-lead{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:500;margin-bottom:clamp(10px,1.6vh,16px);text-align:center}
+  #wayfinding .lc-rail{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(10px,1.5vw,16px)}
+  #wayfinding .lc-tile{margin:0;position:relative;border-radius:5px;overflow:hidden;
+    border:5px solid var(--cream);background:var(--paper-warm);
+    box-shadow:0 34px 60px -32px rgba(15,42,34,.46),0 8px 20px -10px rgba(15,42,34,.2)}
+  #wayfinding .lc-shot{aspect-ratio:4/5;background-size:cover;background-position:center}
+  #wayfinding .lc-tile figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;
+    padding:26px 12px 9px;background:linear-gradient(0deg,rgba(6,81,60,.86),transparent);
+    font-family:var(--disp);font-weight:700;font-variation-settings:'wdth' var(--disp-wdth);
+    letter-spacing:-.02em;font-size:clamp(14px,1.25vw,18px);color:var(--cream)}
+  #wayfinding .copy{position:relative;text-align:left;max-width:620px;z-index:5;pointer-events:none}
+  #wayfinding .copy .eyebrow{margin-bottom:16px}
+  /* a 22-word headline can't ride the display scale the old six-word one did */
+  #wayfinding .copy .h2{font-size:clamp(27px,3.25vw,45px);line-height:1.04}
+  #wayfinding .copy .lede{margin:20px 0 0}
+  #wayfinding .wf-subhead{font-family:'Archivo',system-ui,sans-serif;font-weight:400;font-size:18px;line-height:1.58;color:var(--ink-soft);margin-top:18px;max-width:34ch}
+  #wayfinding .wf-quote{margin-top:22px;font-family:'Fraunces',serif;font-style:italic;font-size:16px;line-height:1.5;color:var(--ink);max-width:52ch}
+  #wayfinding .wf-quote .wf-attr{display:block;margin-top:8px;font-family:'Archivo',sans-serif;font-style:normal;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  #wayfinding .corners{position:absolute;inset:26px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;color:var(--ink-soft);font-size:11px;letter-spacing:.2em;text-transform:uppercase;z-index:6}
+  #wayfinding .corners .r{text-align:right}
+  @media (max-width:820px){
+    /* the fixed nav overlays this sticky, so the view's own top padding has to clear it —
+       without it the card's head was under the bar from the very first life stage */
+    #wayfinding .wf-layout{grid-template-columns:1fr;align-content:center;gap:22px;
+      padding:calc(var(--navh,62px) + 12px) 26px 16px}
+    /* The frame grows as the life unfolds. On a phone it grows ACROSS ONLY: a portrait card
+       that also grew taller pushed its own top under the nav and squeezed the closing quote
+       off the bottom of the screen. Height is fixed here and the crop simply widens. */
+    /* On a phone the four slide sideways rather than stacking: a 2x2 grid at this width makes
+       each stage too small to read a face in, and four stacked eats the whole view. The next
+       tile stays half in frame, which is what says it scrolls.
+       ⚠ min-width:0 on both, or the flex rail's content width wins the `1fr` column's auto
+       minimum, the column grows to 900px and shoves the copy off the side of the screen. */
+    #wayfinding .lc-grid{max-width:none;min-width:0;width:100%}
+    #wayfinding .lc-rail{display:flex;min-width:0;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+    #wayfinding .lc-rail::-webkit-scrollbar{display:none}
+    #wayfinding .lc-tile{flex:0 0 auto;width:min(56vw,196px);scroll-snap-align:start;border-width:4px}
+    #wayfinding .lc-tile figcaption{font-size:15px;padding:20px 10px 8px}
+    #wayfinding .copy{text-align:center;max-width:none}
+    #wayfinding .copy .lede{margin-left:auto;margin-right:auto}
+    #wayfinding .copy .wf-subhead{margin-left:auto;margin-right:auto}
+    #wayfinding .copy .wf-quote{margin-left:auto;margin-right:auto}
+    #wayfinding .corners{display:none}
+  }
+
+  /* ============================================================
+     3 · HOW — drag to compare
+     ============================================================ */
+  .how{background:var(--paper);padding:clamp(80px,10vw,130px) 0}
+  .how .head{text-align:center;max-width:720px;margin:0 auto 44px}
+  .how .head .h2{margin-top:14px}
+  .how .head .lede{margin:18px auto 0;text-align:center}
+  .compare{position:relative;max-width:1120px;margin:0 auto;height:clamp(560px,76vh,720px);border-radius:18px;overflow:hidden;border:1px solid var(--rule);box-shadow:0 40px 80px -50px rgba(15,42,34,.5);user-select:none}
+  .cpanel{position:absolute;inset:0;padding:clamp(32px,5.5vw,70px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+  .cpanel h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(25px,2.9vw,40px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);max-width:15ch;text-shadow:0 1px 16px rgba(0,0,0,.22)}
+  .cpanel ul{list-style:none;margin-top:clamp(18px,2.6vh,30px);display:flex;flex-direction:column;gap:clamp(13px,1.8vh,19px);max-width:34ch}
+  .cpanel li{font-size:clamp(17px,min(1.5vw,2.2vh),23px);line-height:1.34;font-weight:450;display:flex;gap:13px;align-items:flex-start;text-shadow:0 1px 12px rgba(0,0,0,.2)}
+  .cpanel li::before{content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:.5em}
+  .cpanel.flow{background:radial-gradient(ellipse at 72% 28%,#0c6b50 0%,var(--emerald-deep) 72%);color:var(--cream);align-items:flex-end;text-align:right;z-index:0}
+  .cpanel.flow h3 em{font-style:normal;color:var(--emerald-bright)}
+  .cpanel.flow ul{margin-left:auto}
+  .cpanel.flow li{justify-content:flex-end;text-align:right}
+  .cpanel.flow li::before{order:2;margin-top:6px;background:var(--emerald-bright)}
+  .cpanel.friction{background:radial-gradient(ellipse at 28% 30%,#bb3c27 0%,#963019 82%);color:#fff;z-index:1;clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+  .cpanel.friction h3 em{font-style:normal;color:#FFC9B4}
+  .cpanel.friction li::before{background:#ffd9cd}
+  .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  /* artwork sits flush to the bottom and to the edge opposite each panel's copy,
+     mirrored so the arrows run out of that edge. object-position is set to the
+     OPPOSITE side because scaleX flips the element after it is placed. */
+  /* ⚠ THE DRAG DOES NOT SURVIVE A PHONE. The two panels are stacked in one box and the
+     top one is clipped to a fraction of the width, which is the whole trick — but it means
+     each panel only ever shows part of its own copy, and it needs to be wide enough that
+     the visible part is still a readable column. At 326px it was not: both headlines and
+     every bullet were cut through the middle of a word, and the two halves collided.
+     Below 720px the panels simply stack, full width each, and the handle and the hint go
+     away. Same two ideas, same order, read one after the other instead of side by side. */
+  @media (max-width:720px){
+    .compare{height:auto;display:flex;flex-direction:column;overflow:visible;
+      border:0;box-shadow:none;border-radius:0;background:none}
+    .cpanel{position:relative;inset:auto;clip-path:none !important;border-radius:16px;
+      padding:34px 26px 30px;min-height:0;justify-content:flex-start;
+      box-shadow:0 26px 54px -34px rgba(15,42,34,.5)}
+    .cpanel.friction{order:1}
+    .cpanel.flow{order:2;margin-top:14px;align-items:flex-start;text-align:left}
+    .cpanel.flow ul{margin-left:0}
+    .cpanel.flow li{justify-content:flex-start;text-align:left}
+    .cpanel.flow li::before{order:0}
+    .cpanel h3{max-width:none;font-size:clamp(28px,8.4vw,38px)}
+    .cpanel ul{max-width:none;margin-top:20px;gap:12px}
+    .cpanel li{font-size:16.5px}
+    .compare .cbg{height:58%;opacity:.32}   /* the path art is scenery here, not a backdrop to read through */
+    .chandle,.drag-hint{display:none}
+  }
+  .compare .cbg{position:absolute;left:0;right:0;bottom:0;width:100%;height:92%;object-fit:contain;pointer-events:none;z-index:1;opacity:.9}
+  /* friction art is near-square, so at the 50% rest position a flush-right
+     placement would sit entirely in the clipped half — scaled up so it reaches
+     into view, cropping its sparse top rather than its arrowheads. */
+  .cpanel.friction .cbg{object-position:left bottom;transform:scaleX(-1);height:110%}
+  .cpanel.flow .cbg{object-position:right bottom;transform:scaleX(-1)}
+  .chandle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:var(--cream);transform:translateX(-1px);z-index:10;cursor:ew-resize}
+  .chandle .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--cream);box-shadow:0 6px 20px -6px rgba(15,42,34,.5);display:flex;align-items:center;justify-content:center;gap:4px}
+  .chandle .grip::before,.chandle .grip::after{content:"";width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent}
+  .chandle .grip::before{border-right:7px solid var(--ink)}
+  .chandle .grip::after{border-left:7px solid var(--ink)}
+  .drag-hint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.78);z-index:11;pointer-events:none;transition:opacity .4s}
+  .how .tie{text-align:center;max-width:62ch;margin:40px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.55}
+  .how .tie b{color:var(--ink);font-weight:600}
+  .how .more{text-align:center;margin-top:30px}
+
+  /* ============================================================
+     FLAGSHIP CASE — two bodies of work, rising into one arch
+     Client note (Laura, Sept): the section read plain next to the rest — no
+     photos, no colour. Colour now comes from the section field itself (a warm
+     and a cool wash crossing the band), from the arch drawn between the two
+     cards, and from the cards, which are tinted rather than cream: the
+     intellectual body of work cool, the governance/financing body warm.
+     ============================================================ */
+  .flagship{position:relative;overflow:hidden;padding:clamp(80px,10vw,130px) 0;
+    background:
+      radial-gradient(72% 58% at 50% -6%,rgba(0,145,105,.20),transparent 68%),
+      radial-gradient(62% 54% at 6% 104%,rgba(195,105,56,.20),transparent 70%),
+      radial-gradient(52% 44% at 96% 76%,rgba(0,219,182,.13),transparent 72%),
+      linear-gradient(180deg,var(--cream) 0%,var(--paper) 58%,var(--paper-warm) 100%)}
+  .flagship>.grain-tex{z-index:0;opacity:.13}
+  .flagship .wrap{position:relative;z-index:1}
+  .flagship .head{text-align:center;max-width:640px;margin:0 auto}
+  .flagship .head .h2{margin-top:14px}
+  .flagship .head .lede{margin:18px auto 0;text-align:center}
+  .fs-arch{position:relative;max-width:880px;margin:64px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,34px);padding-top:64px}
+  /* the arch is now a drawn form, not a hairline: a tinted field rising behind
+     the gap between the cards, with the stroke reading emerald on the
+     intellectual side and terracotta on the governance/financing side */
+  .fs-line{position:absolute;top:0;left:0;width:100%;height:108px;overflow:visible;pointer-events:none}
+  .fs-line .fs-fill{fill:url(#fsFieldGrad);opacity:0;transition:opacity 1.1s ease .5s}
+  .fs-line .fs-stroke{stroke-opacity:.9}
+  .fs-arch.in .fs-line .fs-fill{opacity:1}
+  .fs-line .fs-stroke{fill:none;stroke:url(#fsArchGrad);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s cubic-bezier(.2,.7,.2,1) .1s}
+  .fs-arch.in .fs-line .fs-stroke{stroke-dashoffset:0}
+  .fs-key{position:absolute;top:-9px;left:50%;transform:translate(-50%,-10px) scale(.82);opacity:0;background:var(--emerald-deep);color:var(--cream);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:10px 20px;border-radius:999px;box-shadow:0 16px 32px -14px rgba(15,42,34,.5);transition:opacity .5s ease 1.3s,transform .5s cubic-bezier(.2,.7,.2,1) 1.3s;white-space:nowrap;z-index:3;pointer-events:none}
+  .fs-arch.in .fs-key{opacity:1;transform:translate(-50%,0) scale(1)}
+  .fs-pillar{position:relative;z-index:2;overflow:hidden;border-radius:20px;padding:38px 32px 34px;
+    box-shadow:0 34px 64px -34px rgba(15,42,34,.34);border:1px solid var(--fs-edge);
+    background:var(--fs-bg);transform:perspective(900px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+  .fs-pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--fs-accent)}
+  /* each card carries a quarter of the arch above it, in its own colour — the
+     motif repeats instead of a cropped numeral, which read as a rendering slip */
+  .fs-pillar::after{content:"";position:absolute;right:-96px;bottom:-96px;width:230px;height:230px;border-radius:50%;border:1.5px solid var(--fs-accent);opacity:.24;pointer-events:none}
+  .fs-pillar:hover{box-shadow:0 46px 84px -32px rgba(15,42,34,.4)}
+  .fs-pillar.p1{--fs-accent:var(--emerald);--fs-edge:rgba(0,145,105,.24);--fs-ink:var(--emerald-deep);
+    --fs-bg:linear-gradient(162deg,#E9F4EE 0%,#D3E9DD 100%)}
+  .fs-pillar.p2{--fs-accent:var(--terracotta-bright);--fs-edge:rgba(195,105,56,.26);--fs-ink:#8A4522;
+    --fs-bg:linear-gradient(162deg,#FAEBDD 0%,#F0D6BE 100%)}
+  .fs-num{position:relative;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--fs-accent);color:var(--cream);font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.01em;margin-bottom:16px;box-shadow:0 8px 18px -8px var(--fs-accent)}
+  .fs-pillar h3{position:relative;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(21px,2.2vw,27px);line-height:1.06;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--fs-ink);margin-bottom:12px}
+  .fs-pillar h3::after{content:"";display:block;width:40px;height:2px;background:var(--fs-accent);opacity:.5;margin-top:14px}
+  .fs-pillar p{position:relative;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+  .flagship .tie{position:relative;text-align:center;max-width:62ch;margin:46px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.6}
+  .flagship .tie b{color:var(--emerald-deep);font-weight:600}
+  /* the quote gets the treatment from the client's own type reference: an
+     oversized mark, a colour rule down the side, the voice ranged left */
+  .fs-quote{position:relative;max-width:56ch;margin:46px auto 0;padding:4px 0 4px clamp(30px,5vw,52px);
+    border-left:3px solid var(--terracotta-bright);text-align:left;
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(19px,2vw,22px);line-height:1.46;color:var(--ink)}
+  .fs-quote::before{content:"\201C";position:absolute;left:clamp(14px,2.4vw,24px);top:-.16em;font-size:2.6em;line-height:1;font-style:normal;color:var(--terracotta-bright);opacity:.3;pointer-events:none}
+  .fs-quote .fs-attr{display:block;margin-top:16px;font-family:'Archivo',sans-serif;font-style:normal;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  @media (max-width:720px){
+    .fs-arch{grid-template-columns:1fr;gap:18px;padding-top:0;margin-top:40px}
+    .fs-line,.fs-key{display:none}
+    .fs-pillar{padding:30px 26px 28px}
+    .fs-pillar::after{font-size:124px}
+  }
+
+  /* ============================================================
+     4 · ACT
+     ============================================================ */
+  .act{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#0c6b50 0%,var(--emerald-deep) 70%);color:var(--cream);padding:clamp(80px,10vw,140px) 0;text-align:center;border-radius:clamp(28px,4vw,56px) clamp(28px,4vw,56px) 0 0}
+  .act .ring{position:absolute;border:1px solid rgba(164,214,198,.22);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+  .act .ring.r1{width:520px;height:520px}.act .ring.r2{width:820px;height:820px;border-color:rgba(164,214,198,.13)}.act .ring.r3{width:1180px;height:1180px;border-color:rgba(164,214,198,.07)}
+  .act canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+  .act .inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+  .act .eyebrow{color:var(--emerald-bright)}
+  .act .h2{color:var(--cream);margin-top:16px}.act .h2 em{color:var(--emerald-bright)}
+  .act p{margin:20px auto 0;font-size:18px;line-height:1.6;color:rgba(251,246,234,.82);max-width:46ch}
+  .act .btn.light{background:var(--cream);color:var(--emerald-deep);margin-top:36px;padding:16px 30px;font-size:15px}
+  .act .btn.light:hover{background:#fff;transform:translateY(-1px)}
+  .act .note{margin-top:18px;font-size:13px;color:rgba(164,214,198,.8)}
+  .act .fund-label{margin-top:34px;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(251,246,234,.6);font-weight:500}
+  .act .tags{margin-top:10px;font-size:15px;line-height:1.75;letter-spacing:.05em;text-transform:uppercase;color:var(--emerald-bright);font-weight:600}
+
+  footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
+  .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer img{height:30px}
+  /* wraps, and each label stays whole: at 360px the five links overran the page by 14px and
+     broke across words */
+  .foot-links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px}
+  .foot-links a{white-space:nowrap}
+  .foot-links a{color:rgba(251,246,234,.7);text-decoration:none;transition:color .2s}
+  .foot-links a:hover{color:var(--cream)}
+  footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.6)}
+
+  /* ============================================================
+     THE CYCLE — one screen in the landing sequence, not a page of its own.
+     The client: "I wasn't thinking of this as a separate approach page. I was
+     thinking of it as the second to last view in the landing page sequence."
+     So it sits between the Flagship case and Get Involved, and nothing inside it
+     scrolls: picking a step swaps the panel on the left, so the diagram and the
+     words about it are never separated.
+     The spiral carries more of the frame than it did on its own page — her note
+     was that it "could be more dominant because it catches the eye and is helpful
+     for conveying our cyclic way of working" — so the copy column gives up width
+     and the stage takes it.
+     ============================================================ */
+  .cycle{position:relative;overflow:hidden;min-height:100svh;display:flex;align-items:center;
+    padding:clamp(72px,9vh,104px) 0 clamp(30px,4.5vh,52px);
+    background:radial-gradient(ellipse 132% 80% at 66% 6%,#FBF6EA 0%,#F2E7CF 46%,#E8D6B8 100%)}
+  .cycle .wrap{position:relative;z-index:2;width:100%;max-width:1320px}
+  .ap-grid{display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,1fr);align-items:center;gap:clamp(22px,3.2vw,50px)}
+
+  /* ---------- left: the headline, then whichever step is open ---------- */
+  .ap-say{min-width:0}
+  .ap-say .h2{margin-top:13px;font-size:clamp(23px,2.5vw,37px);line-height:1.08}
+  .ap-panel{position:relative;margin-top:clamp(20px,3vh,32px);padding-top:clamp(18px,2.4vh,26px);
+    border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px)}
+  .ap-panel>.sp-prompt,.ap-panel>.sp-detail{position:absolute;left:0;right:0;top:clamp(18px,2.4vh,26px);
+    transition:opacity .34s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
+  /* the resting state says what to do, and shows it — the dot mimics a cursor
+     arriving on a step, which is the one gesture the page depends on */
+  .sp-prompt .cue{display:inline-flex;align-items:center;gap:11px;font-size:11px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--emerald-deep)}
+  .sp-prompt .cue i{position:relative;width:11px;height:11px;border-radius:50%;background:var(--terracotta-bright);flex:0 0 auto}
+  .sp-prompt .cue i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid var(--terracotta-bright);opacity:0;animation:cuePing 2.4s cubic-bezier(.2,.7,.2,1) infinite}
+  @keyframes cuePing{0%{transform:scale(.55);opacity:.85}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
+  .sp-prompt p{margin-top:15px;font-size:16px;line-height:1.6;color:var(--ink-soft);max-width:42ch}
+  .sp-detail{opacity:0;transform:translateY(10px);pointer-events:none}
+  .ap-panel.open .sp-prompt{opacity:0;transform:translateY(-10px);pointer-events:none}
+  .ap-panel.open .sp-detail{opacity:1;transform:none;pointer-events:auto}
+  .sp-detail-n{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--terracotta-bright);margin-bottom:9px}
+  .sp-detail h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,min(2.3vw,3.15vh),29px);line-height:1.04;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:11px}
+  .sp-detail p{font-size:clamp(14px,1.65vh,15.2px);line-height:1.56;color:var(--ink-soft);text-wrap:pretty;max-width:50ch}
+  /* five ticks double as the readout of where you are and as a second way in,
+     for anyone who never thinks to point at the diagram */
+  .sp-ticks{position:absolute;left:0;bottom:0;display:flex;gap:8px}
+  .sp-ticks button{width:30px;height:4px;padding:0;border:0;border-radius:2px;background:rgba(15,42,34,.17);
+    cursor:pointer;transition:background .3s,transform .2s;outline-offset:5px}
+  .sp-ticks button:hover{background:rgba(15,42,34,.34);transform:scaleY(1.6)}
+  .sp-ticks button.on{background:var(--terracotta-bright)}
+
+  /* ---------- right: the spiral ---------- */
+  .sp-stage{position:relative;width:min(100%,84vh,800px);aspect-ratio:1;margin:0 auto}
+  .sp-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  /* the line is a current of dots now, drawn on canvas underneath the SVG. 400+ dots
+     redrawn every frame is four attribute writes each as SVG and janks a mid laptop;
+     on canvas it is one fill per dot. */
+  .sp-flow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  /* the outer sweep is the one part of the figure that is not a step, so it is
+     labelled as a band rather than given a numbered chip */
+  .sp-band{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:.17em;
+    text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
+    font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
+  .sp-stage.armed .sp-band{opacity:.2}
+  .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
+  .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
+    fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
+    paint-order:stroke;stroke:#E8D6B8;stroke-width:7px;stroke-linejoin:round}
+  .sp-num.on{fill:var(--terracotta-bright)}
+  .sp-trail{fill:none;stroke:var(--emerald);stroke-width:3.4;stroke-linecap:round;
+    stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.2,.7,.2,1)}
+  .sp-dot{fill:var(--cream);stroke:var(--emerald);stroke-width:2.4;transition:fill .3s,stroke .3s,r .3s}
+  .sp-dot.on{fill:var(--terracotta-bright);stroke:var(--terracotta-bright)}
+  .sp-halo{fill:none;stroke:var(--terracotta-bright);stroke-width:2;opacity:0;transition:opacity .3s,r .35s cubic-bezier(.2,.7,.2,1)}
+  .sp-halo.on{opacity:.5}
+  .sp-seed{fill:rgba(15,42,34,.3)}
+
+  /* the steps are HTML over the SVG, not SVG text: they read horizontally at every
+     position on the curve, and they can look like the buttons they are */
+  .sp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;max-width:168px;text-align:left;line-height:1.28;
+    padding:8px 15px 8px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink);
+    background:var(--cream);
+    border:1px solid rgba(15,42,34,.16);box-shadow:0 7px 18px -9px rgba(15,42,34,.5);
+    cursor:pointer;outline:none;font-family:inherit;
+    transition:transform .26s cubic-bezier(.2,.7,.2,1),background .26s,border-color .26s,box-shadow .26s,color .26s,opacity .26s}
+  .sp-chip .n{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.05em;color:var(--emerald)}
+  .sp-chip:hover,.sp-chip:focus-visible{border-color:var(--emerald);
+    box-shadow:0 12px 26px -10px rgba(15,42,34,.55);transform:var(--sp-t) scale(1.05)}
+  .sp-chip.on{background:var(--emerald-deep);color:var(--cream);border-color:var(--emerald-deep);
+    box-shadow:0 14px 30px -10px rgba(6,81,60,.6);transform:var(--sp-t) scale(1.05)}
+  .sp-chip.on .n{color:var(--emerald-bright)}
+  .sp-stage.armed .sp-chip:not(.on){color:rgba(15,42,34,.42);border-color:rgba(15,42,34,.08);
+    box-shadow:0 4px 11px -9px rgba(15,42,34,.4)}
+  .sp-stage.armed .sp-chip:not(.on) .n{color:rgba(0,145,105,.45)}
+  /* until someone points at it, the chips breathe in sequence so the page is
+     visibly something you operate rather than something you read */
+  .sp-stage.idle .sp-chip{animation:chipBreathe 4.8s ease-in-out infinite;animation-delay:var(--sp-d)}
+  @keyframes chipBreathe{0%,74%,100%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5)}
+    84%{box-shadow:0 7px 18px -9px rgba(15,42,34,.5),0 0 0 6px rgba(195,105,56,.16)}}
+  @media (prefers-reduced-motion:reduce){.sp-stage.idle .sp-chip{animation:none}.sp-prompt .cue i::after{animation:none;opacity:.5}}
+
+  /* the core of the spiral holds the point of the whole cycle, and never moves */
+  .sp-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:36%;text-align:center;pointer-events:none;z-index:3}
+  .sp-core-b{display:block;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(18px,2.15vw,28px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--emerald-deep)}
+
+  /* the same six steps, read straight through — the only form that works without hover */
+  .sp-steps{display:none;list-style:none;max-width:616px;margin:0 auto;padding:0 28px;counter-reset:sp}
+  .sp-steps li{counter-increment:sp;border-top:1px solid var(--rule);padding:22px 0}
+  .sp-steps li:last-child{border-bottom:1px solid var(--rule)}
+  .sp-steps h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:20px;line-height:1.1;letter-spacing:-.025em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:8px}
+  .sp-steps h3::before{content:"0" counter(sp);font-weight:600;font-size:13px;color:var(--emerald);margin-right:11px}
+  .sp-steps p{font-size:14.5px;line-height:1.55;color:var(--ink-soft)}
+
+  /* a cue that the view continues, since this one fills the screen exactly */
+  .ap-more{position:absolute;left:50%;bottom:clamp(14px,2.4vh,26px);transform:translateX(-50%);z-index:3;
+    display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+  .ap-more:hover{color:var(--ink)}
+  .ap-more span{font-size:14px;line-height:1;animation:apBob 2.2s ease-in-out infinite}
+  @keyframes apBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  /* ============================================================
+     THE CYCLE ON A PHONE
+     The desktop diagram does not survive being shrunk. 820 dots across a 300px stage read
+     as grain rather than a current, the labelled chips have nowhere to go so they are
+     hidden, and what is left is five unlabelled rings with a list underneath that has no
+     visible connection to them — a decoration, when the client's whole reason for wanting
+     the spiral bigger was that it "conveys our cyclic way of working".
+     So at this size it becomes a different, simpler instrument with the same geometry:
+       · the curve is DRAWN, one continuous line, instead of implied by moving dots;
+       · every step is numbered on the curve, so the order is readable standing still;
+       · the diagram STICKS while the five steps scroll past under it, and each step lights
+         its own node as it arrives. The order is then taught twice — by the numerals and
+         by the reading.
+     The steps stay below the diagram, which is what the client asked for.
+     ============================================================ */
+  @media (max-width:980px){
+    /* `clip`, not `hidden`: overflow:hidden makes this section its own scroll container, and a
+       sticky child of a box that never scrolls never sticks. `clip` trims the same overhang
+       without creating one. */
+    /* Flat, not the desktop gradient. The section is ~1690px tall here, so the gradient has
+       already run out to its last stop (#E8D6B8) long before you reach the diagram — which left
+       the pinned band sitting 15 RGB points lighter than the paper the steps sit on. One tone
+       means the band cannot mismatch at any scroll position. Keep this in step with the band
+       and the numerals' knockout below. */
+    .cycle{min-height:0;display:block;overflow:clip;background:#E8D6B8;
+      padding:clamp(72px,10vh,104px) 0 clamp(40px,6vh,64px)}
+    .ap-grid{display:contents}                 /* so the stage can stick against .wrap, which holds the list too */
+    .ap-say{text-align:center;margin-bottom:26px}
+    .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
+    .ap-panel,.ap-more{display:none}
+    .sp-chip{display:none}
+    .sp-stage{position:sticky;top:calc(var(--navh,62px) + 8px);z-index:2;
+      width:min(340px,80vw);margin:0 auto 10px}
+    /* the pinned diagram needs paper under it, or the steps scroll straight through it.
+       A full-width band in the section's own tone, fading out at the foot so the step
+       arriving underneath is not cut off by a hard edge. */
+    .sp-stage::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+      left:50%;transform:translateX(-50%);width:100vw;
+      top:-26px;bottom:-48px;
+      /* soft at BOTH ends. A hard top edge sliced the headline clean through while the stage
+         was still in flow, before it had pinned. It only has to reach up 26px: once pinned,
+         the stage sits at navh+8 and the nav itself covers everything above it. */
+      background:linear-gradient(180deg,rgba(232,214,184,0) 0%,#E8D6B8 22%,#E8D6B8 90%,rgba(232,214,184,0) 100%)}
+    /* On desktop the core label is a quarter of an 800px stage. Shrunk to a phone it kept its
+       share of the width and so grew, relative to the figure, until it sat on top of steps
+       01-03 — a large part of why the diagram read as a tangle. It is a caption here. */
+    .sp-center{width:46%}
+    .sp-core-b{font-size:14px;line-height:1.08}
+    /* The current stays. Dropping it for a plain line lost the best thing about the figure —
+       the dots are scaled up instead (see sizeBoost) so they read at this width. The drawn
+       line is kept only as a faint thread holding the form together between them. */
+    .sp-base{display:block;stroke:rgba(0,145,105,.16);stroke-width:4}
+    .sp-num{display:block}
+    .sp-band{font-size:44px;letter-spacing:.13em}
+    .sp-steps{display:block;padding:0;margin-top:4px}
+    /* the step being read is the one lit on the diagram above it */
+    /* The steps are NOT dimmed or recoloured — every one reads in its normal colour. Which
+       step you are on is shown on the diagram above, by the lit node and the path drawn to it,
+       and that is enough; greying out four fifths of the copy to say it was too heavy a hand. */
+    /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
+    .sp-stage.armed .sp-band{opacity:1}
+  }
+  /* ============================================================
+     ONE SCREEN PER VIEW (2026-09-25)
+     Reviewer: "I'd like to see the last two sections each fit within one screen,
+     as the other two sections do, rather than extending beyond the screen and
+     requiring scrolling to see the full section... you know how we stop everything
+     on the screen while we scroll? do the same with the fit, but without the scroll."
+     The book and the river get their full-screen feel from a sticky child inside a
+     tall scroll-area — that is scroll-jacking, and it is deliberately NOT what these
+     two get. They are simply one viewport tall with their contents centred, and every
+     internal measurement is capped against viewport HEIGHT as well as width so the
+     contents shrink to fit instead of overflowing on a short laptop.
+     ============================================================ */
+  .how,.flagship,.act{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+  /* a flex item with `margin:0 auto` shrink-wraps to its content, which quietly cut the
+     wrap from 1180px to 607px and took the compare box down with it */
+  .how>.wrap,.flagship>.wrap,.act>.wrap{width:100%}
+  .how{padding:clamp(76px,9.4vh,118px) 0 clamp(24px,3.4vh,58px)}
+  .flagship{padding:clamp(76px,9.4vh,120px) 0 clamp(18px,2.6vh,64px)}
+
+  .how .head,.flagship .head{margin-bottom:clamp(12px,2vh,40px)}
+  .how .head .h2,.flagship .head .h2{font-size:clamp(27px,min(4.6vw,5.3vh),60px)}
+  .how .head .lede,.flagship .head .lede{font-size:clamp(15px,1.9vh,19px);margin-top:clamp(10px,1.6vh,18px)}
+  /* the client's implementation sentence is half as long again as the line it replaced.
+     It buys its room back across rather than down: the head runs wider and the lede is
+     not capped inside it, so the sentence takes three lines instead of five. */
+  .flagship .head{max-width:840px}
+  .flagship .head .lede{max-width:none}
+
+  /* the compare box and everything inside it */
+  .compare{height:clamp(288px,42vh,560px)}
+  .cpanel{padding:clamp(20px,3.1vh,44px) clamp(26px,4.2vw,62px)}
+  /* two words, not a sentence — the heading labels the panel and the list carries it */
+  .cpanel h3{font-size:clamp(22px,min(2.9vw,4.1vh),38px)}
+  .cpanel ul{margin-top:clamp(14px,2.4vh,30px);gap:clamp(9px,1.7vh,19px)}
+  .cpanel li{font-size:clamp(15px,min(1.5vw,2.35vh),22px)}
+  .how .tie{margin:clamp(16px,2.6vh,40px) auto 0;font-size:clamp(13.5px,1.7vh,16px)}
+  .how .more{margin-top:clamp(12px,2vh,30px)}
+
+  /* the flagship arch and its two cards */
+  .fs-arch{margin:clamp(8px,1.3vh,44px) auto 0;padding-top:clamp(45px,4.6vh,56px)}
+  .fs-line{height:clamp(48px,6.8vh,108px)}
+  .fs-pillar{padding:clamp(15px,2.2vh,38px) clamp(20px,2.4vw,32px) clamp(13px,1.9vh,34px)}
+  .fs-num{width:clamp(26px,3.4vh,34px);height:clamp(26px,3.4vh,34px);margin-bottom:clamp(8px,1.6vh,16px)}
+  .fs-pillar h3{font-size:clamp(18px,min(2.2vw,3.1vh),27px);margin-bottom:clamp(7px,1.3vh,12px)}
+  .fs-pillar h3::after{margin-top:clamp(7px,1.5vh,14px)}
+  .fs-pillar p{font-size:clamp(13.5px,1.75vh,15px)}
+  .flagship .tie{margin:clamp(10px,1.6vh,44px) auto 0;font-size:clamp(13.5px,1.65vh,16px)}
+  .act{padding:clamp(72px,9vh,130px) 0 clamp(30px,4.5vh,110px)}
+  .act .h2{font-size:clamp(28px,min(4.6vw,5.6vh),60px);margin-top:clamp(9px,1.7vh,16px)}
+  .act p{margin-top:clamp(12px,2.1vh,20px);font-size:clamp(15px,1.9vh,18px)}
+  .act .btn.light{margin-top:clamp(18px,3.4vh,36px)}
+  .act .note{margin-top:clamp(11px,1.9vh,18px)}
+  .act .fund-label{margin-top:clamp(18px,3.2vh,34px)}
+
+  /* on a phone a screen cannot hold either of them, and pretending otherwise only
+     crops the content; they go back to flowing at their natural height */
+  @media (max-width:820px){
+    .how,.flagship,.act{min-height:0;display:block;padding:clamp(56px,9vw,90px) 0}
+    .compare{height:auto}
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero"><img src="logo.svg" alt="Self-Healing Communities Fund" /></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#why" data-pv="How early experience shapes a whole life, and what we can change.">The Science</a>
+      <a href="#cycle" data-pv="Evidence, community knowledge, learning and financing, in a continuing cycle.">Our Approach</a>
+      <a href="#" data-pv="The Fund in real places. A growing home for community stories.">Community Stories</a>
+      <a href="#" data-pv="The founders, funders, and partners behind the movement.">About</a>
+      <a class="cta" href="#act">Get Involved</a>
+    </div>
+  </div>
+  <div class="nav-preview" id="navPreview"><div class="pv" id="navPv"></div></div>
+</nav>
+
+<!-- ===================== OPENING — the book (cover → cascades) ===================== -->
+<section id="why" aria-label="The Self-Healing Communities Fund">
+  <div class="scroll-area" data-tick="why">
+    <div class="sticky">
+      <canvas class="hero-glow" id="heroGlow" aria-hidden="true"></canvas>
+      <div class="grain-tex"></div>
+      <canvas id="heroTitle"></canvas>
+      <p class="hero-lede" id="heroLede"><b>The Self-Healing Communities Fund</b> is building a new model that helps communities and public systems to align people, funding, and practices around the common causes of lifelong wellbeing.</p>
+      <div class="book-bar" id="bookBar" aria-hidden="true"><i></i></div>
+      <div class="why-copy" id="whyCopy">
+        <div class="wc-stack">
+          <article class="wc">
+            <div class="wc-eyebrow">Self-Healing Communities Fund</div>
+            <h2 class="wc-title">It begins with <em>seeing differently.</em></h2>
+            <p class="wc-body">We keep treating and financing connected public problems as separate ones. Homelessness, behavioral health, chronic disease, addiction, family instability, violence, and problems at school and work are shaped by common causes.</p>
+          </article>
+          <article class="wc">
+            <div class="wc-eyebrow">Page one</div>
+            <h2 class="wc-title">Risk can <em>build over time.</em></h2>
+            <p class="wc-body">The Adverse Childhood Experiences (ACEs) discoveries show how risk can accumulate across childhood, and have cascading effects in health, learning, justice, family stability, work, and involvement with public systems across a lifetime.</p>
+          </article>
+          <article class="wc">
+            <div class="wc-eyebrow">Page two</div>
+            <h2 class="wc-title">ACE-related risk has <em>outgrown the systems built to manage it.</em></h2>
+            <p class="wc-body">Adults today carry a substantially higher burden of childhood adversity into parenting years than the generation before them.</p>
+            <div class="wc-stats">
+              <div class="stat"><span class="num">27%</span><span class="lbl">increase in average ACE score among adults 25&ndash;39, 2009&ndash;2010 to 2023&ndash;2024</span></div>
+              <div class="stat"><span class="num">1 in 4</span><span class="lbl">adults that age now report 4+ ACEs, up from about 1 in 6 a decade earlier</span></div>
+            </div>
+            <p class="wc-body">This creates a structural mismatch. The public systems responding to the consequences of adversity were largely built in an earlier, lower-prevalence era &mdash; before we understood how ACE-related risk can accumulate across the life course, cross systems, and carry forward to the next generation.</p>
+          </article>
+          <article class="wc">
+            <div class="wc-eyebrow">Page three</div>
+            <h2 class="wc-title">Our fragmented programmatic approach <em>is too expensive.</em></h2>
+            <div class="wc-stats solo">
+              <div class="stat"><span class="num">$14.1 Trillion<span class="per">/Year</span></span><span class="lbl">the economic burden of ACE exposure in the US adult population.</span></div>
+            </div>
+            <p class="wc-body">This estimate is likely conservative: childhood adversity is only one part of a larger risk cascade. Adversity in the home interacts with experiences in schools, neighborhoods, and communities, creating reinforcing pathways that increase health, social, and economic costs across the life course and often into the next generation.</p>
+          </article>
+          <article class="wc">
+            <div class="wc-eyebrow">Page four</div>
+            <h2 class="wc-title">Find where change has <em>the greatest reach.</em></h2>
+            <p class="wc-body">Popular ideas about what causes risk &mdash; and what protects against it &mdash; do not always hold up under careful analysis. And not every condition or intervention has equal influence.</p>
+            <p class="wc-body">SHCF brings rigorous epidemiology together with community knowledge and lived experience to test assumptions, identify the drivers of risk, and find the protective and healing conditions that may have disproportionate &mdash; or &ldquo;keystone&rdquo; &mdash; effects. Communities and public systems can then learn from what happens, refine their understanding, and adapt their portfolios over time.</p>
+          </article>
+        </div>
+        <div class="cta-row" id="ctaRow">
+          <a class="btn" href="#how">See how it works <span class="arrow">→</span></a>
+          <a class="btn dark" href="#act">Get involved</a>
+        </div>
+      </div>
+      <div class="clip-window" id="clipWin">
+      <div class="stage">
+        <div class="book-zoom" id="bookZoom">
+        <div class="book" id="why-book">
+          <span class="edge left"></span><span class="edge right"></span>
+          <div class="book-base">
+            <div class="page page-left"><div class="photo-face" style="background-image:url('assets/face.jpg');background-image:image-set(url('assets/face.avif') type('image/avif'),url('assets/face.jpg') type('image/jpeg'));background-position:center 30%"></div></div>
+            <div class="page page-right"><div class="photo-face" style="background-image:url('assets/community.jpg');background-image:image-set(url('assets/community.avif') type('image/avif'),url('assets/community.jpg') type('image/jpeg'))"></div></div>
+          </div>
+          <div class="leaves" id="why-leaves">
+            <div class="leaf" data-i="0">
+              <div class="face recto qpage">
+                <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>I used to think we had lots of separate problems. Then I realized we were seeing the same problem from different departments, the same people at different moments in their lives.</blockquote>
+                <div class="q-rule"></div>
+                <div class="q-attr">City Commissioner</div>
+              </div>
+              <div class="face verso qpage">
+                <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>Every experience teaches the body and brain what to expect next. When families repeatedly experience high levels of stress, risk builds over time and can affect the life course and the next generation.</blockquote>
+                <div class="q-rule"></div>
+                <div class="q-attr">Dr. Rob Anda</div>
+              </div>
+            </div>
+            <div class="leaf" data-i="1">
+              <div class="face recto" style="background-image:url('assets/cascade.jpg');background-image:image-set(url('assets/cascade.avif') type('image/avif'),url('assets/cascade.jpg') type('image/jpeg'))"></div>
+              <div class="face verso qpage">
+                <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>The bills show up in one place, the savings show up somewhere else, and they don't happen until years later. Addressing the common causes will hold all of us accountable for breaking the cycle.</blockquote>
+                <div class="q-rule"></div>
+                <div class="q-attr">Budget Director</div>
+              </div>
+            </div>
+            <div class="leaf" data-i="2">
+              <div class="face recto" style="background-image:url('assets/adversity.jpg');background-image:image-set(url('assets/adversity.avif') type('image/avif'),url('assets/adversity.jpg') type('image/jpeg'))"></div>
+              <div class="face verso qpage">
+                <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>Success isn't just about money &mdash; it is about how we invest all our resources including people, place, stewardship, knowledge, and funds. Every public dollar we don't need to spend on a crisis is a dollar that can stay in the pocket of a taxpayer who really needs it.</blockquote>
+                <div class="q-rule"></div>
+                <div class="q-attr">State Legislator</div>
+              </div>
+            </div>
+            <div class="leaf" data-i="3">
+              <div class="face recto" style="background-image:url('assets/gathering.jpg');background-image:image-set(url('assets/gathering.webp') type('image/webp'),url('assets/gathering.jpg') type('image/jpeg'));background-position:center 40%"></div>
+              <div class="face verso qpage">
+                <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>If we can weave the science through these different professions and get it into the hands of the general population, they will invent very wise actions.</blockquote>
+                <div class="q-rule"></div>
+                <div class="q-attr">Laura Porter, ACE Interface<span class="q-src">Resilience: The Biology of Stress and the Science of Hope</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="spine"></div>
+        </div>
+        </div>
+      </div>
+      </div>
+      <div class="scrollcue" id="scrollCue"><span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WAYFINDING — scatter → flow ===================== -->
+<section id="wayfinding" aria-label="From friction to flow">
+  <div class="scroll-area" data-tick="wayfinding">
+    <div class="sticky">
+      <canvas id="wf-canvas"></canvas>
+      <div class="wf-layout">
+        <!-- Four stages, all on screen at once. Two reviewers could not make the scrolling
+             sequence reveal its changes, so there is nothing to operate here: the whole life
+             course is visible in one look. On a phone the four slide sideways instead of
+             stacking, which keeps them comparable without costing vertical room. -->
+        <div class="lc-grid" id="lcGrid">
+          <div class="lc-lead">Lives unfold</div>
+          <div class="lc-rail">
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/infancy.jpg');background-image:image-set(url('assets/infancy.avif') type('image/avif'),url('assets/infancy.jpg') type('image/jpeg'))"></div>
+            <figcaption>Infancy</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/childhood.jpg');background-image:image-set(url('assets/childhood.avif') type('image/avif'),url('assets/childhood.jpg') type('image/jpeg'))"></div>
+            <figcaption>Childhood</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/adolescence.jpg');background-image:image-set(url('assets/adolescence.avif') type('image/avif'),url('assets/adolescence.jpg') type('image/jpeg'))"></div>
+            <figcaption>Adolescence</figcaption>
+          </figure>
+          <figure class="lc-tile">
+            <div class="lc-shot" style="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
+            <figcaption>Adulthood</figcaption>
+          </figure>
+          </div>
+        </div>
+        <div class="copy">
+          <h2 class="h2">In Self-Healing Communities people see what is disrupting the conditions for wellbeing &mdash; <em>and build the knowledge, capacity and financing to restore them.</em></h2>
+          <p class="wf-quote">&ldquo;We kept fighting the smoke instead of putting out the fire. Every group was doing its part, but now the whole community is working to solve the problem together.&rdquo;<span class="wf-attr">Founder, Family Philanthropy</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3 · HOW — drag to compare ===================== -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">How it works</div>
+      <h2 class="h2 reveal">We don't work <em>one problem at a time.</em></h2>
+      <p class="lede reveal">The Fund's work rests on a single shift.</p>
+    </div>
+    <div class="compare reveal" id="compare">
+      <div class="cpanel flow">
+        <div class="grain-tex"></div>
+        <img class="cbg" src="assets/path-flow.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <div style="position:relative;z-index:2">
+          <h3>New Way</h3>
+          <ul><li>Healthy relationships, durable resources</li><li>Earlier action, less crisis</li><li>Learning and adapting together</li><li>People grow stronger together</li><li>Stronger with each generation</li></ul>
+        </div>
+      </div>
+      <div class="cpanel friction" id="frictionPanel">
+        <div class="grain-tex" style="mix-blend-mode:multiply;opacity:.2"></div>
+        <img class="cbg" src="assets/path-friction.svg" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <div style="position:relative;z-index:2">
+          <h3>Old Way</h3>
+          <ul><li>People adapt to what's wrong</li><li>Effort scatters, barriers remain</li><li>Help arrives after harm</li><li>Adversity carries forward</li></ul>
+        </div>
+      </div>
+      <div class="chandle" id="cmpHandle"><div class="grip"></div></div>
+      <div class="drag-hint" id="dragHint">← Drag to compare →</div>
+    </div>
+    <p class="tie reveal">Healing emerges from the <b>whole system</b>, not from a single program or agency. SHCF helps communities, government, and philanthropic partners strengthen the conditions that reduce risk and support wellbeing &mdash; and build the capacity to <b>learn, adapt, and act on what works over time</b>.</p>
+    <div class="more reveal"><a class="pagelink" href="#cycle">See how we work <span class="arrow">→</span></a></div>
+  </div>
+</section>
+
+<!-- ===================== FLAGSHIP CASE ===================== -->
+<section class="flagship" id="flagship">
+  <div class="grain-tex"></div>
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">The work underway</div>
+      <h2 class="h2 reveal">Building a model <em>that can work in practice.</em></h2>
+      <p class="lede reveal">We are developing a detailed implementation case that brings the research, partnerships, governance, financing, and measures together in a model that communities and states can put to work.</p>
+    </div>
+    <div class="fs-arch reveal" id="fsArch">
+      <svg class="fs-line" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="fsArchGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#009169"/><stop offset="50%" stop-color="#06513C"/><stop offset="100%" stop-color="#C36938"/>
+          </linearGradient>
+          <linearGradient id="fsFieldGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#009169" stop-opacity=".22"/><stop offset="100%" stop-color="#C36938" stop-opacity=".22"/>
+          </linearGradient>
+          <linearGradient id="fsFadeGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff"/><stop offset="55%" stop-color="#777"/><stop offset="100%" stop-color="#000"/>
+          </linearGradient>
+          <mask id="fsFade"><rect x="0" y="0" width="800" height="200" fill="url(#fsFadeGrad)"/></mask>
+        </defs>
+        <path class="fs-fill" mask="url(#fsFade)" d="M200,200 C200,72 330,22 400,22 C470,22 600,72 600,200 Z"/>
+        <path class="fs-stroke" pathLength="1" d="M200,190 C200,70 330,20 400,20 C470,20 600,70 600,190"/>
+      </svg>
+      <div class="fs-key">Implementation case</div>
+      <div class="fs-pillar p1" data-n="1">
+        <div class="fs-num">01</div>
+        <h3>Intellectual groundwork</h3>
+        <p>Understanding and strategically managing life-course and intergenerational risk.</p>
+      </div>
+      <div class="fs-pillar p2" data-n="2">
+        <div class="fs-num">02</div>
+        <h3>Governance &amp; financing architecture</h3>
+        <p>Acting on that knowledge, and sustaining improvements over time.</p>
+      </div>
+    </div>
+    <p class="tie reveal">These two bodies of work build on the momentum of the <b>Adverse Childhood Experience Study</b>, the feature-length films &ldquo;Paper Tigers&rdquo; and &ldquo;Resilience,&rdquo; and the stunning work of people throughout the nation who have asked for better metrics, more durable financing, and opportunities to collaboratively deliver success that no one agency or neighborhood can deliver on its own.</p>
+    <p class="fs-quote reveal">For years no one asked what my childhood was like. The first time someone did, my life finally made sense.<span class="fs-attr">Community member, rural health clinic</span></p>
+  </div>
+</section>
+
+<!-- ===================== HERO — the cycle, explained in place ===================== -->
+<section class="cycle" id="cycle" aria-label="How the Fund works">
+  <div class="grain-tex"></div>
+  <div class="wrap">
+    <div class="ap-grid">
+
+      <div class="ap-say">
+        <div class="eyebrow reveal">A different way of working</div>
+        <h2 class="h2 reveal">SHCF brings evidence, community knowledge, learning, and financing together in <em>a continuing cycle.</em></h2>
+
+        <div class="ap-panel" id="apPanel">
+          <div class="sp-prompt">
+            <span class="cue"><i></i> Pick a step</span>
+            <p>Five steps wind outward from the core. Choose any one and the path lights from the centre out to it &mdash; what it means appears here.</p>
+          </div>
+          <div class="sp-detail" id="spDetail">
+            <div class="sp-detail-n"></div>
+            <h3></h3>
+            <p></p>
+          </div>
+          <div class="sp-ticks" id="spTicks" role="tablist" aria-label="The five steps"></div>
+        </div>
+      </div>
+
+      <div class="sp-stage reveal idle" id="spStage">
+        <canvas class="sp-flow" id="spFlow" aria-hidden="true"></canvas>
+        <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120" aria-hidden="true">
+          <defs>
+            <!-- the core fade: it has to clear the centre label (ink reaches 145 units) but reveal
+                 enough of the inner curl that the form reads as a spiral and not a ring.
+                 Fully hidden below 31 units, fully visible from 123. -->
+            <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
+              <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
+            </radialGradient>
+            <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
+          </defs>
+          <g mask="url(#spMask)" id="spMasked">
+            <!-- the curve as an actual line. Off on desktop, where the dot current IS the line;
+                 on at phone sizes, where 820 dots across a 300px stage read as grain, not water. -->
+            <path class="sp-base" id="spBase" />
+            <path class="sp-trail" id="spTrail" pathLength="1" />
+          </g>
+          <path id="spBandPath" fill="none" stroke="none" />
+          <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
+          <g id="spDots"></g>
+        </svg>
+        <div class="sp-center">
+          <span class="sp-core-b">Risk<br>Stewardship</span>
+        </div>
+        <div id="spChips"></div>
+      </div>
+
+    </div>
+
+  <ol class="sp-steps" id="spSteps">
+    <li><h3>Find leverage</h3><p>See connected risk and healing trajectories across systems, the life course, and generations. Use rigorous evidence and community knowledge to identify where change may have the greatest reach.</p></li>
+    <li><h3>Build effective portfolios</h3><p>Bring together community knowledge, lived experience, research, practice, public-system authority, and resources to build locally tailored portfolios that change underlying risk trajectories and strengthen protective capacity. Investments work together across the places where risk develops, building on the relationships, assets, and capacities already present.</p></li>
+    <li><h3>Learn continuously across investments</h3><p>Create shared feedback so communities and partners can learn together whether risk is changing, which benefits cascade across systems, where public costs change, and what should adapt, be sustained, or scale.</p></li>
+    <li><h3>Finance differently</h3><p>Finance portfolios that reduce risk earlier, strengthen community capacity, support learning, and create benefits across systems. Track the human, economic, and fiscal value created &mdash; and align incentives so public systems are rewarded for reducing risk earlier, not only responding to its consequences.</p></li>
+    <li><h3>Make improvement durable</h3><p>Connect learning, public financing, provider sustainability, and reinvestment so successful change does not disappear when a grant ends. Create mechanisms to reinvest financial gains from improved outcomes into risk reduction and community capacity.</p></li>
+  </ol>
+  </div>
+
+  <a class="ap-more" href="#act">Get involved <span>&darr;</span></a>
+</section>
+
+<!-- ===================== 4 · ACT ===================== -->
+<section class="act" id="act">
+  <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+  <canvas id="orbitCanvas"></canvas>
+  <div class="wrap"><div class="inner">
+    <h2 class="h2 reveal">Each generation will leave the next <em>stronger.</em></h2>
+    <div class="fund-label reveal">Self-Healing Communities Fund</div>
+    <div class="tags reveal"><div>Stewardship for impact</div><div>Technically rigorous data</div><div>Deeply hopeful action</div></div>
+    <p class="reveal">Get the briefing and we'll keep you close to the work as it grows.</p>
+    <a class="btn light reveal" href="#">Get the briefing <span class="arrow">→</span></a>
+  </div></div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" loading="lazy" decoding="async" />
+      <div class="foot-links">
+        <a href="#why">The Science</a><a href="#cycle">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="#act">Get Involved</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 Self-Healing Communities Fund — a fund by ACE Interface. Founded on the ACE Study by Dr. Robert Anda and Laura Porter.</div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.remove('no-js');
+  setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const COARSE = window.matchMedia('(hover: none)').matches;   /* a finger, not a pointer */
+
+  /* The nav is fixed, so anything laid out inside a full-height sticky has to clear it by hand.
+     Publish its real height once rather than guessing it in four different places. */
+  (function(){
+    const nav=document.querySelector('nav');if(!nav)return;
+    const set=()=>document.documentElement.style.setProperty('--navh',nav.offsetHeight+'px');
+    set();window.addEventListener('resize',set);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(set);
+  })();
+
+  /* FLAGSHIP CASE — pillar cards tilt toward the cursor, like a light object held up to the light */
+  if(!reduce){
+    const TILT=6; /* max degrees */
+    document.querySelectorAll('.fs-pillar').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+        const rx=((0.5-py)*TILT).toFixed(2),ry=((px-0.5)*TILT).toFixed(2);
+        card.style.transform='perspective(900px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-3px)';
+      });
+      card.addEventListener('mouseleave',()=>{card.style.transform='perspective(900px)';});
+    });
+  }
+
+  /* nav hover-preview removed */
+
+  /* nav: transparent over the hero, glass background from the second section on */
+  (function(){
+    const nav=document.querySelector('.nav'),second=document.getElementById('wayfinding');
+    if(!nav||!second)return;
+    function navState(){nav.classList.toggle('solid',window.scrollY>48);}
+    window.addEventListener('scroll',navState,{passive:true});
+    window.addEventListener('resize',navState);
+    navState();
+  })();
+
+  /* reveal on scroll */
+  (function(){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  })();
+
+  /* helpers */
+  /* how far a tall scroll-area has run under its pinned child. `h` is that child's height —
+     pass the measured sticky, because with 100svh it no longer equals window.innerHeight on iOS. */
+  function progressOf(el,h){h=h||(el.firstElementChild&&el.firstElementChild.offsetHeight)||window.innerHeight;
+    const r=el.getBoundingClientRect(),total=el.offsetHeight-h,passed=Math.min(Math.max(-r.top,0),total);return total>0?passed/total:0;}
+  function inView(el){const r=el.getBoundingClientRect();return r.bottom>-200&&r.top<window.innerHeight+200;}
+  function lerp(a,b,t){return a+(b-a)*t}
+  function easeOut(t){return 1-Math.pow(1-t,3)}
+
+  /* OPENING — phase A: full face + dissolving title pull back into the open book; phase B: pages turn */
+  const whySection=document.querySelector('#why .scroll-area');
+  const whyLeaves=document.querySelectorAll('#why .leaf');
+  const clipWin=document.getElementById('clipWin');
+  const bookZoom=document.getElementById('bookZoom'),bookEl=document.getElementById('why-book'),ctaRow=document.getElementById('ctaRow'),scrollCue=document.getElementById('scrollCue');
+  const whyCopy=document.getElementById('whyCopy'),whyStates=document.querySelectorAll('#whyCopy .wc');
+  const bookBar=document.getElementById('bookBar'),bookBarFill=bookBar&&bookBar.firstElementChild;
+  const whySticky=document.querySelector('#why .sticky');
+  /* The frame everything in the opening is placed inside. Measured, never window.innerHeight:
+     on iOS those are two different numbers and mixing them is what put the intro paragraph
+     over the photograph. */
+  function stickyH(){return (whySticky&&whySticky.offsetHeight)||window.innerHeight;}
+  const OPEN=0.18;   /* 0 → OPEN: the wide box opens out to the full frame */
+  const SETTLE=0.36; /* OPEN → SETTLE: the same face settles from the zoom into the open book */
+  const SHIFT=0.44;  /* SETTLE → SHIFT: the book slides aside (right; up on phones) and the copy fades in */
+  const OVERSCAN=1.2;/* how far the face overfills the box width, so the spine / right page stay hidden */
+  const EYE=0.45;    /* where the eyes sit down the face image (0..1) — tune to centre them in the box */
+  /* rest framing of the box, in vh/vw — a wide rectangle, big corners, breathing room under the title */
+  /* The resting frame, in % of the sticky. On a phone the top used to sit at 44%, which left a
+     dead band the depth of the photograph between the headline and the picture, and stacked the
+     slack at one end of the view. 37/28 closes that gap and gives the frame back the height. */
+  function curBox(){return window.innerWidth<=720?{t:37,r:6,b:28,l:6,rad:20}:{t:48,r:16,b:25,l:16,rad:44};}
+  /* where the book ends up once it has slid aside, and the room that leaves for the copy */
+  let whyLay={tx:0,ty:0,s:1};
+  function layoutWhy(){
+    if(!bookEl||!whyCopy)return;
+    const vw=window.innerWidth,vh=stickyH(),bw=bookEl.offsetWidth,bh=bw*2/3;
+    const navH=(document.querySelector('nav')||{}).offsetHeight||0;  /* the fixed nav overlaps the sticky frame */
+    if(vw<=720){
+      const top=Math.max(navH+14,vh*0.07);
+      whyLay={tx:0,ty:top+bh/2-vh/2,s:1};
+      Object.assign(whyCopy.style,{left:'6vw',width:'88vw',top:(top+bh+24)+'px',bottom:'3vh'});
+      if(bookBar){bookBar.classList.add('flat');Object.assign(bookBar.style,{left:(vw-bw)/2+'px',width:bw+'px',top:(top+bh+10)+'px',height:''});}
+    }else{
+      const gR=Math.max(24,vw*0.05),gL=Math.max(24,vw*0.06),gap=Math.max(32,vw*0.035);
+      const wb=Math.min(vw*0.54,bw,(vh-140)*1.5),s=wb/bw;
+      /* book-zoom scales about 25% of its width, so solve for the translate that lands its right edge at the gutter */
+      whyLay={tx:vw-gR-(vw-bw)/2-bw*0.25-bw*0.75*s,ty:0,s};
+      Object.assign(whyCopy.style,{left:gL+'px',width:(vw-gR-wb-gap-gL)+'px',top:Math.max(navH+28,vh*0.09)+'px',bottom:'7vh'});
+      /* upright, flush against the outside of the right page-stack edge — a lifting leaf pokes a few px past the page itself, so it must clear the 8px stack too */
+      if(bookBar){bookBar.classList.remove('flat');const h=wb*2/3;Object.assign(bookBar.style,{left:(vw-gR+8*s)+'px',width:'',top:(vh-h)/2+'px',height:h+'px'});}
+    }
+    fitWhy();
+  }
+  /* one quote size for every page and one copy size for every state: the largest at which the longest still fits */
+  function fitWhy(){
+    const pages=bookEl.querySelectorAll('.qpage');
+    let q=Math.min(34,bookEl.offsetWidth*0.037);
+    const set=v=>bookEl.style.setProperty('--q-fs',v+'px');
+    set(q);while(q>10&&[...pages].some(pg=>pg.scrollHeight>pg.clientHeight+1)){q-=0.5;set(q);}
+    let f=window.innerWidth<=720?16:20;
+    whyCopy.style.fontSize=f+'px';
+    while(f>12&&whyCopy.scrollHeight>whyCopy.clientHeight+1){f-=0.5;whyCopy.style.fontSize=f+'px';}
+  }
+  let whySmooth=0;
+  function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function tickWhy(){
+    if(!inView(whySection))return;
+    /* No easing on touch. The lerp exists to smooth a mouse wheel's coarse steps, but on iOS
+       requestAnimationFrame can be starved during a momentum scroll: the target runs away while
+       whySmooth sits still, and when frames resume the book races through several page-turns at
+       once. That is the "images change abruptly". A finger already supplies the smoothing, so
+       the book tracks the scroll exactly. */
+    const target=progressOf(whySection,stickyH());
+    whySmooth=COARSE?target:lerp(whySmooth,target,0.14);
+    const p=whySmooth;
+    const BOX=curBox();
+    /* phase A — the wide box opens out; the title dissolves into dots */
+    const pc=Math.min(1,p/OPEN),ec=easeInOut(pc);
+    if(clipWin){
+      const vw=window.innerWidth,vh=stickyH();
+      const it=BOX.t*(1-ec)/100*vh,ib=BOX.b*(1-ec)/100*vh,il=BOX.l*(1-ec)/100*vw,rad=BOX.rad*(1-ec);
+      clipWin.style.clipPath='inset('+it.toFixed(1)+'px '+il.toFixed(1)+'px '+ib.toFixed(1)+'px '+il.toFixed(1)+'px round '+rad.toFixed(1)+'px)';
+    }
+    drawTitle(pc);
+    if(glowCv) glowCv.style.opacity=(1-0.5*ec).toFixed(2);  /* recedes once the photo fills the frame */
+    /* phase B — the same face settles from the zoom into the open book */
+    const ps=Math.max(0,Math.min(1,(p-OPEN)/(SETTLE-OPEN))),es=easeInOut(ps);
+    /* phase C — the book slides aside to make room for the copy */
+    const esh=easeInOut(Math.max(0,Math.min(1,(p-SETTLE)/(SHIFT-SETTLE))));
+    if(bookZoom){
+      const bw=bookEl.offsetWidth||600,bh=bw*2/3;
+      const boxW=window.innerWidth*(1-(BOX.l+BOX.r)/100);
+      const fz=Math.max(1.8,boxW/(bw/2)*OVERSCAN);  /* zoom so only the face fills the box, at any width */
+      const boxOff=(BOX.t-BOX.b)/200*stickyH();  /* the box centre sits below the viewport centre when t>b */
+      const ty0=(0.5-EYE)*bh*fz+boxOff;             /* lift the eyes to the box centre at rest */
+      const S=lerp(fz,1,es)*lerp(1,whyLay.s,esh),TX=lerp(bw/4,0,es)+whyLay.tx*esh,TY=lerp(ty0,0,es)+whyLay.ty*esh;
+      bookZoom.style.transform='translate('+TX.toFixed(1)+'px,'+TY.toFixed(1)+'px) scale('+S.toFixed(3)+')';
+    }
+    if(scrollCue) scrollCue.style.opacity=Math.max(0,1-p/0.05).toFixed(2);
+    if(ctaRow){ctaRow.style.opacity=esh.toFixed(2);ctaRow.style.visibility=esh<0.01?'hidden':'visible';}
+    /* phase D — turn the pages, with a pause on each spread so the copy beside it can be read */
+    const N=whyLeaves.length,u=Math.max(0,(p-SHIFT)/(1-SHIFT))*(N+0.5),turn=[];
+    /* ⚠ The back of a turning leaf is hidden HERE, not by backface-visibility alone.
+       iOS Safari does not reliably cull back faces inside a preserve-3d subtree that is
+       itself being scaled (book-zoom is, every frame), so the verso bleeds through the
+       recto and you see two pictures at once, flickering as the leaf swings — which is
+       exactly the "wrong images as you scroll" on a phone. Driving it from the angle we
+       already know is deterministic. Written only when the side actually changes, so this
+       stays one style write per turn rather than two per frame. */
+    whyLeaves.forEach((leaf,i)=>{
+      const local=easeInOut(Math.max(0,Math.min(1,(u-i-0.3)/0.55)));turn.push(local);
+      leaf.style.transform='rotateY('+(-local*180)+'deg)';leaf.style.zIndex=local<0.5?50-i:100+i;
+      /* Written EVERY frame, not only when the side changes. Caching it on the element meant
+         that if a single style write was ever dropped — a recomposite, a frame lost to a
+         momentum scroll — the leaf stayed wrong for good, showing the other page's picture.
+         Same value twice is a no-op for the style system, so this costs nothing. */
+      const front=local<0.5;
+      if(!leaf._f){leaf._f=leaf.querySelector('.recto');leaf._b=leaf.querySelector('.verso');}
+      if(leaf._f)leaf._f.style.visibility=front?'visible':'hidden';
+      if(leaf._b)leaf._b.style.visibility=front?'hidden':'visible';
+    });
+    /* the bar fills across the current spread; a spread hands over when its page is halfway turned (u = i+0.575) */
+    if(bookBar){
+      const s=turn.filter(t=>t>=0.5).length,start=s===0?0:s-0.425,end=s<N?s+0.575:N+0.5;
+      bookBar.style.opacity=smooth(0.6,1,esh).toFixed(2);  /* appears as the book arrives, like the copy */
+      bookBarFill.style.transform=(bookBar.classList.contains('flat')?'scaleX(':'scaleY(')+Math.max(0,Math.min(1,(u-start)/(end-start))).toFixed(4)+')';
+    }
+    /* each copy state fades out as its page lifts and the next fades in as the new spread lands */
+    whyStates.forEach((el,s)=>{
+      /* The first state leads. It used to come up at the very END of the book's slide (0.6..1),
+         so the book had already landed before "It begins with seeing differently" was readable.
+         The client wants that line read first — it is the core thing she wants remembered — so
+         it now rises while the book is still moving aside and is at full strength the moment the
+         book clears the copy column (measured: esh 0.86), so the words are read first and the
+         book settles in beside them. It cannot start earlier than this — the book's path crosses
+         this column, and bringing the text up sooner simply prints it under the photograph. */
+      const inA=s===0?smooth(0.45,0.86,esh):smooth(0.55,1,turn[s-1]),outA=s<N?smooth(0,0.45,turn[s]):0,o=inA*(1-outA);
+      el.style.opacity=o.toFixed(3);el.style.transform='translateY('+((1-inA)*18-outA*18).toFixed(1)+'px)';el.style.visibility=o<0.01?'hidden':'visible';
+    });
+  }
+  layoutWhy();window.addEventListener('resize',layoutWhy);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutWhy);
+
+  /* HERO TITLE — crisp antialiased text first, then it breaks into dots and scatters (no scrim) */
+  const titleCv=document.getElementById('heroTitle'),titleCtx=titleCv&&titleCv.getContext('2d'),heroLede=document.getElementById('heroLede');
+  let TITLE_LEAD=['From crisis response to lasting community capacity'];
+  const TITLE_EMPH='to leave each generation stronger.';
+  const brandEl=document.querySelector('.nav .brand');
+  function logoBigH(){const vw=window.innerWidth;return vw<=720?Math.min(vw*0.085,32):Math.min(vw*0.036,52);}
+  let navBrandBox=null;
+  function measureNav(){
+    if(!brandEl){navBrandBox=null;return;}
+    const prev=brandEl.style.transform;brandEl.style.transform='none';  /* its resting box, free of the transform we set each frame */
+    const r=brandEl.getBoundingClientRect();
+    brandEl.style.transform=prev;
+    navBrandBox={left:r.left,top:r.top,w:r.width,h:r.height};
+  }
+  let titleParts=[],tcw=0,tch=0,tDpr=1,titleCx=0,titleCy=0,leadFs=0,emphFs=0,leadLh=0,emphGap=0,eyebrowFs=0,eyebrowGap=0;
+  function smooth(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
+  function leadFont(c){c.font='500 '+leadFs+"px Archivo, system-ui, sans-serif";c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
+  function emphFont(c){c.font='700 semi-condensed '+emphFs+"px Archivo, system-ui, sans-serif";c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
+  function titleLayout(){
+    const n=TITLE_LEAD.length,totalH=eyebrowFs+eyebrowGap+(n-1)*leadLh+leadFs+emphGap+emphFs,top=titleCy-totalH/2;
+    /* the drop applies to the type only (and is left out of totalH), so the logo above it does not shift */
+    const eyebrowY=top+eyebrowFs/2,leadTop=top+eyebrowFs+eyebrowGap+leadFs*0.6;
+    const leadY=[];for(let i=0;i<n;i++)leadY.push(leadTop+leadFs/2+i*leadLh);
+    const emphY=leadTop+(n-1)*leadLh+leadFs+emphGap+emphFs/2;
+    return {eyebrowY,leadY,emphY};
+  }
+  /* a sketchy, hand-drawn dark pencil underline (two slightly-wobbling passes) */
+  function pencilUnderline(c,x0,x1,y,a){
+    c.save();c.shadowColor='transparent';c.lineCap='round';c.lineJoin='round';c.strokeStyle='#06513C';
+    const w=x1-x0,segs=18;
+    const passes=[{lw:Math.max(2.6*tDpr,emphFs*0.05),al:0.6,off:0,ph:0},{lw:Math.max(1.5*tDpr,emphFs*0.028),al:0.24,off:1.3*tDpr,ph:2.3}];
+    for(const p of passes){
+      c.globalAlpha=a*p.al;c.lineWidth=p.lw;c.beginPath();
+      for(let s=0;s<=segs;s++){const t=s/segs,px=x0+w*t,py=y+p.off+Math.sin(t*6.2+p.ph)*1.4*tDpr-Math.sin(t*Math.PI)*1.2*tDpr;s===0?c.moveTo(px,py):c.lineTo(px,py);}
+      c.stroke();
+    }
+    c.restore();
+  }
+  /* offscreen white mask so the whole headline shatters into dots uniformly */
+  function paintTitleMask(c){
+    const L=titleLayout();
+    leadFont(c);for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
+    emphFont(c);c.fillText(TITLE_EMPH,titleCx,L.emphY);
+  }
+  /* the at-rest headline: small upright dark lead, a bigger upright payoff with a pencil mark */
+  function paintTitleSolid(c,a){
+    const L=titleLayout();
+    c.fillStyle='rgba(15,42,34,0.9)';leadFont(c);
+    for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
+    emphFont(c);
+    const ew=c.measureText(TITLE_EMPH).width;
+    pencilUnderline(c,titleCx-ew/2,titleCx+ew/2,L.emphY+emphFs*0.5,a);
+    c.fillStyle='#06513C';c.fillText(TITLE_EMPH,titleCx,L.emphY);
+  }
+  function buildTitle(){
+    if(!titleCv)return;
+    tDpr=window.devicePixelRatio||1;
+    tcw=titleCv.width=titleCv.offsetWidth*tDpr;tch=titleCv.height=titleCv.offsetHeight*tDpr;
+    const tm=titleCv.offsetWidth<=720;
+    TITLE_LEAD=['From crisis response to lasting community capacity'];
+    leadFs=Math.min(titleCv.offsetWidth*(tm?0.05:0.026),tm?32:28)*tDpr;
+    emphFs=Math.min(titleCv.offsetWidth*(tm?0.07:0.046),tm?44:54)*tDpr;
+    eyebrowFs=logoBigH()*tDpr;  /* the logo now occupies the band the eyebrow used to */
+    measureNav();
+    /* Shrink the lead + payoff so the headline stays two lines with no forced breaks.
+       Twice, not once: a variable font's advance width is not exactly linear in size, and
+       one pass left the payoff a few per cent over on a phone — which is a clipped line,
+       not a tight one. Measured against the SAME context that draws, and only once the real
+       Archivo has loaded (see the fonts.load call under buildTitle) — measuring the fallback
+       and then rendering Archivo is what ran the headline off both edges. */
+    {/* ⚠ measure on the context that DRAWS, never a detached canvas. A canvas in the page
+        inherits font-variation-settings:'wdth' 100 from body, and that overrides the
+        `semi-condensed` in the font shorthand; a detached one inherits nothing, keeps the
+        condensation, and so reports a string ~12% narrower than the one that gets painted.
+        That gap is exactly what ran the payoff off both edges of a phone. */
+     const probe=titleCtx||titleCv.getContext('2d');
+     const maxLeadW=tcw*(tm?0.88:0.9);
+     for(let i=0;i<2;i++){leadFont(probe);let lw=0;for(const s of TITLE_LEAD)lw=Math.max(lw,probe.measureText(s).width);if(lw>maxLeadW)leadFs*=maxLeadW/lw;}
+     const maxEmphW=tcw*(tm?0.88:0.92);
+     for(let i=0;i<2;i++){emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}}
+    eyebrowGap=leadFs*0.8;  /* breathing room under the logo lockup */
+    leadLh=leadFs*1.18;emphGap=leadFs*0.32;
+    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
+    /* the intro paragraph sits below the photo box, so the opening reads statement → image → what we're building */
+    if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*stickyH()+(tm?14:24))+'px';}
+    const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
+    o.fillStyle='#fff';paintTitleMask(o);
+    const data=o.getImageData(0,0,tcw,tch).data;
+    titleParts=[];const step=Math.max(3,Math.round(3*tDpr));
+    for(let y=0;y<tch;y+=step)for(let x=0;x<tcw;x+=step){
+      if(data[(y*tcw+x)*4+3]>130)titleParts.push({hx:x,hy:y,ang:Math.random()*6.283,dist:(60+Math.random()*230)*tDpr,ph:Math.random()*6.283});
+    }
+  }
+  /* the nav logo starts blown up and centred over the headline, then travels back into the bar (transform none at ec=1) */
+  function placeBrand(pa){
+    if(!brandEl||!navBrandBox)return;
+    const r=navBrandBox,ec=easeInOut(Math.max(0,Math.min(1,pa))),bigH=logoBigH(),L=titleLayout();
+    const k0=bigH/r.h;                                        /* transform-origin is 0 0, so solve for the scaled box */
+    const tx0=window.innerWidth/2-r.w*k0/2-r.left,ty0=L.eyebrowY/tDpr-bigH/2-r.top;
+    const k=lerp(k0,1,ec),tx=lerp(tx0,0,ec),ty=lerp(ty0,0,ec);
+    brandEl.style.transform=ec>=1?'none':'translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) scale('+k.toFixed(4)+')';
+  }
+  function drawTitle(pa){
+    placeBrand(pa);
+    if(!titleCtx)return;
+    titleCtx.clearRect(0,0,tcw,tch);
+    if(pa>=0.64){if(heroLede)heroLede.style.opacity=0;return;}
+    const t=Date.now()*0.001;
+    /* 1 — crisp antialiased text, what you see at first; fades as it turns to dots */
+    const solidA=1-smooth(0.05,0.30,pa);
+    if(heroLede)heroLede.style.opacity=solidA.toFixed(3);
+    if(solidA>0.01){
+      titleCtx.save();titleCtx.globalAlpha=solidA;
+      titleCtx.shadowColor='rgba(251,246,234,0.6)';titleCtx.shadowBlur=10*tDpr;titleCtx.shadowOffsetY=1*tDpr;
+      paintTitleSolid(titleCtx,solidA);
+      titleCtx.restore();
+    }
+    /* 2 — the letters break into dots that drift apart */
+    if(pa>0.08){
+      const e=easeInOut(Math.min(1,(pa-0.08)/0.56)),appear=smooth(0.08,0.20,pa);
+      for(const p of titleParts){
+        const dx=Math.cos(p.ang)*p.dist*e,dy=Math.sin(p.ang)*p.dist*e-26*tDpr*e;
+        const x=p.hx+dx+Math.sin(t*0.8+p.ph)*2*tDpr*e,y=p.hy+dy,a=appear*(1-e)*0.95;
+        if(a<=0.01)continue;
+        titleCtx.fillStyle='rgba(15,42,34,'+a.toFixed(3)+')';
+        titleCtx.beginPath();titleCtx.arc(x,y,(1.5+e*1.3)*tDpr,0,7);titleCtx.fill();
+      }
+    }
+  }
+  buildTitle();
+  /* The webfont stylesheet is loaded lazily (media="print" then swapped), so fonts.ready can
+     resolve before Archivo has even been requested. Ask for the two weights the headline
+     actually draws in, and only re-measure once they are really here. */
+  if(document.fonts&&document.fonts.load){
+    Promise.all([document.fonts.load('700 40px Archivo'),document.fonts.load('500 40px Archivo')])
+      .then(()=>document.fonts.ready).then(buildTitle).catch(()=>{});
+  }else if(document.fonts&&document.fonts.ready){document.fonts.ready.then(buildTitle);}
+  window.addEventListener('resize',buildTitle);
+
+  /* OPENING BACKDROP — slow organic colour behind the frame; each blob follows the cursor by a different amount */
+  const glowCv=document.getElementById('heroGlow'),glowCtx=glowCv&&glowCv.getContext('2d');
+  let gW=0,gH=0,gDpr=1,gPx=0.5,gPy=0.42,gTx=0.5,gTy=0.42,pointerSeen=false;
+  const BLOBS=[
+    {x:.20,y:.26,r:.50,sx:1.25,sy:.85,rot:-.5,sp:.030,ph:0.7,depth:.9,c:'0,145,105',a:.42},
+    {x:.82,y:.22,r:.42,sx:.95,sy:1.20,rot:.6,sp:.025,ph:2.1,depth:.5,c:'0,219,182',a:.30},
+    {x:.76,y:.80,r:.48,sx:1.30,sy:.90,rot:.25,sp:.022,ph:4.2,depth:1.0,c:'195,105,56',a:.46},
+    {x:.30,y:.86,r:.40,sx:1.10,sy:1.00,rot:-.3,sp:.034,ph:5.5,depth:.6,c:'201,68,47',a:.26}
+  ];
+  function sizeGlow(){
+    if(!glowCv)return;
+    gDpr=Math.min(1.5,window.devicePixelRatio||1);
+    const r=glowCv.getBoundingClientRect();
+    gW=glowCv.width=Math.max(1,Math.round(r.width*gDpr));gH=glowCv.height=Math.max(1,Math.round(r.height*gDpr));
+  }
+  function drawGlow(){
+    if(!glowCtx)return;
+    gPx+=(gTx-gPx)*0.05;gPy+=(gTy-gPy)*0.05;   /* the cursor pull lags well behind the pointer */
+    const t=reduce?0:Date.now()*0.001,m=Math.max(gW,gH);
+    glowCtx.clearRect(0,0,gW,gH);
+    for(const b of BLOBS){
+      const cx=(b.x+(gPx-0.5)*b.depth*0.13+Math.sin(t*b.sp*6.2+b.ph)*0.035)*gW;
+      const cy=(b.y+(gPy-0.5)*b.depth*0.09+Math.cos(t*b.sp*5.1+b.ph*1.3)*0.03)*gH;
+      const rad=b.r*m*(1+Math.sin(t*b.sp*4+b.ph)*0.06);
+      glowCtx.save();
+      glowCtx.translate(cx,cy);glowCtx.rotate(b.rot+Math.sin(t*b.sp*3+b.ph)*0.12);glowCtx.scale(b.sx,b.sy);
+      const g=glowCtx.createRadialGradient(0,0,0,0,0,rad);
+      g.addColorStop(0,'rgba('+b.c+','+b.a+')');
+      g.addColorStop(.55,'rgba('+b.c+','+(b.a*0.38).toFixed(3)+')');
+      g.addColorStop(1,'rgba('+b.c+',0)');
+      glowCtx.fillStyle=g;glowCtx.beginPath();glowCtx.arc(0,0,rad,0,7);glowCtx.fill();
+      glowCtx.restore();
+    }
+    /* torch — the colour burns brightest around the cursor and settles to an ambient level further out.
+       Without a pointer (touch) the falloff is much flatter, so the page never looks half-lit. */
+    const cx=gPx*gW,cy=gPy*gH,tR=Math.max(gW,gH)*0.62,amb=pointerSeen?.28:.62;
+    glowCtx.globalCompositeOperation='destination-in';
+    const mask=glowCtx.createRadialGradient(cx,cy,0,cx,cy,tR);
+    mask.addColorStop(0,'rgba(0,0,0,1)');
+    mask.addColorStop(.42,'rgba(0,0,0,'+(amb+(1-amb)*0.55).toFixed(3)+')');
+    mask.addColorStop(1,'rgba(0,0,0,'+amb+')');
+    glowCtx.fillStyle=mask;glowCtx.fillRect(0,0,gW,gH);
+    glowCtx.globalCompositeOperation='source-over';
+    /* a faint warm lift right under the cursor, so the torch reads as light rather than just a window */
+    if(pointerSeen){
+      const hl=glowCtx.createRadialGradient(cx,cy,0,cx,cy,tR*0.38);
+      hl.addColorStop(0,'rgba(255,248,230,.14)');hl.addColorStop(1,'rgba(255,248,230,0)');
+      glowCtx.fillStyle=hl;glowCtx.fillRect(0,0,gW,gH);
+    }
+  }
+  sizeGlow();window.addEventListener('resize',sizeGlow);
+  window.addEventListener('mousemove',e=>{gTx=e.clientX/window.innerWidth;gTy=e.clientY/window.innerHeight;pointerSeen=true;},{passive:true});
+
+  /* WAYFINDING — scatter → gentle flow, with a life-course frame that advances on scroll */
+  const wfSection=document.querySelector('#wayfinding .scroll-area'),cvs=document.getElementById('wf-canvas'),ctx=cvs.getContext('2d');
+  /* The life course used to be one framed photograph that swapped and grew with the scroll, and
+     all of its state lived here. It is four static tiles now — nothing to drive. The river's
+     own scroll (scatter -> flow) is untouched. */
+  let particles=[],wfW=0,wfH=0,wfDpr=1;
+  const FLOW_SPEED=0.05;  /* how fast the current carries a dot down the river (fraction of width per second) */
+  function flowY(u){return wfH*0.46+Math.sin(u*Math.PI*2.4+0.4)*wfH*0.09;}  /* the river's gentle meander */
+  function sizeWf(){
+    wfDpr=window.devicePixelRatio||1;const r=cvs.getBoundingClientRect();
+    wfW=cvs.width=r.width*wfDpr;wfH=cvs.height=r.height*wfDpr;
+    particles=[];const count=Math.floor(wfW*wfH/1950);
+    for(let i=0;i<count;i++){particles.push({
+      u:Math.random(),                       /* position along the river, 0..1 */
+      off:(Math.random()-0.5)*wfH*0.14,      /* spread across the river */
+      sx:Math.random()*wfW,sy:Math.random()*wfH, /* scattered origin */
+      phase:Math.random()*Math.PI*2,r:Math.random()*3.2+1.8,
+      delay:Math.random()*0.55               /* each dot fades in at its own moment */
+    });}
+  }
+  function tickWf(){
+    if(!inView(wfSection))return;
+    const p=progressOf(wfSection),t=Date.now()*0.001,flowU=t*FLOW_SPEED;ctx.clearRect(0,0,wfW,wfH);
+    particles.forEach(pt=>{
+      const lp=Math.max(0,Math.min(1,(p-pt.delay)/0.45));  /* per-dot gather + fade-in window */
+      if(lp<=0)return;
+      const g=easeOut(lp);
+      let u=(pt.u+flowU)%1;if(u<0)u+=1;                     /* carried downstream, wrapping around */
+      const rx=u*wfW,ry=flowY(u)+pt.off+Math.sin(t*1.2+pt.phase)*6*wfDpr;
+      const x=pt.sx+(rx-pt.sx)*g,y=pt.sy+(ry-pt.sy)*g;
+      const edge=Math.min(1,u/0.05,(1-u)/0.05);             /* fade at the river's ends so the wrap is invisible */
+      const alpha=(0.55+0.45*p)*lp*(1-(1-edge)*g);
+      if(alpha<=0.01)return;
+      const cr=Math.round(201+(170-201)*g),cg=Math.round(68+(78-68)*g),cb=Math.round(47+(38-47)*g);
+      ctx.fillStyle='rgba('+cr+','+cg+','+cb+','+alpha.toFixed(3)+')';
+      ctx.beginPath();ctx.arc(x,y,pt.r*wfDpr*(0.7+g*0.5),0,7);ctx.fill();
+    });
+    /* readability — a subtle cream radial sat exactly behind the copy, at any layout/width */
+    const copyEl=document.querySelector('#wayfinding .copy');
+    if(copyEl){
+      const cr=copyEl.getBoundingClientRect(),cb=cvs.getBoundingClientRect();
+      const cx=(cr.left+cr.width/2-cb.left)*wfDpr,cy=(cr.top+cr.height/2-cb.top)*wfDpr,rad=Math.max(cr.width,cr.height)*1.1*wfDpr;
+      const wg=ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+      wg.addColorStop(0,'rgba(244,236,220,0.94)');wg.addColorStop(0.45,'rgba(244,236,220,0.78)');wg.addColorStop(0.75,'rgba(244,236,220,0.38)');wg.addColorStop(1,'rgba(244,236,220,0)');
+      ctx.fillStyle=wg;ctx.fillRect(0,0,wfW,wfH);
+    }
+  }
+  sizeWf();
+  window.addEventListener('resize',sizeWf);
+
+  /* HOW — drag to compare */
+  (function(){
+    const cmp=document.getElementById('compare'),handle=document.getElementById('cmpHandle'),friction=document.getElementById('frictionPanel'),hint=document.getElementById('dragHint');
+    /* stacked below 720px, so there is nothing to drag and the nudge would only
+       set a --pos the CSS is ignoring */
+    const stacked=window.matchMedia('(max-width:720px)');
+    if(stacked.matches)return;
+    let dragging=false,nudged=false;
+    function setPos(x){const r=cmp.getBoundingClientRect();let pct=((x-r.left)/r.width)*100;pct=Math.max(4,Math.min(96,pct));cmp.style.setProperty('--pos',pct+'%');friction.style.setProperty('--pos',pct+'%');handle.style.left=pct+'%';}
+    cmp.style.setProperty('--pos','50%');friction.style.setProperty('--pos','50%');
+    function start(e){dragging=true;nudged=true;hint.style.opacity=0;setPos(e.touches?e.touches[0].clientX:e.clientX);}
+    function move(e){if(!dragging)return;setPos(e.touches?e.touches[0].clientX:e.clientX);if(e.cancelable)e.preventDefault();}
+    function end(){dragging=false;}
+    handle.addEventListener('mousedown',start);cmp.addEventListener('mousedown',start);
+    window.addEventListener('mousemove',move);window.addEventListener('mouseup',end);
+    handle.addEventListener('touchstart',start,{passive:true});cmp.addEventListener('touchstart',start,{passive:true});
+    window.addEventListener('touchmove',move,{passive:false});window.addEventListener('touchend',end);
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!nudged){let t=0;const id=setInterval(()=>{if(nudged){clearInterval(id);return;}t++;const pp=50+Math.sin(t/6)*9;cmp.style.setProperty('--pos',pp+'%');friction.style.setProperty('--pos',pp+'%');handle.style.left=pp+'%';if(t>38){clearInterval(id);if(!nudged){cmp.style.setProperty('--pos','50%');friction.style.setProperty('--pos','50%');handle.style.left='50%';}}},28);io.disconnect();}}),{threshold:.5});
+    io.observe(cmp);
+  })();
+
+
+
+  /* ACT — "gather around": abstract people orbiting the centre in slow circles */
+  (function(){
+    const cv=document.getElementById('orbitCanvas');if(!cv)return;
+    const ctx=cv.getContext('2d');let W=0,H=0,dots=[];
+    const cols=['164,214,198','251,246,234','232,168,142','0,219,182','214,235,225'];/* varied = different people */
+    const rings=[{r:0.26,n:6,sp:0.05},{r:0.40,n:9,sp:0.038},{r:0.56,n:11,sp:0.029}];
+    /* The copy's own box, in canvas coordinates. The orbits are sized from the SHORT side, so on
+       a phone every ring passes straight through the words — which is what made this section hard
+       to read on a handset. The dots are not moved; they fade out as they cross the text and come
+       back on the other side, so the gathering still reads as a gathering. */
+    let keep=null;
+    function measureKeep(){
+      const inner=cv.parentElement&&cv.parentElement.querySelector('.inner');
+      if(!inner){keep=null;return;}
+      const a=cv.getBoundingClientRect(),b=inner.getBoundingClientRect();
+      keep={l:b.left-a.left,t:b.top-a.top,r:b.right-a.left,b:b.bottom-a.top};
+    }
+    const FADE=34;      /* px over which a dot dims as it approaches the copy */
+    const FLOOR=0.10;   /* never quite nothing: a dot behind the words is a faint presence, not a hole */
+    function keepOut(x,y){
+      if(!keep)return 1;
+      const dx=Math.max(keep.l-x,x-keep.r,0),dy=Math.max(keep.t-y,y-keep.b,0);
+      const d=Math.sqrt(dx*dx+dy*dy);
+      return FLOOR+(1-FLOOR)*Math.min(1,d/FADE);
+    }
+    function size(){const dpr=window.devicePixelRatio||1;W=cv.offsetWidth;H=cv.offsetHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      /* widest side on a narrow screen, so the rings orbit around the column instead of sitting on it */
+      const base=W<760?Math.max(W,H)*0.62:Math.min(W,H);dots=[];
+      rings.forEach((rg,ri)=>{for(let i=0;i<rg.n;i++)dots.push({ang:(i/rg.n)*Math.PI*2+ri*0.7,r:rg.r*base,sp:rg.sp,size:2.6+Math.random()*2.8,col:cols[(i+ri)%cols.length],ph:Math.random()*6.28});});
+      measureKeep();
+    }
+    function draw(){
+      const t=Date.now()*0.001,cx=W/2,cy=H/2;ctx.clearRect(0,0,W,H);
+      dots.forEach(d=>{const ang=d.ang+t*d.sp,wob=Math.sin(t*0.45+d.ph)*6;
+        const x=cx+Math.cos(ang)*(d.r+wob),y=cy+Math.sin(ang)*(d.r+wob);
+        const tw=(0.45+Math.sin(t*0.8+d.ph)*0.2+0.2)*keepOut(x,y);
+        if(tw<0.02)return;
+        ctx.beginPath();ctx.arc(x,y,d.size,0,7);ctx.fillStyle='rgba('+d.col+','+tw.toFixed(3)+')';
+        ctx.shadowColor='rgba('+d.col+','+(tw*0.7).toFixed(3)+')';ctx.shadowBlur=10;ctx.fill();});
+      ctx.shadowBlur=0;requestAnimationFrame(draw);
+    }
+    size();window.addEventListener('resize',size);
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measureKeep);  /* the copy reflows when Archivo lands */
+    requestAnimationFrame(draw);
+  })();
+
+  /* master loop */
+  /* tickWhy only runs while the opening is on screen, so a deep link that lands further down
+     (index.html#act from the approach page, say) would otherwise leave the brand frozen at the
+     blown-up size placeBrand gave it on the first frame. Put it back in the bar instead. */
+  function loop(){
+    if(inView(whySection)){tickWhy();drawGlow();}
+    else{placeBrand(1);}
+    tickWf();requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  /* Belt and braces for iOS, and ONLY there: `scroll` keeps firing through a momentum flick
+     even where rAF is throttled, so the opening and the river stay pinned to the scroll
+     position rather than catching up in a lurch once the finger lifts. Not on a pointer, where
+     it would step the wheel easing twice per frame and change how the opening feels. */
+  if(COARSE)window.addEventListener('scroll',()=>{
+    if(inView(whySection))tickWhy();else placeBrand(1);
+    tickWf();
+  },{passive:true});
+  /* ============================================================
+     THE SPIRAL
+     An Archimedean spiral r = R0 + K*t, drawn outward from the core so the cycle
+     reads as widening rather than closing. The six steps sit at fixed angles on it.
+     The step labels are HTML positioned over the SVG rather than SVG text: they stay
+     horizontal wherever they land on the curve, and they can carry the border,
+     shadow and hover state that make them read as buttons.
+     ============================================================ */
+  (function(){
+    const svg=document.getElementById('spSvg');if(!svg)return;
+    const stage=document.getElementById('spStage');
+    const trail=document.getElementById('spTrail');
+    const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips');
+    const panel=document.getElementById('apPanel'),detail=document.getElementById('spDetail'),ticksEl=document.getElementById('spTicks');
+    const steps=[...document.querySelectorAll('#spSteps li')].map(li=>({
+      h:li.querySelector('h3').textContent.trim(),
+      d:li.querySelector('p').textContent.trim()
+    }));
+    const R0=4,K=36.545,TMAX=12.368,GAP=26;
+    /* The steps advance 72 degrees each, so reading the diagram clockwise from any step
+       gives 01 02 03 04 05 in order. A 144-degree advance also spaced them evenly and was
+       easier to fit, but it wound twice round before closing, so the eye met them 1 4 2 5 3.
+       Sharing the numbering with the eye costs radial room: five steps at 72 degrees occupy
+       exactly ONE turn, and one turn inside a fixed radius cannot show the line passing
+       inside itself — it just reads as a circle. So the curve no longer stops at the last
+       step. It carries on for another 140 degrees past 05, which buys a second visible turn
+       and makes the form read as a spiral again.
+       That outer sweep is also where "expand the circle of leadership" belongs: it is the
+       one part of the figure that is not a step, which is exactly what the client asked for.
+       TMAX, K and the step span are not independent — TMAX sets every bearing at once, K
+       follows from the 456-unit outer radius, and a chip is up to 168px wide next to a 560px
+       stage with the copy column immediately left of it. Swept against real chip boxes:
+       step 01 sits at 192 degrees — centre-left, the first thing the eye lands on coming off the
+       headline — and the rest follow clockwise from there. 1.45 turns visible, steps spread
+       206 -> 390, 88 units of curve left beyond 05, no chip within 26px of the copy column, the
+       centre label or another chip. Step 01's bearing has a feasible band of 168..205 degrees,
+       so this is not balanced on an edge.
+       Note 01 cannot sit exactly where 05 used to (226 degrees): that puts the LARGEST radius,
+       and so the widest chip, at 154 degrees — hard left, straight through the copy column. No
+       overshoot value rescues it. 192 is the closest the geometry allows to centre-left. */
+    const STEP_T=[4.9218,6.1785,7.4351,8.6917,9.9484];
+    const pt=t=>{const r=R0+K*t,a=t-Math.PI/2;return[r*Math.cos(a),r*Math.sin(a),r,a];};
+
+    /* sample the curve once; the same points give us the path and the arc length at each step */
+    const N=900,pts=[],cum=[0];
+    for(let i=0;i<=N;i++)pts.push(pt(TMAX*i/N));
+    for(let i=1;i<=N;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+    const total=cum[N];
+    const spiralD='M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
+    trail.setAttribute('d',spiralD);
+    {const base=document.getElementById('spBase');if(base)base.setAttribute('d',spiralD);}
+    const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
+    const NS='http://www.w3.org/2000/svg';
+
+    /* ============================================================
+       THE FLOW — the line, made of moving water
+       The spiral's line is not a line any more. It is a current of dots running
+       outward from the core, widening and fading as the radius grows. A dot that
+       reaches the end of the sweep dissolves there and surfaces again in the core,
+       under the label's fade, so the cycle reads without a drawn way back.
+       ⚠ THERE IS NO RETURN STREAM (Gabriel, 2026-09-23: "this part in red is weird,
+       remove the dots on that path"). The first version drew the way back as a
+       quieter Bézier rising from under the bottom edge into the core; on the page it
+       read as a stray dotted tail hanging off the centre, competing with the
+       spiral's own line. The route between the end and the core is underground now,
+       which is what a returning current does.
+       ============================================================ */
+    /* The spiral as one polyline with cumulative length, so a dot's progress is a
+       single number in 0..1. */
+    const FP=[],FL=[0];
+    for(let i=0;i<=N;i++){const p=pt(TMAX*i/N);FP.push([p[0],p[1],p[2]]);}
+    for(let i=1;i<FP.length;i++)FL.push(FL[i-1]+Math.hypot(FP[i][0]-FP[i-1][0],FP[i][1]-FP[i-1][1]));
+    const FTOT=FL[FL.length-1],SPIRAL_U=1;
+
+    /* u -> point, plus the unit normal, so a dot can sit off the centreline */
+    function atU(u){
+      const target=u*FTOT;
+      let lo=0,hi=FL.length-1;
+      while(lo<hi-1){const mid=(lo+hi)>>1;if(FL[mid]<=target)lo=mid;else hi=mid;}
+      const seg=FL[hi]-FL[lo]||1,k=(target-FL[lo])/seg;
+      const a=FP[lo],b=FP[hi];
+      const x=a[0]+(b[0]-a[0])*k,y=a[1]+(b[1]-a[1])*k;
+      let tx=b[0]-a[0],ty=b[1]-a[1];const m=Math.hypot(tx,ty)||1;tx/=m;ty/=m;
+      return [x,y,-ty,tx,a[2]+(b[2]-a[2])*k];
+    }
+
+    (function(){
+      const cv=document.getElementById('spFlow'),cx=cv.getContext('2d');
+      /* 820, not the 1050 the loop carried: about a fifth of those spent their time on
+         the return leg, so with the leg gone the same density on the spiral needs fewer. */
+      const NDOT=820;
+      const drops=[];
+      for(let i=0;i<NDOT;i++)drops.push({
+        u:(i+Math.random()*0.85)/NDOT,
+        off:(Math.random()*2-1),                 /* where in the width of the stream */
+        sp:0.78+Math.random()*0.5,               /* the current is not uniform */
+        sz:0.5+Math.pow(Math.random(),1.5)*1.6,   /* skewed small: many fine, a few coarse */
+        ph:Math.random()*6.283,
+        tone:Math.random()
+      });
+      let W=0,H=0,dpr=1;
+      function size(){
+        dpr=Math.min(2,window.devicePixelRatio||1);
+        const r=cv.getBoundingClientRect();W=r.width;H=r.height;
+        cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+        cx.setTransform(dpr,0,0,dpr,0,0);
+      }
+      size();window.addEventListener('resize',size);
+      const X=v=>(v+560)/1120*W, Y=v=>(v+560)/1120*H, S=v=>v/1120*W;
+      /* A dot's radius is in viewBox units, so it shrinks with the stage: at 760px across it
+         draws 0.3-3.9px, but on a 310px phone stage the same dots are a third of a pixel and
+         the current disappears into grain. Scale them back up to roughly the apparent size they
+         have on a desktop. Capped, so it cannot run away on a very narrow screen. */
+      const sizeBoost=()=>Math.min(2.6,Math.max(1,700/(W||700)));
+
+      /* the same core fade the SVG mask applies, so the flow dissolves into the
+         centre instead of colliding with the label */
+      const core=r=>Math.max(0,Math.min(1,(r-31)/(123-31)));
+
+      let armed=0,seen=true,t0=performance.now();
+      new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
+
+      /* THE SWELL. The old pulse was its own set of SVG bands riding the line; with the
+         line gone it read as a smear. It is now a brightening that travels along the
+         current itself — the same event, carried by the water instead of drawn over it.
+         It runs out of the core, slows as it widens, rests, and stands down while a step
+         is open so it never competes with the trail hover draws. */
+      const SW_TRAVEL=3400,SW_REST=2100,SW_JIT=1900;
+      let swStart=performance.now()+900,swSpan=SW_TRAVEL+SW_REST,swU=-1,swAmp=0;
+
+      function draw(now){
+        const t=(now-t0)/1000;
+        const BOOST=sizeBoost();
+        cx.clearRect(0,0,W,H);
+        armed+=((stage.classList.contains('armed')?1:0)-armed)*0.08;
+        const mute=1-0.5*armed;
+
+        const e=now-swStart;
+        if(e>swSpan){swStart=now;swSpan=SW_TRAVEL+SW_REST+Math.random()*SW_JIT;swU=-1;swAmp=0;}
+        else if(e>=0&&e<SW_TRAVEL){
+          const k=e/SW_TRAVEL;
+          swU=(1-Math.pow(1-k,2.4))*SPIRAL_U;
+          swAmp=Math.min(1,k/0.13)*Math.min(1,(1-k)/0.26)*(1-armed);
+        } else { swU=-1;swAmp=0; }
+
+        for(const d of drops){
+          let u=d.u+t*0.035*d.sp; u-=Math.floor(u);
+          const [x,y,nx,ny,r]=atU(u);
+          const onSpiral=u<SPIRAL_U;
+          const wob=Math.sin(t*0.9*d.sp+d.ph)*0.3+d.off*0.8;
+          const width=onSpiral?(2.2+6.5*(r/456)):11;
+          const px=x+nx*wob*width, py=y+ny*wob*width;
+          let a;
+          if(onSpiral){
+            const k=u/SPIRAL_U;
+            a=0.34*Math.min(1,k/0.09)*(1-Math.pow(Math.max(0,(k-0.74)/0.26),1.6));
+          }else{
+            const k=(u-SPIRAL_U)/(1-SPIRAL_U);
+            a=0.26*Math.min(1,k/0.16)*Math.min(1,(1-k)/0.30);   /* the return is quieter, not absent */
+          }
+          /* the swell: a soft band around its position, brightest at the centre of it */
+          let lift=0;
+          if(swAmp>0&&onSpiral){
+            const dd=Math.abs(u-swU);
+            if(dd<0.075) lift=swAmp*Math.pow(1-dd/0.075,1.8);
+          }
+          a=(a+lift*0.5)*core(Math.hypot(px,py))*mute;
+          if(a<=0.004)continue;
+          const rad=S((onSpiral?(0.85+1.9*(r/456)):1.5)*d.sz*(1+lift*0.7))*BOOST;
+          cx.globalAlpha=Math.min(1,a);
+          /* water, not dust: the current carries the Fund's green, deepening as it widens,
+             and the swell pushes the dots it passes toward the bright end of it */
+          cx.fillStyle = lift>0.38 ? '#00DBB6' : (lift>0.06 ? '#009169' : (d.tone<0.62 ? '#0F2A22' : '#009169'));
+          cx.beginPath();cx.arc(X(px),Y(py),Math.max(0.55,rad),0,6.2832);cx.fill();
+        }
+        cx.globalAlpha=1;
+      }
+      if(reduce){draw(performance.now());window.addEventListener('resize',()=>{size();draw(performance.now());});return;}
+      requestAnimationFrame(function tick(now){requestAnimationFrame(tick);if(seen)draw(now);});
+    })();
+
+    /* THE OUTER BAND. It follows the spiral's own curve, offset outward, and runs past
+       where the line stops so the words sit across the TOP of the stage where they read
+       horizontally. The client asked for this to follow the widening edge; she also
+       asked, earlier, that step names never tilt. Both hold here because this is not a
+       step — it is the label on the sweep the steps produce. */
+    {
+      const bp=document.getElementById('spBandPath'),seg=[];
+      for(let i=0;i<=200;i++){
+        const t=11.40+(13.70-11.40)*i/200,r=R0+K*t+38,a=t-Math.PI/2;
+        seg.push((r*Math.cos(a)).toFixed(1)+' '+(r*Math.sin(a)).toFixed(1));
+      }
+      bp.setAttribute('d','M'+seg.join('L'));
+    }
+    const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
+
+    const nodes=STEP_T.map((t,i)=>{
+      const [x,y,r,a]=pt(t);
+      const halo=document.createElementNS(NS,'circle');
+      halo.setAttribute('class','sp-halo');halo.setAttribute('cx',x.toFixed(1));halo.setAttribute('cy',y.toFixed(1));halo.setAttribute('r',8);
+      const dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('class','sp-dot');dot.setAttribute('cx',x.toFixed(1));dot.setAttribute('cy',y.toFixed(1));dot.setAttribute('r',8);
+      dotsG.append(halo,dot);
+
+      /* A chip is far wider than it is tall, so centring it on a radial offset would lay it
+         across the spiral. Anchor its inner edge to the dot instead and let it run outward —
+         except near the top and bottom of the circle, where there is no "outward" horizontally
+         and the chip is centred and pushed clear vertically. */
+      const chip=document.createElement('button');
+      chip.type='button';chip.className='sp-chip';
+      chip.innerHTML='<span class="n">0'+(i+1)+'</span>'+steps[i].h;
+      chip.setAttribute('aria-label',steps[i].h+'. '+steps[i].d);
+      const upright=Math.abs(x)<r*0.42, out=Math.sign(y)||1;
+      const lx = upright ? x : x+Math.sign(x)*GAP;
+      const ly = upright ? y+out*(GAP+8) : y;
+      const tf = upright ? 'translate(-50%,'+(out>0?'0':'-100%')+')'
+                         : 'translate('+(x>0?'0':'-100%')+',-50%)';
+      chip.style.left=pct(lx);chip.style.top=pct(ly);
+      chip.style.setProperty('--sp-t',tf);
+      chip.style.transform=tf;
+      chip.style.setProperty('--sp-d',(i*0.8)+'s');
+      chipsEl.appendChild(chip);
+
+      const tick=document.createElement('button');
+      tick.type='button';tick.setAttribute('aria-label',steps[i].h);
+      ticksEl.appendChild(tick);
+
+      /* The numeral sits OUTWARD of its node, not inside it: at phone scale a marker big
+         enough to hold a legible numeral would reach back into the centre label's ink.
+         Outward there is room to spare — the stage runs to 560 and the last step is at 367. */
+      const num=document.createElementNS(NS,'text');
+      num.setAttribute('class','sp-num');
+      num.setAttribute('x',(Math.cos(a)*(r+58)).toFixed(1));
+      num.setAttribute('y',(Math.sin(a)*(r+58)).toFixed(1));
+      num.textContent='0'+(i+1);
+      svg.appendChild(num);
+
+      return {dot,halo,chip,tick,num,frac:lenAt(t)/total};
+    });
+
+    /* At phone sizes the markers have to carry the diagram on their own — the chips are gone.
+       Set in script rather than CSS because `r` on an SVG circle is only an attribute here. */
+    const narrow=window.matchMedia('(max-width:980px)');
+    function sizeNodes(){
+      const big=narrow.matches;
+      nodes.forEach(nd=>{
+        const on=nd.dot.classList.contains('on');
+        nd.dot.setAttribute('r',big?15:8);
+        nd.halo.setAttribute('r',on?(big?26:16):(big?15:8));
+        nd.dot.style.strokeWidth=big?4.5:'';
+      });
+    }
+    sizeNodes();window.addEventListener('resize',sizeNodes);
+
+    let open=-1;
+    function show(i){
+      if(i===open)return;open=i;
+      stage.classList.toggle('armed',i>=0);
+      nodes.forEach((nd,j)=>{
+        const on=j===i;
+        nd.dot.classList.toggle('on',on);
+        nd.halo.classList.toggle('on',on);
+        nd.halo.setAttribute('r',on?16:8);
+        nd.chip.classList.toggle('on',on);
+        nd.chip.setAttribute('aria-pressed',on?'true':'false');
+        nd.tick.classList.toggle('on',on);
+        if(nd.num)nd.num.classList.toggle('on',on);
+      });
+      sizeNodes();
+      trail.style.strokeDashoffset=i<0?1:(1-nodes[i].frac).toFixed(4);
+      panel.classList.toggle('open',i>=0);
+      if(i>=0){
+        detail.querySelector('.sp-detail-n').textContent='0'+(i+1);
+        detail.querySelector('h3').textContent=steps[i].h;
+        detail.querySelector('p').textContent=steps[i].d;
+      }
+    }
+
+    /* Until the first real interaction the chips breathe in sequence; the first
+       hover, focus or tap stops that for good, so the hint never fights the user. */
+    function settle(){stage.classList.remove('idle');}
+    nodes.forEach((nd,i)=>{
+      const open=()=>{settle();show(i);};
+      nd.chip.addEventListener('mouseenter',open);
+      nd.chip.addEventListener('focus',open);
+      nd.chip.addEventListener('click',open);
+      nd.tick.addEventListener('mouseenter',open);
+      nd.tick.addEventListener('focus',open);
+      nd.tick.addEventListener('click',open);
+    });
+
+    const m=location.hash.match(/^#step-([1-6])$/);if(m){settle();show(+m[1]-1);}
+    /* leaving the diagram clears it, but only if focus has not landed on a step */
+    stage.addEventListener('mouseleave',()=>{if(!stage.contains(document.activeElement))show(-1);});
+    stage.addEventListener('focusout',e=>{if(!stage.contains(e.relatedTarget)&&!ticksEl.contains(e.relatedTarget))show(-1);});
+    ticksEl.addEventListener('mouseleave',()=>{if(!ticksEl.contains(document.activeElement)&&!stage.matches(':hover'))show(-1);});
+
+    /* THE READING LINE (phone only).
+       There is no hover on a phone and no room for the chips, so the link between the list and
+       the diagram is the scroll itself: the diagram is pinned, the steps pass under it, and
+       whichever step you are reading lights its node and the arc of spiral that leads to it.
+       That is the same gesture as the desktop hover — pick a step, watch the path reach it —
+       carried by the one input a phone always has. */
+    {
+      const lis=[...document.querySelectorAll('#spSteps li')];
+      let cur=-2,queued=false;
+      function pick(){
+        queued=false;
+        if(!narrow.matches){
+          if(cur!==-2){cur=-2;lis.forEach(li=>li.classList.remove('on'));show(-1);}
+          return;
+        }
+        /* the line sits below the pinned diagram, where the step you are actually reading is */
+        const line=window.innerHeight*0.62;
+        let best=-1,bestD=1e9;
+        lis.forEach((li,i)=>{
+          const r=li.getBoundingClientRect();
+          if(r.bottom<8||r.top>window.innerHeight-8)return;
+          const d=Math.abs(r.top+Math.min(r.height,220)/2-line);
+          if(d<bestD){bestD=d;best=i;}
+        });
+        if(best===cur)return;
+        cur=best;
+        lis.forEach((li,i)=>li.classList.toggle('on',i===best));
+        if(best>=0)settle();
+        show(best);
+      }
+      const onScroll=()=>{if(!queued){queued=true;requestAnimationFrame(pick);}};
+      window.addEventListener('scroll',onScroll,{passive:true});
+      window.addEventListener('resize',onScroll);
+      pick();
+    }
+  })();
+</script>
+</body>
+</html>

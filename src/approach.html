@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Different Way of Working &middot; Self-Healing Communities Fund</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<meta name="description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta name="theme-color" content="#F4ECDC" />
+<link rel="canonical" href="https://hero-versions.vercel.app/approach.html" />
+<!-- How the link looks when it is pasted into an email, a message or a post. Without these a
+     shared link renders as a bare grey URL, which is the first thing a board member sees.
+     ⚠ og:image must be an ABSOLUTE url — scrapers do not resolve relative paths — so the
+     domain is hard-coded here and in canonical/og:url. Change all four when the site moves
+     off the preview domain. The card itself is generated to match the hero; see backlog 11a. -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Self-Healing Communities Fund" />
+<meta property="og:title" content="Our Approach — Self-Healing Communities Fund" />
+<meta property="og:description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta property="og:url" content="https://hero-versions.vercel.app/approach.html" />
+<meta property="og:image" content="https://hero-versions.vercel.app/assets/share-card.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Self-Healing Communities Fund — from crisis response to lasting community capacity, to leave each generation stronger." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Our Approach — Self-Healing Communities Fund" />
+<meta name="twitter:description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
+<meta name="twitter:image" content="https://hero-versions.vercel.app/assets/share-card.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap"></noscript>
+<style>
+  :root{
+    --emerald:#009169;--emerald-bright:#00DBB6;--emerald-deep:#06513C;--emerald-soft:#A4D6C6;
+    --paper:#F4ECDC;--paper-warm:#EFE2CB;--cream:#FBF6EA;--terracotta:#C9442F;--terracotta-soft:#E8A88E;--terracotta-bright:#C36938;
+    --ink:#0F2A22;--ink-soft:#4A5F58;
+    /* display axis settings — one place to retune the whole voice */
+    --disp:'Archivo','Archivo Narrow',system-ui,sans-serif;--disp-wdth:90;--disp-wght:700;--rule:rgba(15,42,34,.16);--rule-soft:rgba(15,42,34,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;font-variation-settings:'wdth' 100;-webkit-font-smoothing:antialiased;line-height:1.5}
+  body{min-height:100vh;overflow-x:hidden}
+  section{scroll-margin-top:80px}
+  img{max-width:100%;display:block}
+
+  /* ---------- atoms ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.2em;font-size:11px;color:var(--ink-soft);font-weight:600}
+  .h1{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(42px,6vw,82px);line-height:.98;letter-spacing:-.032em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h1 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  .h2{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(32px,4.6vw,60px);line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);text-wrap:balance}
+  .h2 em{font-style:normal;font-weight:var(--disp-wght);color:var(--emerald)}
+  /* the second colour starts its own line, as it does in the client's reference */
+  .h1 em::before,.h2 em::before{content:"\A";white-space:pre}
+  .lede{font-size:19px;line-height:1.52;color:var(--ink-soft);max-width:48ch;letter-spacing:-.005em}
+  .btn{display:inline-flex;align-items:center;gap:10px;background:var(--emerald);color:var(--cream);text-decoration:none;padding:15px 26px;border-radius:999px;font-weight:500;font-size:14.5px;transition:transform .2s,background .2s;border:1px solid transparent}
+  .btn:hover{transform:translateY(-1px);background:var(--emerald-deep)}
+  .btn .arrow{display:inline-block;transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(3px)}
+  .btn.alt{background:transparent;color:var(--cream);border:1px solid rgba(251,246,234,.5)}
+  .btn.alt:hover{background:rgba(251,246,234,.12)}
+  .btn.dark{background:transparent;color:var(--emerald-deep);border:1px solid var(--rule)}
+  .btn.dark:hover{background:rgba(0,145,105,.08);border-color:var(--emerald)}
+  .pagelink{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px;color:var(--emerald-deep);text-decoration:none;transition:gap .2s}
+  .pagelink:hover{gap:14px}
+  .pagelink .arrow{transition:transform .2s}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  .no-js .reveal{opacity:1;transform:none}
+
+  /* ---------- NAV ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:200;background:transparent;border-bottom:1px solid transparent;transition:background .4s ease,box-shadow .4s ease,border-color .4s ease,backdrop-filter .4s ease,-webkit-backdrop-filter .4s ease}
+  .nav.solid{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
+  .nav-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .nav .brand img{height:30px}
+  .nav-links{display:flex;align-items:center;gap:2px}
+  .nav-links a{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:999px;transition:all .2s}
+  .nav-links a:hover{color:var(--ink);background:rgba(0,145,105,.08)}
+  .nav-links a.cta{background:var(--emerald);color:var(--cream);margin-left:8px}
+  .nav-links a.cta:hover{background:var(--emerald-deep)}
+  .nav-preview{max-width:1280px;margin:0 auto;height:0;overflow:hidden;transition:height .3s}
+  .nav-preview.open{height:36px}
+  .nav-preview .pv{padding:9px 32px;font-size:13px;color:var(--ink-soft);font-family:'Archivo',system-ui,sans-serif}
+  @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px}}
+  .grain-tex{position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  /* the same card the Flagship section uses on the homepage — these two pages were
+     sharing the class name while looking nothing alike, which read as an oversight.
+     Three returns here rather than two, so there is a third tint: deep forest, which
+     keeps the trio inside the palette and still tells the cards apart at a glance. */
+  .fs-pillar{position:relative;z-index:2;overflow:hidden;border-radius:20px;padding:38px 32px 34px;
+    box-shadow:0 34px 64px -34px rgba(15,42,34,.34);border:1px solid var(--fs-edge);
+    background:var(--fs-bg);transform:perspective(900px);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+  .fs-pillar::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--fs-accent)}
+  .fs-pillar::after{content:"";position:absolute;right:-96px;bottom:-96px;width:230px;height:230px;border-radius:50%;border:1.5px solid var(--fs-accent);opacity:.24;pointer-events:none}
+  .fs-pillar:hover{box-shadow:0 46px 84px -32px rgba(15,42,34,.4)}
+  .fs-pillar.p1{--fs-accent:var(--emerald);--fs-edge:rgba(0,145,105,.24);--fs-ink:var(--emerald-deep);
+    --fs-bg:linear-gradient(162deg,#E9F4EE 0%,#D3E9DD 100%)}
+  .fs-pillar.p2{--fs-accent:var(--terracotta-bright);--fs-edge:rgba(195,105,56,.26);--fs-ink:#8A4522;
+    --fs-bg:linear-gradient(162deg,#FAEBDD 0%,#F0D6BE 100%)}
+  .fs-pillar.p3{--fs-accent:var(--emerald-deep);--fs-edge:rgba(6,81,60,.24);--fs-ink:#06513C;
+    --fs-bg:linear-gradient(162deg,#EDF2ED 0%,#D6E3D8 100%)}
+  .fs-num{position:relative;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--fs-accent);color:var(--cream);font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.01em;margin-bottom:16px;box-shadow:0 8px 18px -8px var(--fs-accent)}
+  .fs-pillar h3{position:relative;font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(21px,2.2vw,27px);line-height:1.06;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--fs-ink);margin-bottom:12px}
+  .fs-pillar h3::after{content:"";display:block;width:40px;height:2px;background:var(--fs-accent);opacity:.5;margin-top:14px}
+  .fs-pillar p{position:relative;font-size:15px;line-height:1.6;color:var(--ink-soft)}
+    .fs-pillar{padding:30px 26px 28px}
+  footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
+  .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer img{height:30px}
+  .foot-links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px}
+  .foot-links a{white-space:nowrap}
+  .foot-links a{color:rgba(251,246,234,.7);text-decoration:none;transition:color .2s}
+  .foot-links a:hover{color:var(--cream)}
+  footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.6)}
+
+  /* ============================================================
+     APPROACH — the cycle, drawn as a spiral
+     ============================================================ */
+  body{padding-top:0}
+  .nav{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
+
+  /* ---------- the three returns ---------- */
+  .ap-value{background:linear-gradient(180deg,#E8D6B8 0%,var(--paper) 18%,var(--paper-warm) 100%);padding:clamp(80px,10vw,130px) 0}
+  .ap-value .head{text-align:center;max-width:680px;margin:0 auto}
+  .ap-value .head .h2{margin-top:14px}
+  .ap-returns{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1040px;margin:56px auto 0}
+  /* ---------- what the cycle is for ----------
+     This sat as centred copy in a full-width band, which left a great deal of empty
+     paper either side of it and no reason for the section to be as tall as it was.
+     The image now runs off the left edge of the screen with no margin at all, and the
+     words take the column beside it. The column is what gives the prose its measure,
+     so nothing here carries a width of its own. */
+  .ap-thesis{background:var(--paper);overflow:hidden;padding-top:clamp(64px,8vh,92px)}
+  .ap-thesis-grid{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);align-items:stretch}
+  .ap-thesis-fig{position:relative;min-height:clamp(420px,58vh,660px);overflow:hidden;
+    background-color:#E2D2B2;background-size:cover;background-position:center 46%}
+  /* a warm wash so the photograph sits in the page's palette rather than on top of it */
+  .ap-thesis-fig::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(118deg,rgba(6,81,60,.22) 0%,rgba(6,81,60,0) 46%),
+               linear-gradient(0deg,rgba(244,236,220,.30) 0%,rgba(244,236,220,0) 42%)}
+  .ap-thesis-say{display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(56px,7vh,96px) max(32px,calc((100vw - 1180px)/2 + 32px)) clamp(56px,7vh,96px) clamp(32px,4.4vw,74px)}
+  .ap-thesis .lead{font-size:clamp(19px,2vw,25px);line-height:1.38;color:var(--ink);text-wrap:pretty}
+  .ap-thesis .lead b{font-weight:600;color:var(--emerald-deep)}
+  /* the questions are the substance of the claim above, so they are set apart rather
+     than run on — same words, same order, just given their own field */
+  .ap-thesis .qs{margin-top:clamp(22px,3vh,34px);padding:16px 0 16px 22px;
+    border-left:2px solid var(--emerald);
+    font-size:16px;line-height:1.72;color:var(--ink-soft);text-wrap:pretty}
+  @media (max-width:900px){
+    .ap-thesis-grid{grid-template-columns:1fr}
+    .ap-thesis-fig{min-height:clamp(260px,42vh,380px)}
+    .ap-thesis-fig::before{inset:18px}
+    .ap-thesis-say{padding:clamp(38px,6vh,58px) max(22px,calc((100vw - 1180px)/2 + 32px))}
+    .ap-thesis .qs{padding-left:16px}
+  }
+
+  .ap-value .tie{text-align:center;max-width:66ch;margin:52px auto 0;color:var(--ink-soft);font-size:16px;line-height:1.6}
+  .ap-value .tie b{color:var(--ink);font-weight:600}
+  .ap-back{text-align:center;margin-top:34px}
+
+
+  @media (max-width:980px){
+    .ap-returns{grid-template-columns:1fr;gap:18px;margin-top:40px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html"><img src="logo.svg" alt="Self-Healing Communities Fund" /></a>
+    <div class="nav-links">
+      <a href="index.html#why">The Science</a>
+      <a href="index.html#cycle">Our Approach</a>
+      <a href="#">Community Stories</a>
+      <a href="#">About</a>
+      <a class="cta" href="index.html#act">Get Involved</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== WHAT THE CYCLE IS FOR ===================== -->
+<section class="ap-thesis">
+  <div class="ap-thesis-grid">
+    <div class="ap-thesis-fig" role="img" aria-label="A group leaning in together over the pages they are comparing"
+         style="background-image:url('assets/deliberation.jpg');background-image:image-set(url('assets/deliberation.webp') type('image/webp'),url('assets/deliberation.jpg') type('image/jpeg'))"></div>
+    <div class="ap-thesis-say">
+      <p class="lead reveal">SHCF is not another answer to the question, &ldquo;What should we fund upstream?&rdquo; It is <b>infrastructure for continually answering harder questions together</b>:</p>
+      <p class="qs reveal">What is driving risk? Where can its course be changed? How do we know? What is strengthening the protective capacities that support health, safety, and prosperity? What should be adapted, sustained, or scaled? And how do we align leadership, resources, and financial incentives to act on what we learn?</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THE RETURNS ===================== -->
+<section class="ap-value" id="value">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow reveal">What success returns</div>
+      <h2 class="h2 reveal">Success creates value in <em>more than one way.</em></h2>
+    </div>
+    <div class="ap-returns">
+      <div class="fs-pillar p1 reveal">
+        <div class="fs-num">01</div>
+        <h3>Human return</h3>
+        <p>Better health, safety, learning, stability, belonging, relationships, and wellbeing.</p>
+      </div>
+      <div class="fs-pillar p2 reveal">
+        <div class="fs-num">02</div>
+        <h3>Economic return</h3>
+        <p>Greater participation in work, earnings, productivity, family economic stability, and community economic vitality.</p>
+      </div>
+      <div class="fs-pillar p3 reveal">
+        <div class="fs-num">03</div>
+        <h3>Fiscal return</h3>
+        <p>Reduced or more stable demand for costly public services and, where demonstrated, measurable improvements in public costs or revenues.</p>
+      </div>
+    </div>
+    <p class="tie reveal">The result is a different way of working: communities and public systems move from repeatedly paying for the consequences of risk toward <b>continually learning how to reduce it</b> &mdash; and building the capacity to keep doing so.</p>
+    <div class="ap-back reveal"><a class="pagelink" href="index.html#act">Get involved <span class="arrow">&rarr;</span></a></div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" loading="lazy" decoding="async" />
+      <div class="foot-links">
+        <a href="index.html#why">The Science</a><a href="index.html#cycle">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="index.html#act">Get Involved</a>
+      </div>
+    </div>
+    <div class="copy">&copy; 2026 Self-Healing Communities Fund &mdash; a fund by ACE Interface. Founded on the ACE Study by Dr. Robert Anda and Laura Porter.</div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.remove('no-js');
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* reveal on scroll — same observer as the home page */
+  (function(){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>e.classList.add('in')),3000);
+  })();
+
+  /* return cards tilt toward the cursor — same as the flagship pillars */
+  if(!reduce){
+    const TILT=6;
+    document.querySelectorAll('.fs-pillar').forEach(card=>{
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+        card.style.transform='perspective(900px) rotateX('+((0.5-py)*TILT).toFixed(2)+'deg) rotateY('+((px-0.5)*TILT).toFixed(2)+'deg) translateY(-3px)';
+      });
+      card.addEventListener('mouseleave',()=>{card.style.transform='perspective(900px)';});
+    });
+  }
+
+</script>
+
+</body>
+</html>
