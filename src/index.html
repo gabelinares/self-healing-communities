@@ -172,6 +172,7 @@
   #why .wc-eyebrow{font-family:'Archivo',system-ui,sans-serif;font-size:.6em;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:1.1em}
   #why .wc-title{font-family:var(--disp);font-weight:var(--disp-wght);font-size:2.15em;line-height:1.0;letter-spacing:-.03em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin:0 0 .6em;text-wrap:balance}
   #why .wc-title em{font-style:normal;color:var(--emerald)}
+  #why .wc-src{font-size:.82em;white-space:nowrap;color:var(--emerald);text-decoration:underline;text-underline-offset:3px}
   #why .wc-body{font-family:'Archivo',system-ui,sans-serif;font-size:1em;line-height:1.55;color:var(--ink);margin:0 0 1em;text-wrap:pretty}
   #why .wc-stats{display:flex;gap:1.4em;flex-wrap:wrap;margin:.3em 0 1.2em}
   #why .wc-stats .stat{flex:1 1 0;min-width:0;max-width:17em;border-top:1px solid rgba(15,42,34,.18);padding-top:.75em}
@@ -481,6 +482,8 @@
     text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
     font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
   .sp-stage.armed .sp-band{opacity:.2}
+  .sp-return{fill:none;stroke:var(--emerald);stroke-width:4.4;stroke-linecap:round;stroke-dasharray:.1 12;opacity:.9;transition:opacity .4s}
+  .sp-stage.armed .sp-return{opacity:.28}
   .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
   .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
     fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
@@ -598,6 +601,8 @@
        and that is enough; greying out four fifths of the copy to say it was too heavy a hand. */
     /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
     .sp-stage.armed .sp-band{opacity:1}
+    .sp-return{stroke-width:6;opacity:.8}
+    .sp-stage.armed .sp-return{opacity:.8}
   }
   /* ============================================================
      ONE SCREEN PER VIEW (2026-09-25)
@@ -703,7 +708,7 @@
           <article class="wc">
             <div class="wc-eyebrow">Page two</div>
             <h2 class="wc-title">ACE-related risk has <em>outgrown the systems built to manage it.</em></h2>
-            <p class="wc-body">Adults today carry a substantially higher burden of childhood adversity into parenting years than the generation before them.</p>
+            <p class="wc-body">Adults today carry a substantially higher burden of childhood adversity into parenting years than the generation before them &mdash; this is essentially a new normal that invites a healing-centered approach to systems change. <a class="wc-src" href="https://www.mdpi.com/2076-328X/16/9/1687" target="_blank" rel="noopener">Read the paper&nbsp;&rarr;</a></p>
             <div class="wc-stats">
               <div class="stat"><span class="num">27%</span><span class="lbl">increase in average ACE score among adults 25&ndash;39, 2009&ndash;2010 to 2023&ndash;2024</span></div>
               <div class="stat"><span class="num">1 in 4</span><span class="lbl">adults that age now report 4+ ACEs, up from about 1 in 6 a decade earlier</span></div>
@@ -937,6 +942,7 @@
             <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
               <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
             </radialGradient>
+            <marker id="spArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#009169" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
             <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
           </defs>
           <g mask="url(#spMask)" id="spMasked">
@@ -946,6 +952,10 @@
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
           <path id="spBandPath" fill="none" stroke="none" />
+          <!-- the second loop (client, Oct 1): the outer sweep does not end at "expand the circle of
+               leadership" — it carries on round and comes back in to step 03, learning. Drawn from the
+               curve's end (-90,-447) to step 03's node (251,-112), arriving from above clear of its chip. -->
+          <path class="sp-return" id="spReturn" d="M-90 -447C120 -482 330 -330 252 -132" marker-end="url(#spArrow)"/>
           <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
           <g id="spDots"></g>
         </svg>
@@ -1224,21 +1234,11 @@
     c.restore();
   }
   /* offscreen white mask so the whole headline shatters into dots uniformly */
-  function paintTitleMask(c){
-    const L=titleLayout();
-    leadFont(c);for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
-    emphFont(c);c.fillText(TITLE_EMPH,titleCx,L.emphY);
-  }
-  /* the at-rest headline: small upright dark lead, a bigger upright payoff with a pencil mark */
-  function paintTitleSolid(c,a){
-    const L=titleLayout();
-    c.fillStyle='rgba(15,42,34,0.9)';leadFont(c);
-    for(let i=0;i<TITLE_LEAD.length;i++)c.fillText(TITLE_LEAD[i],titleCx,L.leadY[i]);
-    emphFont(c);
-    const ew=c.measureText(TITLE_EMPH).width;
-    pencilUnderline(c,titleCx-ew/2,titleCx+ew/2,L.emphY+emphFs*0.5,a);
-    c.fillStyle='#06513C';c.fillText(TITLE_EMPH,titleCx,L.emphY);
-  }
+  /* The large headline ("From crisis response… to leave each generation stronger.") is retired
+     (client, Oct 1): the opening is the logo, then the lede. titleLayout() still reserves its
+     space so the logo keeps its place; nothing is painted, so no dots are built either. */
+  function paintTitleMask(c){}
+  function paintTitleSolid(c,a){}
   function buildTitle(){
     if(!titleCv)return;
     tDpr=window.devicePixelRatio||1;
@@ -1270,6 +1270,7 @@
     titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
     /* the intro paragraph sits below the photo box, so the opening reads statement → image → what we're building */
     if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*stickyH()+(tm?14:24))+'px';}
+    if(!tcw||!tch){titleParts=[];return;}  /* page measured while hidden (zero-size canvas): getImageData would throw and halt the rest of the script */
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
     const data=o.getImageData(0,0,tcw,tch).data;
