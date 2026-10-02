@@ -482,8 +482,6 @@
     text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
     font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
   .sp-stage.armed .sp-band{opacity:.2}
-  .sp-return{fill:none;stroke:var(--emerald);stroke-width:4.4;stroke-linecap:round;stroke-dasharray:.1 12;opacity:.9;transition:opacity .4s}
-  .sp-stage.armed .sp-return{opacity:.28}
   .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
   .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
     fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
@@ -601,8 +599,6 @@
        and that is enough; greying out four fifths of the copy to say it was too heavy a hand. */
     /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
     .sp-stage.armed .sp-band{opacity:1}
-    .sp-return{stroke-width:6;opacity:.8}
-    .sp-stage.armed .sp-return{opacity:.8}
   }
   /* ============================================================
      ONE SCREEN PER VIEW (2026-09-25)
@@ -942,7 +938,6 @@
             <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
               <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
             </radialGradient>
-            <marker id="spArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#009169" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
             <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
           </defs>
           <g mask="url(#spMask)" id="spMasked">
@@ -952,10 +947,6 @@
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
           <path id="spBandPath" fill="none" stroke="none" />
-          <!-- the second loop (client, Oct 1): the outer sweep does not end at "expand the circle of
-               leadership" — it carries on round and comes back in to step 03, learning. Drawn from the
-               curve's end (-90,-447) to step 03's node (251,-112), arriving from above clear of its chip. -->
-          <path class="sp-return" id="spReturn" d="M-90 -447C120 -482 330 -330 252 -132" marker-end="url(#spArrow)"/>
           <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
           <g id="spDots"></g>
         </svg>
