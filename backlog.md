@@ -861,6 +861,21 @@ leadership" and back in to step 03, learning, with an arrowhead. It is not in th
 so it was deliberately backed out. **The code is preserved in
 `hero-versions/_double-loop-attempt.txt`** rather than lost with the preview.
 
+### 13a · The double loop is the version we are keeping (Oct 5)
+Gabriel picked the EARLIER preview — `qlpwcfpou`, the one with the double loop — as the base to
+work from, so that is what is in the repo now. Diffed against the already-recovered later build
+first: it is exactly that plus the four double-loop pieces (desktop CSS, phone CSS, the `spArrow`
+marker, the `spReturn` path), with no other difference. `approach.html` identical again.
+
+So Laura's item 16 is in, not withdrawn. `_double-loop-attempt.txt` is deleted — the code is back
+in `index.html` where it belongs.
+
+Verified: the arc is drawn and inside the stage bounds at 1440 and at 390 (opacity .9 desktop,
+.8 phone), no console errors, no overflow at any width, all four one-screen views unchanged.
+
+Still outstanding on this view, from §12: the step names on a phone, moving the diagram and its
+explanation closer together, and the hover text for the leadership arc, which Laura has not sent.
+
 ### To stop this recurring
 Either give this repo a remote both machines push to, or always deploy with `--prod`. The second
 only fixes the symptom.
