@@ -478,14 +478,6 @@
      redrawn every frame is four attribute writes each as SVG and janks a mid laptop;
      on canvas it is one fill per dot. */
   .sp-flow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-  /* the outer sweep is the one part of the figure that is not a step, so it is
-     labelled as a band rather than given a numbered chip */
-  .sp-band{font-family:var(--disp);font-weight:600;font-size:21px;letter-spacing:.17em;
-    text-transform:uppercase;fill:var(--emerald-deep);opacity:.42;
-    font-variation-settings:'wdth' var(--disp-wdth);transition:opacity .4s}
-  .sp-stage.armed .sp-band{opacity:.2}
-  .sp-return{fill:none;stroke:var(--emerald);stroke-width:4.4;stroke-linecap:round;stroke-dasharray:.1 12;opacity:.9;transition:opacity .4s}
-  .sp-stage.armed .sp-return{opacity:.28}
   .sp-base{display:none;fill:none;stroke:rgba(0,145,105,.30);stroke-width:5.5;stroke-linecap:round}
   .sp-num{display:none;font-family:var(--disp);font-weight:700;font-size:40px;letter-spacing:.02em;
     fill:var(--emerald);text-anchor:middle;dominant-baseline:central;transition:fill .3s;
@@ -595,16 +587,11 @@
        line is kept only as a faint thread holding the form together between them. */
     .sp-base{display:block;stroke:rgba(0,145,105,.16);stroke-width:4}
     .sp-num{display:block}
-    .sp-band{font-size:44px;letter-spacing:.13em}
     .sp-steps{display:block;padding:0;margin-top:4px}
     /* the step being read is the one lit on the diagram above it */
     /* The steps are NOT dimmed or recoloured — every one reads in its normal colour. Which
        step you are on is shown on the diagram above, by the lit node and the path drawn to it,
        and that is enough; greying out four fifths of the copy to say it was too heavy a hand. */
-    /* a step is lit nearly all the time here, so the band must not spend its life dimmed */
-    .sp-stage.armed .sp-band{opacity:1}
-    .sp-return{stroke-width:6;opacity:.8}
-    .sp-stage.armed .sp-return{opacity:.8}
   }
   /* ============================================================
      ONE SCREEN PER VIEW (2026-09-25)
@@ -944,7 +931,6 @@
             <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
               <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
             </radialGradient>
-            <marker id="spArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1.5L8 5L1 8.5" fill="none" stroke="#009169" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
             <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
           </defs>
           <g mask="url(#spMask)" id="spMasked">
@@ -953,12 +939,6 @@
             <path class="sp-base" id="spBase" />
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
-          <path id="spBandPath" fill="none" stroke="none" />
-          <!-- the second loop (client, Oct 1): the outer sweep does not end at "expand the circle of
-               leadership" — it carries on round and comes back in to step 03, learning. Drawn from the
-               curve's end (-90,-447) to step 03's node (251,-112), arriving from above clear of its chip. -->
-          <path class="sp-return" id="spReturn" d="M-90 -447C120 -482 330 -330 252 -132" marker-end="url(#spArrow)"/>
-          <text class="sp-band"><textPath href="#spBandPath" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
           <g id="spDots"></g>
         </svg>
         <div class="sp-center">
@@ -1560,8 +1540,10 @@
        inside itself — it just reads as a circle. So the curve no longer stops at the last
        step. It carries on for another 140 degrees past 05, which buys a second visible turn
        and makes the form read as a spiral again.
-       That outer sweep is also where "expand the circle of leadership" belongs: it is the
-       one part of the figure that is not a step, which is exactly what the client asked for.
+       That outer sweep used to carry the words "expand the circle of leadership", and later a
+       dotted arc returning from its end to step 03 to close a second loop. Both were removed on
+       the client's instruction (Oct 5); the sweep itself stays, because without it the five
+       steps occupy exactly one turn and the figure reads as a plain circle.
        TMAX, K and the step span are not independent — TMAX sets every bearing at once, K
        follows from the 456-unit outer radius, and a chip is up to 168px wide next to a 560px
        stage with the copy column immediately left of it. Swept against real chip boxes:
@@ -1714,19 +1696,6 @@
       requestAnimationFrame(function tick(now){requestAnimationFrame(tick);if(seen)draw(now);});
     })();
 
-    /* THE OUTER BAND. It follows the spiral's own curve, offset outward, and runs past
-       where the line stops so the words sit across the TOP of the stage where they read
-       horizontally. The client asked for this to follow the widening edge; she also
-       asked, earlier, that step names never tilt. Both hold here because this is not a
-       step — it is the label on the sweep the steps produce. */
-    {
-      const bp=document.getElementById('spBandPath'),seg=[];
-      for(let i=0;i<=200;i++){
-        const t=11.40+(13.70-11.40)*i/200,r=R0+K*t+38,a=t-Math.PI/2;
-        seg.push((r*Math.cos(a)).toFixed(1)+' '+(r*Math.sin(a)).toFixed(1));
-      }
-      bp.setAttribute('d','M'+seg.join('L'));
-    }
     const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
 
     const nodes=STEP_T.map((t,i)=>{

@@ -930,3 +930,20 @@ for. **18 waits on Laura.**
 
 Laura sent two links for the paper; the page uses the article URL. The PDF variant
 (`/pdf`) is unused — the article page carries its own PDF button.
+
+### 14d · Both outer-sweep decorations removed (Oct 5)
+Gabriel, on a screenshot of the cycle view: *"remove this expand sentence and remove the dots you
+added connecting the end of the spiral"*. So Laura's item 16 is **out again**, and the band label
+goes with it:
+
+- **"Expand the circle of leadership"** — the `.sp-band` text, its `#spBandPath` curve, the CSS at
+  both sizes, and the 200-point JS loop that generated the path.
+- **The double-loop arc** — `#spReturn`, the `#spArrow` marker and the `.sp-return` CSS at both
+  sizes.
+
+Nothing references `sp-band`, `spBandPath`, `sp-return`, `spReturn` or `spArrow` any more.
+
+**The outer sweep itself stays.** It is not decoration: five steps at 72 degrees occupy exactly
+one turn, and without the extra 140 degrees past step 05 the figure reads as a plain circle rather
+than a spiral — see the geometry note above `STEP_T`, which is updated to record why the two
+labels that used to live on that sweep are gone.
