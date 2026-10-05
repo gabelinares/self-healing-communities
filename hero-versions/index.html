@@ -440,13 +440,24 @@
     padding:clamp(72px,9vh,104px) 0 clamp(30px,4.5vh,52px);
     background:radial-gradient(ellipse 132% 80% at 66% 6%,#FBF6EA 0%,#F2E7CF 46%,#E8D6B8 100%)}
   .cycle .wrap{position:relative;z-index:2;width:100%;max-width:1320px}
-  .ap-grid{display:grid;grid-template-columns:minmax(0,.56fr) minmax(0,1fr);align-items:center;gap:clamp(22px,3.2vw,50px)}
+  /* .64, not .56. Widening the copy column pulls the explanation toward the diagram (110px of
+     empty paper between them, down to 91) and settles the headline on four lines instead of five,
+     and it costs the stage 5px — 756 to 751. Going further keeps closing the gap but starts
+     shrinking the spiral in earnest (684px at .80fr), which runs against the client's earlier
+     note that it should be MORE dominant. The stage is capped by viewport height, so narrowing
+     this column does not grow the diagram, it only adds space between the two. */
+  .ap-grid{display:grid;grid-template-columns:minmax(0,.64fr) minmax(0,1fr);align-items:center;gap:clamp(14px,1.7vw,26px)}
 
   /* ---------- left: the headline, then whichever step is open ---------- */
   .ap-say{min-width:0}
   .ap-say .h2{margin-top:13px;font-size:clamp(23px,2.5vw,37px);line-height:1.08}
+  /* Laura: "one of our folks just didn't get the fact that when you hover over, the explanation
+     appears on the left... making them closer together might help." The headline keeps the full
+     column, but the panel is pushed to the RIGHT of it so the words sit against the diagram
+     rather than 124px away from it across empty paper. */
   .ap-panel{position:relative;margin-top:clamp(20px,3vh,32px);padding-top:clamp(18px,2.4vh,26px);
-    border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px)}
+    border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px);
+    max-width:365px;margin-left:auto}
   .ap-panel>.sp-prompt,.ap-panel>.sp-detail{position:absolute;left:0;right:0;top:clamp(18px,2.4vh,26px);
     transition:opacity .34s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
   /* the resting state says what to do, and shows it — the dot mimics a cursor
@@ -564,7 +575,17 @@
     .ap-say{text-align:center;margin-bottom:26px}
     .ap-say .lede,.sp-prompt p,.sp-detail p{margin-left:auto;margin-right:auto}
     .ap-panel,.ap-more{display:none}
-    .sp-chip{display:none}
+    /* Laura: "in the phone only, each part of the spiral is only a number - no word".
+       The chips ARE the words — they were hidden here because a 168px pill cannot sit beside a
+       310px diagram. Sized down they fit, and the numeral travels with its name instead of
+       standing alone. The bare SVG numerals go, since the chip already carries one. */
+    .sp-chip{display:inline-flex;max-width:86px;font-size:9.5px;line-height:1.22;gap:4px;
+      padding:5px 8px 5px 7px;border-radius:11px;box-shadow:0 5px 12px -7px rgba(15,42,34,.45)}
+    .sp-chip .n{font-size:8.5px;letter-spacing:.04em}
+    /* a step is lit nearly all the time here, so the other four must not live dimmed —
+       the point of this change is that every part of the spiral reads */
+    .sp-stage.armed .sp-chip:not(.on){color:var(--ink);border-color:rgba(15,42,34,.16)}
+    .sp-stage.armed .sp-chip:not(.on) .n{color:var(--emerald)}
     .sp-stage{position:sticky;top:calc(var(--navh,62px) + 8px);z-index:2;
       width:min(340px,80vw);margin:0 auto 10px}
     /* the pinned diagram needs paper under it, or the steps scroll straight through it.
@@ -586,7 +607,6 @@
        the dots are scaled up instead (see sizeBoost) so they read at this width. The drawn
        line is kept only as a faint thread holding the form together between them. */
     .sp-base{display:block;stroke:rgba(0,145,105,.16);stroke-width:4}
-    .sp-num{display:block}
     .sp-steps{display:block;padding:0;margin-top:4px}
     /* the step being read is the one lit on the diagram above it */
     /* The steps are NOT dimmed or recoloured — every one reads in its normal colour. Which

@@ -947,3 +947,43 @@ Nothing references `sp-band`, `spBandPath`, `sp-return`, `spReturn` or `spArrow`
 one turn, and without the extra 140 degrees past step 05 the figure reads as a plain circle rather
 than a spiral — see the geometry note above `STEP_T`, which is updated to record why the two
 labels that used to live on that sweep are gone.
+
+---
+
+## 15 · The last two spiral items from Laura's Oct 1 list (Oct 5)
+
+### 15a · Item 10 — the phone diagram had numbers and no words
+*"in the phone only, each part of the spiral is only a number - no word - so that should be
+changed."* The chips were already the words; they were hidden below 980px because a 168px pill
+cannot sit beside a 310px diagram, and bare SVG numerals stood in for them.
+
+Sized down they fit — `max-width:86px`, 9.5px, tighter padding and a rounded rect rather than a
+pill — so the numeral travels with its name. The standalone `.sp-num` numerals are gone, and the
+`armed` dimming is cancelled at this size: a step is lit nearly all the time here, so leaving the
+other four greyed would have defeated the point.
+
+Verified at 390 and 360: **five chips shown, zero chip-on-chip collisions, none off-screen.**
+
+### 15b · Item 11 — the explanation sat 124px from the thing it describes
+*"one of our folks just didn't get the fact that when you hover over, the explanation appears on
+the left… making them closer together might help."*
+
+Two changes: the grid gap drops (`clamp(22,3.2vw,50)` -> `clamp(14,1.7vw,26)`), and the panel is
+pushed to the right of its column (`max-width:365px;margin-left:auto`) so the headline keeps the
+full width but the words sit against the diagram. **124px -> 91px**, and the panel stays
+vertically centred on the spiral.
+
+**The column ratio moves the WRONG way from instinct.** `.sp-stage` is capped by viewport height
+(`min(100%,84vh,800px)`), so narrowing the copy column does not grow the diagram — it only adds
+space between the two. Measured at 1440x900:
+
+| copy column | gap to diagram | stage width | headline |
+|---|---|---|---|
+| .40fr | 155 | 756 | 5 lines |
+| .56fr (was) | 110 | 756 | 5 lines |
+| **.64fr (now)** | **91** | **751** | **4 lines** |
+| .80fr | 70 | 684 | 4 lines |
+
+`.64` is the knee: it buys 19px and a tighter headline for 5px of stage. Past it the gap keeps
+closing but the spiral shrinks in earnest, which runs against Laura's Sept 25 note that it should
+be **more** dominant. That is why it stops here and not closer.
