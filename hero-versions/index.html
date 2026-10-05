@@ -78,7 +78,9 @@
   .nav.solid{background:linear-gradient(180deg,rgba(251,246,234,.42),rgba(251,246,234,.26));backdrop-filter:blur(24px) saturate(1.7);-webkit-backdrop-filter:blur(24px) saturate(1.7);border-bottom:1px solid rgba(255,255,255,.28);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 30px -18px rgba(15,42,34,.4)}
   .nav-inner{max-width:1280px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
   .nav .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-  .nav .brand img{height:30px}
+  /* width:auto — the <img> carries width/height so its box is reserved before the file
+     lands (see measureNav); without this the 1000px attribute wins and the mark blows up. */
+  .nav .brand img{height:30px;width:auto}
   .nav-links{display:flex;align-items:center;gap:2px}
   .nav-links a{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:999px;transition:all .2s}
   .nav-links a:hover{color:var(--ink);background:rgba(0,145,105,.08)}
@@ -87,7 +89,7 @@
   .nav-preview{max-width:1280px;margin:0 auto;height:0;overflow:hidden;transition:height .3s}
   .nav-preview.open{height:36px}
   .nav-preview .pv{padding:9px 32px;font-size:13px;color:var(--ink-soft);font-family:'Archivo',system-ui,sans-serif}
-  @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px}}
+  @media (max-width:860px){.nav-links a:not(.cta){display:none}.nav-inner{padding:12px 18px}.nav .brand img{height:26px;width:auto}}
 
   /* ============================================================
      OPENING — the book is the cover (eyes + intro) and turns into the cascades
@@ -413,7 +415,7 @@
 
   footer{background:var(--emerald-deep);color:rgba(251,246,234,.7);padding:42px 0 48px;border-top:1px solid rgba(164,214,198,.14)}
   .foot-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-  footer img{height:30px}
+  footer img{height:30px;width:auto}
   /* wraps, and each label stays whole: at 360px the five links overran the page by 14px and
      broke across words */
   .foot-links{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px}
@@ -672,7 +674,7 @@
 <!-- ===================== NAV ===================== -->
 <nav class="nav">
   <div class="nav-inner">
-    <a class="brand" href="#hero"><img src="logo.svg" alt="Self-Healing Communities Fund" /></a>
+    <a class="brand" href="#hero"><img src="logo.svg" alt="Self-Healing Communities Fund" width="1000" height="302" /></a>
     <div class="nav-links" id="navLinks">
       <a href="#why" data-pv="How early experience shapes a whole life, and what we can change.">The Science</a>
       <a href="#cycle" data-pv="Evidence, community knowledge, learning and financing, in a continuing cycle.">Our Approach</a>
@@ -996,7 +998,7 @@
 <footer>
   <div class="wrap">
     <div class="foot-inner">
-      <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" loading="lazy" decoding="async" />
+      <img src="assets/logo-white.svg" alt="Self-Healing Communities Fund" width="1000" height="302" loading="lazy" decoding="async" />
       <div class="foot-links">
         <a href="#why">The Science</a><a href="#cycle">Our Approach</a><a href="#">Community Stories</a><a href="#">About</a><a href="#act">Get Involved</a>
       </div>
@@ -1082,7 +1084,10 @@
   /* The resting frame, in % of the sticky. On a phone the top used to sit at 44%, which left a
      dead band the depth of the photograph between the headline and the picture, and stacked the
      slack at one end of the view. 37/28 closes that gap and gives the frame back the height. */
-  function curBox(){return window.innerWidth<=720?{t:37,r:6,b:28,l:6,rad:20}:{t:48,r:16,b:25,l:16,rad:44};}
+  /* The resting frame, in % of the sticky. The top came up (48->36 desktop, 37->30 phone)
+     when the headline was retired: that space belonged to type that is no longer painted, and
+     the photograph is the thing that should have it. */
+  function curBox(){return window.innerWidth<=720?{t:30,r:6,b:28,l:6,rad:20}:{t:36,r:16,b:25,l:16,rad:44};}
   /* where the book ends up once it has slid aside, and the room that leaves for the copy */
   let whyLay={tx:0,ty:0,s:1};
   function layoutWhy(){
@@ -1207,14 +1212,27 @@
     const prev=brandEl.style.transform;brandEl.style.transform='none';  /* its resting box, free of the transform we set each frame */
     const r=brandEl.getBoundingClientRect();
     brandEl.style.transform=prev;
+    /* ⚠ A zero-width measurement is the logo file not having arrived yet, and it is NOT harmless:
+       placeBrand centres the hero lockup with `innerWidth/2 - w*k/2`, so w=0 puts the logo's LEFT
+       edge on the centre line — 86px off at 1440. The <img> now carries width/height so the box is
+       reserved before the file lands, and this refuses a zero reading as a second guard. */
+    if(r.width<1||r.height<1)return;
     navBrandBox={left:r.left,top:r.top,w:r.width,h:r.height};
   }
+  /* and re-measure once the file is actually decoded, whatever the load order was */
+  {const bi=brandEl&&brandEl.querySelector('img');
+   if(bi&&!bi.complete)bi.addEventListener('load',()=>{measureNav();},{once:true});}
   let titleParts=[],tcw=0,tch=0,tDpr=1,titleCx=0,titleCy=0,leadFs=0,emphFs=0,leadLh=0,emphGap=0,eyebrowFs=0,eyebrowGap=0;
   function smooth(a,b,x){x=Math.max(0,Math.min(1,(x-a)/(b-a)));return x*x*(3-2*x);}
   function leadFont(c){c.font='500 '+leadFs+"px Archivo, system-ui, sans-serif";c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
   function emphFont(c){c.font='700 semi-condensed '+emphFs+"px Archivo, system-ui, sans-serif";c.textAlign='center';c.textBaseline='middle';c.letterSpacing='0px';}
   function titleLayout(){
-    const n=TITLE_LEAD.length,totalH=eyebrowFs+eyebrowGap+(n-1)*leadLh+leadFs+emphGap+emphFs,top=titleCy-totalH/2;
+    /* ⚠ The block is just the logo now. This used to add the lead and payoff lines too, and
+       it kept doing so after the headline was retired — so it reserved the height of type that
+       is never painted, pushed the logo up out of it, and left a 229px hole between the logo
+       and the photograph against a 24px gap under it. If the headline ever comes back, this
+       is the line that has to grow again. */
+    const n=TITLE_LEAD.length,totalH=eyebrowFs,top=titleCy-totalH/2;
     /* the drop applies to the type only (and is left out of totalH), so the logo above it does not shift */
     const eyebrowY=top+eyebrowFs/2,leadTop=top+eyebrowFs+eyebrowGap+leadFs*0.6;
     const leadY=[];for(let i=0;i<n;i++)leadY.push(leadTop+leadFs/2+i*leadLh);
@@ -1267,7 +1285,7 @@
      for(let i=0;i<2;i++){emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}}
     eyebrowGap=leadFs*0.8;  /* breathing room under the logo lockup */
     leadLh=leadFs*1.18;emphGap=leadFs*0.32;
-    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.26);
+    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.22);   /* the logo's centre, now that it is the only thing here */
     /* the intro paragraph sits below the photo box, so the opening reads statement → image → what we're building */
     if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*stickyH()+(tm?14:24))+'px';}
     if(!tcw||!tch){titleParts=[];return;}  /* page measured while hidden (zero-size canvas): getImageData would throw and halt the rest of the script */

@@ -879,3 +879,54 @@ explanation closer together, and the hover text for the leadership arc, which La
 ### To stop this recurring
 Either give this repo a remote both machines push to, or always deploy with `--prod`. The second
 only fixes the symptom.
+
+---
+
+## 14 · Closing the hole the headline left, and a logo bug it exposed (Oct 5)
+
+### 14a · The gap
+Retiring the headline left a hole: **229px between the logo and the photograph against a 24px gap
+under it** at 1440x900 (198 / 145 / 124 at 760, 390 and 360). `titleLayout()` was still adding the
+lead and payoff lines into `totalH`, so it reserved the height of type that is never painted and
+pushed the logo up out of it.
+
+`totalH` is `eyebrowFs` alone now — the logo is the only thing in that block. The logo's resting
+centre moved with it (`titleCy` 0.26 -> 0.22 on desktop) and **the photograph took back the room**
+(`curBox().t` 48 -> 36 desktop, 37 -> 30 phone), which is what should have the space.
+
+| | logo -> photo | photo height |
+|---|---|---|
+| 1440x900 | 229 -> **100** | 243 -> **351** |
+| 1440x760 | 198 -> **81** | 205 -> **296** |
+| 390x748 | 145 -> **66** | 262 -> **315** |
+| 360x640 | 124 -> **55** | 224 -> **269** |
+
+Above and below the logo now match (107/100 at 1440, 76/81 at 760, 65/66 at 390).
+**If the headline ever comes back, `totalH` is the line that has to grow again.**
+
+### 14b · The logo was not centred, and had not been since Oct 1
+Found while measuring the above: the hero lockup sat **86px right of centre at 1440**, with its
+LEFT edge exactly on the centre line. `placeBrand` centres it with `innerWidth/2 - w*k/2`, and
+`navBrandBox.w` was **0** — `measureNav()` had run before `logo.svg` arrived, and the `<img>`
+carried no dimensions, so the anchor had no width to measure.
+
+It is timing, not logic, which is why it was invisible: the Oct 2 preview happened to measure
+after the file landed and was centred; the Oct 1 production build and this one were not. Nobody
+would have caught it by eye against a 1440px page.
+
+Three fixes, so it cannot come back:
+- the `<img>` carries `width="1000" height="302"`, so the box is reserved from first layout;
+- `.nav .brand img` and `footer img` get **`width:auto`** — without it the 1000px presentation
+  attribute wins over the CSS height and the mark renders 1327px wide;
+- `measureNav()` refuses a zero reading, and re-measures on the image's `load`.
+
+Fixed on both pages. Verified centred at 300ms, 1.5s and 3s at 1440 and 390.
+
+### 14c · Where the Oct 1 list stands
+Items **1-9, 12-16 are built** — all verified against the file, including that item 15's sentence
+matches Laura's Oct 2 wording exactly, not her Oct 1 draft. **10 and 11 are not** (phone spiral
+step names; moving the diagram and its explanation together) — they were not in the batch asked
+for. **18 waits on Laura.**
+
+Laura sent two links for the paper; the page uses the article URL. The PDF variant
+(`/pdf`) is unused — the article page carries its own PDF button.
