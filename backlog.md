@@ -815,3 +815,52 @@ book settles in beside them.
 It cannot start earlier than that. The book's path crosses this column, so bringing the text up
 sooner just prints it under the photograph — which is what the first attempt at this did.
 **If Laura meant something else, this is one constant.**
+
+---
+
+## 13 · Recovering work done on another machine (Oct 5)
+
+Gabriel: *"i have done a lot of changes on the current website but with other computer locally,
+i think its deployed on vercel but its not here"*.
+
+**Why nothing came across: this repo has no git remote.** `git remote -v` is empty, so the two
+machines share nothing. The only copy of that work was the build output sitting on Vercel.
+
+**And it was never live.** Those deploys went to **Preview**, not Production — `vercel` without
+`--prod`. `hero-versions.vercel.app` was still serving the Oct 1 build, so the client never saw
+any of it. Two previews, both Oct 2:
+
+| | |
+|---|---|
+| `self-healing-communities-qlpwcfpou` | earlier — everything below **plus** the double-loop arc |
+| `self-healing-communities-gb4wdo5xu` | later — the same, with the double loop taken back out |
+
+Recovered from the later one, which is the latest intent. It is built on top of the Oct 1 commit,
+so it is a clean superset — five diff hunks, four of them real, the fifth Vercel's injected
+`vercel.live/feedback` preview script, which was stripped. `approach.html` and every asset are
+byte-identical, so all of it is in `index.html`.
+
+### What it contains
+- **Laura's item 1** — the large opening headline is retired. `paintTitleMask` and
+  `paintTitleSolid` are now empty; the opening is the logo, then the lede. `titleLayout()` still
+  reserves the headline's space so the logo keeps its position — **which leaves a visible gap**
+  of ~225px at 1440x900 and ~270px on a phone between the logo and the photograph. Flagged to
+  Gabriel; not changed here, because the reservation looks deliberate.
+- **Laura's item 15** — "new normal", placed on the page about ACE-related risk outgrowing the
+  systems built to manage it, which is where the rising-prevalence figures are. Reads: "…than the
+  generation before them — this is essentially a new normal that invites a healing-centered
+  approach to systems change." followed by a "Read the paper →" link to
+  `https://www.mdpi.com/2076-328X/16/9/1687`. New `.wc-src` rule for the link.
+- **A crash guard** in `buildTitle`: `if(!tcw||!tch){titleParts=[];return;}`. Measuring the page
+  while hidden gives a zero-size canvas, and `getImageData` then throws and halts the rest of the
+  script. Worth keeping.
+
+### Laura's item 16 was tried and withdrawn
+The earlier preview drew the double loop — the outer sweep carrying on past "expand the circle of
+leadership" and back in to step 03, learning, with an arrowhead. It is not in the later preview,
+so it was deliberately backed out. **The code is preserved in
+`hero-versions/_double-loop-attempt.txt`** rather than lost with the preview.
+
+### To stop this recurring
+Either give this repo a remote both machines push to, or always deploy with `--prod`. The second
+only fixes the symptom.
