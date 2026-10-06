@@ -987,3 +987,82 @@ space between the two. Measured at 1440x900:
 `.64` is the knee: it buys 19px and a tighter headline for 5px of stage. Past it the gap keeps
 closing but the spiral shrinks in earnest, which runs against Laura's Sept 25 note that it should
 be **more** dominant. That is why it stops here and not closer.
+
+---
+
+## 16 · Laura's Oct 5 message and "Spiral feedback 2.docx" (Oct 6)
+
+### 16a · The opening sentence is the main message
+Moved from under the photograph to directly under the logo, opening on "Building **a new model**…"
+(the Fund's name is dropped — the logo above already says it). Archivo display 600 at
+clamp(22, min(2.35vw, 4.1vh), 38), the photograph's width (68vw / 88vw). `curBox().t` is no longer
+a constant: `buildTitle` measures where the sentence ends and hands the photograph the rest
+(`heroBoxT`); the bottom came down 25->13 / 28->12 since nothing sits under the picture now.
+
+### 16b · "Seeing differently" and the book together
+The book used to land centred on its quote, then slide aside for the headline. The slide now runs
+inside the settle (OPEN..SETTLE), so the book arrives beside the copy. The book clears the column
+at esh ~0.90 (p 0.32) at 1440x900, 1280x720, 390 and 360, so the headline fades in over
+esh 0.84..0.97 and the progress bar over 0.88..1. SETTLE..SHIFT is now a pause on that spread.
+
+### 16c · The circle of leadership, third attempt
+A full ring (r 520, outside the sweep's 456) around the whole figure, with
+"EXPAND THE CIRCLE OF LEADERSHIP" on its top arc as part of the line — the stroke's gap is measured
+from the rendered text. Hover/focus/tap lights the ring and the whole path and shows Laura's text in
+the panel; on a phone it is a sixth, unnumbered entry in the step list that lights the ring when read.
+A wide invisible band (`.sp-ring-hit`) takes the pointer, because curved capitals are mostly gaps.
+
+### 16d · Ovals tied to their dots; numbers gone
+Short leader lines from each dot's rim to its oval (`placeChips`, GAP 44 desktop / 64 phone). The
+numerals are gone from the ovals and the panel. **Kept on the phone step list** — it is a reading
+list away from the diagram, and order is all that ties it to it. One line to remove if she wants.
+
+### 16e · The sentence under the spiral
+"Each turn of the spiral builds on what is learned…" sits under the figure, bold. To keep the view
+on one screen the stage drops 84vh -> 76vh, the "Get involved" cue moves under the copy column, and
+`.cycle` loses the 80px scroll margin on desktop (its own padding clears the nav; the margin pushed
+the caption below the fold when reached from the nav link).
+
+Verified: zero chip collisions, nothing off-screen, no horizontal overflow, no console errors at
+1440x900, 1280x720, 390x748, 360x640.
+
+### 16f · The circle, recentred and re-textured (Oct 6, same day)
+Gabriel: *"the circle is not aligned center at all… better texture and more muted color"*.
+- **Centre.** The visible spiral (outside the core fade) spans x -407..293, y -447..350, so its
+  middle is (-57,-48), not the origin. The circle is centred there (`OX/OY`), r 455 — 52 clear of
+  the curve's farthest point — and the whole figure is shifted so that centre is the stage's middle.
+  The core label stays on the spiral's origin.
+- **Frame.** viewBox 1120 -> 1000 (`VB`): nothing reaches past 475 any more, so the spiral is 12%
+  larger on the same stage.
+- **Texture.** No stroke. The circle is 900 drifting dots on the flow canvas, finer and sparser than
+  the current, in muted ink (#4A5F58 / #7F9A8C); lettering #5E7268, weight 500. Lit, both go green.
+
+### 16g · The step ovals (Oct 6, same day)
+Gabriel, on the four-line "Learn continuously across investments" blob: *"super weird padding, not
+only this but other as well"*. Two causes: a pill radius (999px) bulges once text wraps, and an
+absolutely-placed oval near the stage's right edge shrank to the room before THAT edge, whatever its
+max-width. Now `width:max-content`, max 212px (96 phone), 14px radius (9 phone), even 10/16 padding
+(6/9 phone), balanced line breaks, and `placeChips` caps each oval at the room before the VIEWPORT
+edge instead. One line for the short steps, two for the long ones; none off-screen at any of the
+four sizes.
+
+### 16h · The circle is the spiral's continuation (Oct 6, third pass)
+Gabriel: *"not good enough, maybe the circle should be oval idk it just not seem aligned"*. No
+circle or oval can sit an even distance from a spiral — its radius grows all the way round — and the
+bbox-centred circle (§16f) left "Risk Stewardship" ~40px off-centre inside it, which is what the eye
+aligns to. Now: **concentric with the label** (OX/OY back to 0), at **exactly the radius where the
+sweep ends (R0+K*TMAX = 456)**, so the spiral grows outward into the circle. The sweep ends at ~259deg,
+just left of the top; the lettering starts there (`TAIL_A`), and the stipple carries on round and
+meets the spiral again. The sweep's tail thins but no longer fades to nothing, so the hand-over reads.
+Phone: lettering tightened (31 units, .07em) and the step-03 oval hangs from just above its dot
+(`hang`) — centred, it covered "LEADERSHIP".
+
+### 16i · Positions set on the design canvas (Oct 6)
+Gabriel adjusted the view directly on a Design canvas
+(https://claude.ai/artifact/D3gMekgUyBuzHgNRoYHGgk) and the values were carried over exactly:
+circle turned -19deg (lettering now centred 3deg right of the top, `TEXT_A`, no longer tied to the
+sweep's end); spiral ~7% smaller against the circle and offset, so the circle is centred at
+(-30.5,-54) from the core with r 488 (`OX/OY`, `ringGeo.r`, viewBox 1070); lettering 20.3 units
+desktop / 33 phone to stay the same on-screen size; `.ap-panel` no longer pushed right — flush with
+the headline. Rechecked: no oval collisions, no letters under ovals, nothing off-screen, one screen
+at 1440x900 and 1280x720.

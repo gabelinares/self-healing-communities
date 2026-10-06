@@ -190,9 +190,16 @@
   #why .why-copy .cta-row{justify-content:flex-start;opacity:0;font-size:14px}
   #why .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;z-index:4}
   #why canvas#heroTitle{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
-  #why .hero-lede{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:6;width:min(720px,82vw);text-align:center;font-family:'Archivo',system-ui,sans-serif;font-weight:400;font-size:15px;line-height:1.5;color:#12120F;pointer-events:none;opacity:0}
-  /* near-true-black body, with the Fund's name carrying the only colour — per the client's note on grey text */
-  #why .hero-lede b{font-weight:600;color:var(--emerald-deep)}
+  /* Laura, Oct 5: the sentence moves up under the logo and becomes the page's main message.
+     It drops "The Self-Healing Communities Fund" — the logo directly above already says it —
+     so it opens on "Building a new model…". Its width is the photograph's width (68vw / 88vw,
+     the l/r of curBox), so the statement and the picture under it read as one block; the
+     photograph's top is placed under whatever height this wraps to (see buildTitle). */
+  #why .hero-lede{position:absolute;left:50%;top:0;transform:translateX(-50%);z-index:6;width:68vw;text-align:center;
+    font-family:var(--disp);font-weight:600;font-variation-settings:'wdth' var(--disp-wdth);
+    font-size:clamp(22px,min(2.35vw,4.1vh),38px);line-height:1.18;letter-spacing:-.022em;color:var(--ink);
+    text-wrap:balance;pointer-events:none;opacity:0}
+  #why .hero-lede em{font-style:normal;color:var(--emerald)}
   #why .cover-meta{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
   #why .scrollcue{position:absolute;bottom:4.5vh;left:50%;transform:translateX(-50%);z-index:7;width:24px;height:38px;border:2px solid rgba(15,42,34,.38);border-radius:14px;display:flex;justify-content:center;transition:opacity .4s}
   #why .scrollcue span{width:4px;height:8px;border-radius:2px;background:var(--emerald);margin-top:6px;animation:scrolld 1.8s infinite}
@@ -206,7 +213,7 @@
     #why .wc-title{font-size:1.65em}
     #why .wc{align-self:start}
     #why .why-copy .btn.dark{display:none}  /* the nav already carries Get Involved; one CTA fits under the copy */
-    #why .hero-lede{font-size:13px;line-height:1.5;width:86vw}
+    #why .hero-lede{font-size:clamp(19px,5.4vw,24px);line-height:1.2;width:88vw}
   }
 
   /* ============================================================
@@ -453,11 +460,12 @@
   .ap-say .h2{margin-top:13px;font-size:clamp(23px,2.5vw,37px);line-height:1.08}
   /* Laura: "one of our folks just didn't get the fact that when you hover over, the explanation
      appears on the left... making them closer together might help." The headline keeps the full
-     column, but the panel is pushed to the RIGHT of it so the words sit against the diagram
-     rather than 124px away from it across empty paper. */
+     column, and the panel used to be pushed to the RIGHT of it to sit against the diagram.
+     Oct 6: Gabriel moved it back flush with the headline on the design canvas — the narrower
+     column gap (above) still keeps it close to the figure. */
   .ap-panel{position:relative;margin-top:clamp(20px,3vh,32px);padding-top:clamp(18px,2.4vh,26px);
     border-top:1px solid var(--rule);padding-bottom:20px;min-height:clamp(258px,33vh,304px);
-    max-width:365px;margin-left:auto}
+    max-width:365px}
   .ap-panel>.sp-prompt,.ap-panel>.sp-detail{position:absolute;left:0;right:0;top:clamp(18px,2.4vh,26px);
     transition:opacity .34s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
   /* the resting state says what to do, and shows it — the dot mimics a cursor
@@ -471,7 +479,6 @@
   .sp-detail{opacity:0;transform:translateY(10px);pointer-events:none}
   .ap-panel.open .sp-prompt{opacity:0;transform:translateY(-10px);pointer-events:none}
   .ap-panel.open .sp-detail{opacity:1;transform:none;pointer-events:auto}
-  .sp-detail-n{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--terracotta-bright);margin-bottom:9px}
   .sp-detail h3{font-family:var(--disp);font-weight:var(--disp-wght);font-size:clamp(20px,min(2.3vw,3.15vh),29px);line-height:1.04;letter-spacing:-.028em;font-variation-settings:'wdth' var(--disp-wdth);color:var(--ink);margin-bottom:11px}
   .sp-detail p{font-size:clamp(14px,1.65vh,15.2px);line-height:1.56;color:var(--ink-soft);text-wrap:pretty;max-width:50ch}
   /* five ticks double as the readout of where you are and as a second way in,
@@ -483,7 +490,27 @@
   .sp-ticks button.on{background:var(--terracotta-bright)}
 
   /* ---------- right: the spiral ---------- */
-  .sp-stage{position:relative;width:min(100%,84vh,800px);aspect-ratio:1;margin:0 auto}
+  /* 76vh, not 84: the figure carries a sentence under it now (Laura, Oct 5) and the view still
+     has to fit one screen. */
+  .sp-fig{min-width:0}
+  /* a one-screen view whose own top padding already clears the nav: the global 80px scroll
+     margin pushed its foot — now the caption — below the fold when reached from the nav link */
+  @media (min-width:981px){.cycle{scroll-margin-top:0}}
+  .sp-stage{position:relative;width:min(100%,76vh,800px);aspect-ratio:1;margin:0 auto}
+  .sp-caption{max-width:none;margin:clamp(4px,1vh,12px) auto 0;text-align:center;font-weight:600;
+    font-size:clamp(14.5px,1.85vh,17.5px);line-height:1.45;color:var(--ink);text-wrap:balance}
+  /* the enclosing circle. Sized in viewBox units, so the lettering scales with the figure; on a
+     phone the stage is a third the size, so the type is set larger in units to stay legible. */
+  .sp-ring-hit{fill:none;stroke:transparent;stroke-width:64;pointer-events:stroke;cursor:pointer}
+  .sp-ring-line{display:none}   /* the circle is a stipple on the flow canvas; the path stays for its geometry */
+  .sp-ring-txt{font-family:'Archivo',system-ui,sans-serif;font-weight:500;font-size:20.3px;letter-spacing:.22em;text-transform:uppercase;
+    fill:#5E7268;cursor:pointer;outline:none;transition:fill .3s}
+  .sp-ring-txt:hover,.sp-ring-txt:focus-visible,.sp-stage.ring-on .sp-ring-txt{fill:var(--emerald-deep)}
+  .sp-ring-txt{pointer-events:none}   /* the band below takes the pointer; the text keeps focus */
+  /* the short line that ties each step's oval to its dot — Laura: "so it is immediately clear
+     that they go together". With it the numbers are no longer needed, and are gone. */
+  .sp-lead{stroke:rgba(6,81,60,.5);stroke-width:2;stroke-linecap:round;transition:stroke .3s}
+  .sp-lead.on{stroke:var(--terracotta-bright)}
   .sp-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
   /* the line is a current of dots now, drawn on canvas underneath the SVG. 400+ dots
      redrawn every frame is four attribute writes each as SVG and janks a mid laptop;
@@ -504,21 +531,22 @@
 
   /* the steps are HTML over the SVG, not SVG text: they read horizontally at every
      position on the curve, and they can look like the buttons they are */
-  .sp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;max-width:168px;text-align:left;line-height:1.28;
-    padding:8px 15px 8px 12px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink);
+  /* width:max-content, or an absolutely-placed oval near the stage's right edge shrinks to the
+     space left before that edge — which is what folded "Learn continuously across investments"
+     into four lines. A fixed radius, not a pill: a pill on a two-line oval bulges into a blob and
+     the words run into its curve. Even padding on every side. */
+  .sp-chip{position:absolute;display:inline-flex;align-items:center;gap:9px;width:max-content;max-width:212px;text-align:left;line-height:1.3;text-wrap:balance;
+    padding:10px 16px;border-radius:14px;font-size:13.5px;font-weight:500;color:var(--ink);
     background:var(--cream);
     border:1px solid rgba(15,42,34,.16);box-shadow:0 7px 18px -9px rgba(15,42,34,.5);
     cursor:pointer;outline:none;font-family:inherit;
     transition:transform .26s cubic-bezier(.2,.7,.2,1),background .26s,border-color .26s,box-shadow .26s,color .26s,opacity .26s}
-  .sp-chip .n{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.05em;color:var(--emerald)}
   .sp-chip:hover,.sp-chip:focus-visible{border-color:var(--emerald);
     box-shadow:0 12px 26px -10px rgba(15,42,34,.55);transform:var(--sp-t) scale(1.05)}
   .sp-chip.on{background:var(--emerald-deep);color:var(--cream);border-color:var(--emerald-deep);
     box-shadow:0 14px 30px -10px rgba(6,81,60,.6);transform:var(--sp-t) scale(1.05)}
-  .sp-chip.on .n{color:var(--emerald-bright)}
   .sp-stage.armed .sp-chip:not(.on){color:rgba(15,42,34,.42);border-color:rgba(15,42,34,.08);
     box-shadow:0 4px 11px -9px rgba(15,42,34,.4)}
-  .sp-stage.armed .sp-chip:not(.on) .n{color:rgba(0,145,105,.45)}
   /* until someone points at it, the chips breathe in sequence so the page is
      visibly something you operate rather than something you read */
   .sp-stage.idle .sp-chip{animation:chipBreathe 4.8s ease-in-out infinite;animation-delay:var(--sp-d)}
@@ -542,6 +570,9 @@
   .ap-more{position:absolute;left:50%;bottom:clamp(14px,2.4vh,26px);transform:translateX(-50%);z-index:3;
     display:flex;flex-direction:column;align-items:center;gap:7px;font-size:10px;font-weight:600;
     letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+  /* under the copy column, not centred: the middle of the foot belongs to the sentence under
+     the spiral now (Oct 5), and a centred cue printed on top of it at 1280x720 */
+  .ap-more{left:22%}
   .ap-more:hover{color:var(--ink)}
   .ap-more span{font-size:14px;line-height:1;animation:apBob 2.2s ease-in-out infinite}
   @keyframes apBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
@@ -579,13 +610,11 @@
        The chips ARE the words — they were hidden here because a 168px pill cannot sit beside a
        310px diagram. Sized down they fit, and the numeral travels with its name instead of
        standing alone. The bare SVG numerals go, since the chip already carries one. */
-    .sp-chip{display:inline-flex;max-width:86px;font-size:9.5px;line-height:1.22;gap:4px;
-      padding:5px 8px 5px 7px;border-radius:11px;box-shadow:0 5px 12px -7px rgba(15,42,34,.45)}
-    .sp-chip .n{font-size:8.5px;letter-spacing:.04em}
+    .sp-chip{display:inline-flex;max-width:96px;font-size:9.5px;line-height:1.24;gap:4px;
+      padding:6px 9px;border-radius:9px;box-shadow:0 5px 12px -7px rgba(15,42,34,.45)}
     /* a step is lit nearly all the time here, so the other four must not live dimmed —
        the point of this change is that every part of the spiral reads */
     .sp-stage.armed .sp-chip:not(.on){color:var(--ink);border-color:rgba(15,42,34,.16)}
-    .sp-stage.armed .sp-chip:not(.on) .n{color:var(--emerald)}
     .sp-stage{position:sticky;top:calc(var(--navh,62px) + 8px);z-index:2;
       width:min(340px,80vw);margin:0 auto 10px}
     /* the pinned diagram needs paper under it, or the steps scroll straight through it.
@@ -608,6 +637,11 @@
        line is kept only as a faint thread holding the form together between them. */
     .sp-base{display:block;stroke:rgba(0,145,105,.16);stroke-width:4}
     .sp-steps{display:block;padding:0;margin-top:4px}
+    .sp-steps li.sp-ring-step h3::before{content:none}
+    .sp-fig{display:contents}                 /* the stage must stay a child of .wrap to stick */
+    .sp-caption{position:relative;z-index:1;padding:0 6vw;margin:0 0 18px;font-size:15px}
+    .sp-ring-txt{font-size:33px;letter-spacing:.07em}   /* tighter: at .16em the words ran down past step 03 and under its oval */
+    .sp-lead{stroke-width:3.4}
     /* the step being read is the one lit on the diagram above it */
     /* The steps are NOT dimmed or recoloured — every one reads in its normal colour. Which
        step you are on is shown on the diagram above, by the lit node and the path drawn to it,
@@ -700,7 +734,7 @@
       <canvas class="hero-glow" id="heroGlow" aria-hidden="true"></canvas>
       <div class="grain-tex"></div>
       <canvas id="heroTitle"></canvas>
-      <p class="hero-lede" id="heroLede"><b>The Self-Healing Communities Fund</b> is building a new model that helps communities and public systems to align people, funding, and practices around the common causes of lifelong wellbeing.</p>
+      <p class="hero-lede" id="heroLede">Building <em>a new model</em> that helps communities and public systems to align people, funding, and practices around the common causes of lifelong wellbeing.</p>
       <div class="book-bar" id="bookBar" aria-hidden="true"><i></i></div>
       <div class="why-copy" id="whyCopy">
         <div class="wc-stack">
@@ -930,10 +964,9 @@
         <div class="ap-panel" id="apPanel">
           <div class="sp-prompt">
             <span class="cue"><i></i> Pick a step</span>
-            <p>Five steps wind outward from the core. Choose any one and the path lights from the centre out to it &mdash; what it means appears here.</p>
+            <p>Five steps wind outward from the core, inside a widening circle. Choose any step, or the circle itself, and what it means appears here.</p>
           </div>
           <div class="sp-detail" id="spDetail">
-            <div class="sp-detail-n"></div>
             <h3></h3>
             <p></p>
           </div>
@@ -941,9 +974,10 @@
         </div>
       </div>
 
+      <div class="sp-fig">
       <div class="sp-stage reveal idle" id="spStage">
         <canvas class="sp-flow" id="spFlow" aria-hidden="true"></canvas>
-        <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120" aria-hidden="true">
+        <svg class="sp-svg" id="spSvg" viewBox="-560 -560 1120 1120">
           <defs>
             <!-- the core fade: it has to clear the centre label (ink reaches 145 units) but reveal
                  enough of the inner curl that the form reads as a spiral and not a ring.
@@ -951,20 +985,35 @@
             <radialGradient id="spFade" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="560">
               <stop offset="0" stop-color="#000"/><stop offset=".055" stop-color="#000"/><stop offset=".22" stop-color="#fff"/>
             </radialGradient>
-            <mask id="spMask"><rect x="-560" y="-560" width="1120" height="1120" fill="url(#spFade)"/></mask>
+            <mask id="spMask"><rect x="-700" y="-700" width="1400" height="1400" fill="url(#spFade)"/></mask>
           </defs>
-          <g mask="url(#spMask)" id="spMasked">
+          <!-- Laura, Oct 5: "creating a circle around the whole diagram that 'Expand the Circle of
+               Leadership' is embedded in… The lettering could be the line for that section of the
+               circle." So the words are not a label beside the ring, they ARE the ring across the
+               top: the stroke stops where the lettering starts and resumes where it ends. -->
+          <g class="sp-ring" id="spRing">
+            <path class="sp-ring-line" id="spRingLine" aria-hidden="true"/>
+            <path id="spRingPath" fill="none" aria-hidden="true"/>
+            <!-- a wide invisible band under the lettering: curved capitals are mostly gaps, and
+                 a reader of this site should not have to land the pointer on a stroke -->
+            <path class="sp-ring-hit" id="spRingHit" aria-hidden="true"/>
+            <text class="sp-ring-txt" id="spRingTxt" tabindex="0" role="button" dy="0.36em"><textPath id="spRingTP" startOffset="50%" text-anchor="middle">Expand the circle of leadership</textPath></text>
+          </g>
+          <g id="spLeads" aria-hidden="true"></g>
+          <g mask="url(#spMask)" id="spMasked" aria-hidden="true">
             <!-- the curve as an actual line. Off on desktop, where the dot current IS the line;
                  on at phone sizes, where 820 dots across a 300px stage read as grain, not water. -->
             <path class="sp-base" id="spBase" />
             <path class="sp-trail" id="spTrail" pathLength="1" />
           </g>
-          <g id="spDots"></g>
+          <g id="spDots" aria-hidden="true"></g>
         </svg>
         <div class="sp-center">
           <span class="sp-core-b">Risk<br>Stewardship</span>
         </div>
         <div id="spChips"></div>
+      </div>
+      <p class="sp-caption reveal">Each turn of the spiral builds on what is learned, strengthens community capacity, and expands the circle of people able to lead.</p>
       </div>
 
     </div>
@@ -975,6 +1024,7 @@
     <li><h3>Learn continuously across investments</h3><p>Create shared feedback so communities and partners can learn together whether risk is changing, which benefits cascade across systems, where public costs change, and what should adapt, be sustained, or scale.</p></li>
     <li><h3>Finance differently</h3><p>Finance portfolios that reduce risk earlier, strengthen community capacity, support learning, and create benefits across systems. Track the human, economic, and fiscal value created &mdash; and align incentives so public systems are rewarded for reducing risk earlier, not only responding to its consequences.</p></li>
     <li><h3>Make improvement durable</h3><p>Connect learning, public financing, provider sustainability, and reinvestment so successful change does not disappear when a grant ends. Create mechanisms to reinvest financial gains from improved outcomes into risk reduction and community capacity.</p></li>
+    <li class="sp-ring-step"><h3>Expand the circle of leadership</h3><p>SHCF helps more people turn knowledge into action and share in decisions that affect their communities. It connects community members, practitioners, public leaders, and funders with the evidence, relationships, and resources to improve policy and practice&mdash;and sustain what they learn works.</p></li>
   </ol>
   </div>
 
@@ -1087,7 +1137,12 @@
   /* The resting frame, in % of the sticky. The top came up (48->36 desktop, 37->30 phone)
      when the headline was retired: that space belonged to type that is no longer painted, and
      the photograph is the thing that should have it. */
-  function curBox(){return window.innerWidth<=720?{t:30,r:6,b:28,l:6,rad:20}:{t:36,r:16,b:25,l:16,rad:44};}
+  /* Oct 5: the top is no longer a constant. The main sentence sits between the logo and the
+     photograph now, and how many lines it wraps to depends on the width, so buildTitle measures
+     it and hands the photograph whatever is left (heroBoxT). The bottom came down (25->13,
+     28->12) because the sentence that used to sit under the picture has moved above it. */
+  let heroBoxT=null;
+  function curBox(){const m=window.innerWidth<=720;return m?{t:heroBoxT??42,r:6,b:12,l:6,rad:20}:{t:heroBoxT??38,r:16,b:13,l:16,rad:44};}
   /* where the book ends up once it has slid aside, and the room that leaves for the copy */
   let whyLay={tx:0,ty:0,s:1};
   function layoutWhy(){
@@ -1144,8 +1199,13 @@
     if(glowCv) glowCv.style.opacity=(1-0.5*ec).toFixed(2);  /* recedes once the photo fills the frame */
     /* phase B — the same face settles from the zoom into the open book */
     const ps=Math.max(0,Math.min(1,(p-OPEN)/(SETTLE-OPEN))),es=easeInOut(ps);
-    /* phase C — the book slides aside to make room for the copy */
-    const esh=easeInOut(Math.max(0,Math.min(1,(p-SETTLE)/(SHIFT-SETTLE))));
+    /* phase C — the book slides aside to make room for the copy.
+       Oct 5, Laura: the book used to land centred on its quote and only THEN move aside for
+       "It begins with seeing differently", so the reader met the quote first and was sent back
+       to the headline. She asked for the two to be seen together. The slide now runs inside the
+       settle (OPEN..SETTLE) instead of after it, so the book arrives at its place beside the copy
+       and the headline is up as it lands. SETTLE..SHIFT is now a pause on that first spread. */
+    const esh=easeInOut(Math.max(0,Math.min(1,(p-OPEN)/(SETTLE-OPEN))));
     if(bookZoom){
       const bw=bookEl.offsetWidth||600,bh=bw*2/3;
       const boxW=window.innerWidth*(1-(BOX.l+BOX.r)/100);
@@ -1181,7 +1241,7 @@
     /* the bar fills across the current spread; a spread hands over when its page is halfway turned (u = i+0.575) */
     if(bookBar){
       const s=turn.filter(t=>t>=0.5).length,start=s===0?0:s-0.425,end=s<N?s+0.575:N+0.5;
-      bookBar.style.opacity=smooth(0.6,1,esh).toFixed(2);  /* appears as the book arrives, like the copy */
+      bookBar.style.opacity=smooth(0.88,1,esh).toFixed(2);  /* appears as the book arrives — late, since it is drawn at the book's FINAL edge and the book now reaches it while still shrinking */
       bookBarFill.style.transform=(bookBar.classList.contains('flat')?'scaleX(':'scaleY(')+Math.max(0,Math.min(1,(u-start)/(end-start))).toFixed(4)+')';
     }
     /* each copy state fades out as its page lifts and the next fades in as the new spread lands */
@@ -1193,7 +1253,10 @@
          book clears the copy column (measured: esh 0.86), so the words are read first and the
          book settles in beside them. It cannot start earlier than this — the book's path crosses
          this column, and bringing the text up sooner simply prints it under the photograph. */
-      const inA=s===0?smooth(0.45,0.86,esh):smooth(0.55,1,turn[s-1]),outA=s<N?smooth(0,0.45,turn[s]):0,o=inA*(1-outA);
+      /* Oct 5: the slide now happens while the book is still shrinking, so it clears the
+         column later in esh than it did — measured at esh ~0.90 (p 0.32) at 1440x900, 1280x720,
+         390 and 360 alike. The headline comes up over the last stretch of that, never earlier. */
+      const inA=s===0?smooth(0.84,0.97,esh):smooth(0.55,1,turn[s-1]),outA=s<N?smooth(0,0.45,turn[s]):0,o=inA*(1-outA);
       el.style.opacity=o.toFixed(3);el.style.transform='translateY('+((1-inA)*18-outA*18).toFixed(1)+'px)';el.style.visibility=o<0.01?'hidden':'visible';
     });
   }
@@ -1285,9 +1348,14 @@
      for(let i=0;i<2;i++){emphFont(probe);const ew=probe.measureText(TITLE_EMPH).width;if(ew>maxEmphW)emphFs*=maxEmphW/ew;}}
     eyebrowGap=leadFs*0.8;  /* breathing room under the logo lockup */
     leadLh=leadFs*1.18;emphGap=leadFs*0.32;
-    titleCx=tcw/2;titleCy=tch*(tm?0.19:0.22);   /* the logo's centre, now that it is the only thing here */
-    /* the intro paragraph sits below the photo box, so the opening reads statement → image → what we're building */
-    if(heroLede){const B=curBox();heroLede.style.top=((100-B.b)/100*stickyH()+(tm?14:24))+'px';}
+    titleCx=tcw/2;titleCy=tch*0.15;   /* the logo's centre — high, so the sentence under it has room */
+    /* logo → the main sentence → the photograph. The sentence hangs off the logo's foot, and the
+       photograph's top is set by where the sentence ends, so neither can collide at any width. */
+    if(heroLede){
+      const top=titleCy/tDpr+logoBigH()/2+(tm?16:24);
+      heroLede.style.top=top+'px';
+      heroBoxT=Math.min(58,(top+heroLede.offsetHeight+(tm?24:36))/stickyH()*100);
+    }
     if(!tcw||!tch){titleParts=[];return;}  /* page measured while hidden (zero-size canvas): getImageData would throw and halt the rest of the script */
     const off=document.createElement('canvas');off.width=tcw;off.height=tch;const o=off.getContext('2d');
     o.fillStyle='#fff';paintTitleMask(o);
@@ -1545,13 +1613,17 @@
     const svg=document.getElementById('spSvg');if(!svg)return;
     const stage=document.getElementById('spStage');
     const trail=document.getElementById('spTrail');
-    const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips');
+    const dotsG=document.getElementById('spDots'),chipsEl=document.getElementById('spChips'),leadsG=document.getElementById('spLeads');
     const panel=document.getElementById('apPanel'),detail=document.getElementById('spDetail'),ticksEl=document.getElementById('spTicks');
-    const steps=[...document.querySelectorAll('#spSteps li')].map(li=>({
+    const steps=[...document.querySelectorAll('#spSteps li:not(.sp-ring-step)')].map(li=>({
       h:li.querySelector('h3').textContent.trim(),
       d:li.querySelector('p').textContent.trim()
     }));
-    const R0=4,K=36.545,TMAX=12.368,GAP=26;
+    const R0=4,K=36.545,TMAX=12.368;
+    /* GAP is the room between a dot and its oval, which is now where the connecting line lives,
+       so it is longer than it was (26) and longer still on a phone, where a viewBox unit is a
+       third of the size. Swept for collisions at 1440, 1280, 390 and 360. */
+    const gapNow=()=>window.matchMedia('(max-width:980px)').matches?64:44;
     /* The steps advance 72 degrees each, so reading the diagram clockwise from any step
        gives 01 02 03 04 05 in order. A 144-degree advance also spaced them evenly and was
        easier to fit, but it wound twice round before closing, so the eye met them 1 4 2 5 3.
@@ -1588,6 +1660,29 @@
     {const base=document.getElementById('spBase');if(base)base.setAttribute('d',spiralD);}
     const lenAt=t=>cum[Math.max(0,Math.min(N,Math.round(t/TMAX*N)))];
     const NS='http://www.w3.org/2000/svg';
+    /* THE FRAME CENTRE is the spiral's origin — where "Risk Stewardship" sits. No circle or
+       oval can sit an even distance from a spiral (its radius grows all the way round), and
+       centring the circle on the spiral's bounding box instead (-57,-48, tried Oct 6) left the
+       label visibly off-centre inside it, which is what the eye actually aligns to. So the circle
+       is concentric with the label, and it is not a separate ring at all: its radius is exactly
+       where the spiral's sweep ends, so the spiral grows outward INTO the circle. */
+    /* Oct 6, set by Gabriel on the design canvas: the circle is NOT concentric with the core. Its
+       centre sits 30.5 units left of and 54 above the spiral's origin, at r 488, and the spiral
+       reads ~7% smaller against it than when the two shared a centre. Concentric (r 456) made
+       the spiral's sweep run into the circle; this lets the circle enclose the figure instead. */
+    const OX=-30.5,OY=-54;
+    /* 1000 units across, not 1120: centred on the frame, everything (circle + lettering) ends
+       inside 475, so the old 560 left a dead margin round the figure. Tighter, the spiral is
+       12% larger on the same stage. */
+    const VB=1070,VH=VB/2;   /* the circle (488 + lettering) ends inside 535 of the frame centre */
+    svg.setAttribute('viewBox',(OX-VH)+' '+(OY-VH)+' '+VB+' '+VB);
+    {const c=stage.querySelector('.sp-center');
+     if(c){c.style.left=((VH-OX)/VB*100).toFixed(2)+'%';c.style.top=((VH-OY)/VB*100).toFixed(2)+'%';}}
+    /* shared with the flow canvas, which draws the circle's stipple */
+    const ringGeo={r:488,a1:0,span:1,on:0};
+    /* the lettering is centred 3 degrees right of the top — where the canvas put it (the circle
+       there was turned -19 degrees from the version that started the words at the sweep's end) */
+    const TAU=Math.PI*2,TEXT_A=Math.PI*1.5+3*Math.PI/180;
 
     /* ============================================================
        THE FLOW — the line, made of moving water
@@ -1643,7 +1738,12 @@
         cx.setTransform(dpr,0,0,dpr,0,0);
       }
       size();window.addEventListener('resize',size);
-      const X=v=>(v+560)/1120*W, Y=v=>(v+560)/1120*H, S=v=>v/1120*W;
+      const X=v=>(v-OX+VH)/VB*W, Y=v=>(v-OY+VH)/VB*H, S=v=>v/VB*W;
+      /* the circle's stipple: fixed seeds, drifting slowly round, the same fine-to-coarse grain as
+         the current but sparser and in muted ink, so it holds the figure without competing with it */
+      const RDOT=900,rdrops=[];
+      for(let i=0;i<RDOT;i++)rdrops.push({a:Math.random()*6.2832,off:Math.random()*2-1,
+        sz:0.6+Math.pow(Math.random(),2)*1.5,ph:Math.random()*6.283,tone:Math.random()});
       /* A dot's radius is in viewBox units, so it shrinks with the stage: at 760px across it
          draws 0.3-3.9px, but on a 310px phone stage the same dots are a third of a pixel and
          the current disappears into grain. Scale them back up to roughly the apparent size they
@@ -1690,7 +1790,8 @@
           let a;
           if(onSpiral){
             const k=u/SPIRAL_U;
-            a=0.34*Math.min(1,k/0.09)*(1-Math.pow(Math.max(0,(k-0.74)/0.26),1.6));
+            /* thins toward the end but never vanishes: it hands over to the circle there */
+            a=0.34*Math.min(1,k/0.09)*(1-0.55*Math.pow(Math.max(0,(k-0.74)/0.26),1.6));
           }else{
             const k=(u-SPIRAL_U)/(1-SPIRAL_U);
             a=0.26*Math.min(1,k/0.16)*Math.min(1,(1-k)/0.30);   /* the return is quieter, not absent */
@@ -1710,13 +1811,28 @@
           cx.fillStyle = lift>0.38 ? '#00DBB6' : (lift>0.06 ? '#009169' : (d.tone<0.62 ? '#0F2A22' : '#009169'));
           cx.beginPath();cx.arc(X(px),Y(py),Math.max(0.55,rad),0,6.2832);cx.fill();
         }
+        /* the circle of leadership */
+        ringGeo.on+=((stage.classList.contains('ring-on')?1:0)-ringGeo.on)*0.08;
+        const RR=ringGeo.r,A1=ringGeo.a1,SPAN=ringGeo.span,ron=ringGeo.on;
+        for(const d of rdrops){
+          let a=d.a+t*0.012; a-=Math.floor(a/TAU)*TAU;
+          /* the stretch from the sweep's end round through the lettering is words, not dots */
+          const into=((a-A1)%TAU+TAU)%TAU;
+          if(into<SPAN)continue;
+          const edge=Math.min(1,(into-SPAN)/0.09,(TAU-into)/0.09);
+          const rr=RR+(d.off*4+Math.sin(t*0.7+d.ph)*1.4);
+          const px=OX+rr*Math.cos(a),py=OY+rr*Math.sin(a);
+          cx.globalAlpha=(0.46+0.3*ron)*edge;
+          cx.fillStyle=ron>0.5?(d.tone<0.5?'#009169':'#06513C'):(d.tone<0.7?'#4A5F58':'#7F9A8C');
+          cx.beginPath();cx.arc(X(px),Y(py),Math.max(0.5,S(d.sz*(1+0.25*ron))*BOOST),0,6.2832);cx.fill();
+        }
         cx.globalAlpha=1;
       }
       if(reduce){draw(performance.now());window.addEventListener('resize',()=>{size();draw(performance.now());});return;}
       requestAnimationFrame(function tick(now){requestAnimationFrame(tick);if(seen)draw(now);});
     })();
 
-    const pct=v=>((v+560)/1120*100).toFixed(2)+'%';                        /* viewBox unit -> stage % */
+    const pctX=v=>((v-OX+VH)/VB*100).toFixed(2)+'%', pctY=v=>((v-OY+VH)/VB*100).toFixed(2)+'%';  /* viewBox unit -> stage % */
 
     const nodes=STEP_T.map((t,i)=>{
       const [x,y,r,a]=pt(t);
@@ -1732,16 +1848,10 @@
          and the chip is centred and pushed clear vertically. */
       const chip=document.createElement('button');
       chip.type='button';chip.className='sp-chip';
-      chip.innerHTML='<span class="n">0'+(i+1)+'</span>'+steps[i].h;
+      chip.textContent=steps[i].h;
       chip.setAttribute('aria-label',steps[i].h+'. '+steps[i].d);
-      const upright=Math.abs(x)<r*0.42, out=Math.sign(y)||1;
-      const lx = upright ? x : x+Math.sign(x)*GAP;
-      const ly = upright ? y+out*(GAP+8) : y;
-      const tf = upright ? 'translate(-50%,'+(out>0?'0':'-100%')+')'
-                         : 'translate('+(x>0?'0':'-100%')+',-50%)';
-      chip.style.left=pct(lx);chip.style.top=pct(ly);
-      chip.style.setProperty('--sp-t',tf);
-      chip.style.transform=tf;
+      const lead=document.createElementNS(NS,'line');
+      lead.setAttribute('class','sp-lead');leadsG.appendChild(lead);
       chip.style.setProperty('--sp-d',(i*0.8)+'s');
       chipsEl.appendChild(chip);
 
@@ -1759,8 +1869,70 @@
       num.textContent='0'+(i+1);
       svg.appendChild(num);
 
-      return {dot,halo,chip,tick,num,frac:lenAt(t)/total};
+      return {dot,halo,chip,tick,num,lead,x,y,r,frac:lenAt(t)/total};
     });
+
+    /* oval + its connecting line, re-placed whenever the size class changes */
+    function placeChips(){
+      const GAP=gapNow(),dotR=narrow.matches?15:8;
+      nodes.forEach(nd=>{
+        const {x,y,r,chip,lead}=nd;
+        const upright=Math.abs(x)<r*0.42, out=Math.sign(y)||1, side=Math.sign(x)||1;
+        const lx = upright ? x : x+side*GAP;
+        const ly = upright ? y+out*(GAP+8) : y;
+        /* On a phone the ovals are large next to the figure, and one in the upper half that is
+           centred on its dot reaches up into the lettering on the circle (step 03 covered
+           "LEADERSHIP"). There it hangs from just above its dot instead. */
+        const hang = narrow.matches && !upright && y<-60;
+        const tf = upright ? 'translate(-50%,'+(out>0?'0':'-100%')+')'
+                           : 'translate('+(x>0?'0':'-100%')+','+(hang?'-14%':'-50%')+')';
+        chip.style.left=pctX(lx);chip.style.top=pctY(ly);
+        chip.style.setProperty('--sp-t',tf);
+        chip.style.transform=tf;
+        /* from the dot's rim to the oval's edge — never into the dot itself */
+        const x1=upright?x:x+side*dotR, y1=upright?y+out*dotR:y;
+        lead.setAttribute('x1',x1.toFixed(1));lead.setAttribute('y1',y1.toFixed(1));
+        lead.setAttribute('x2',lx.toFixed(1));lead.setAttribute('y2',ly.toFixed(1));
+      });
+      /* An oval that runs outward from its dot may wrap only as much as the SCREEN forces it to
+         (not the stage — that is what folded one into four lines). Measure the room between its
+         anchor and the viewport edge and cap it there; the CSS max-width is the ceiling. */
+      const sr=stage.getBoundingClientRect(),M=narrow.matches?8:16;
+      nodes.forEach(nd=>{
+        const c=nd.chip;c.style.maxWidth='';
+        const upright=Math.abs(nd.x)<nd.r*0.42;if(upright)return;
+        const ax=sr.left+parseFloat(c.style.left)/100*sr.width;
+        const room=nd.x>0?window.innerWidth-M-ax:ax-M;
+        const cap=parseFloat(getComputedStyle(c).maxWidth)||212;
+        if(room<cap)c.style.maxWidth=Math.max(70,Math.floor(room))+'px';
+      });
+    }
+
+    /* THE CIRCLE OF LEADERSHIP. Concentric with the core, at the radius where the sweep ends,
+       so the spiral runs straight into it. The lettering starts just past that junction — the
+       spiral becomes the words, then the stipple carries on round and meets the spiral again.
+       The lettering's length is measured from the rendered text, so it fits at any size. */
+    const RING_R=ringGeo.r;
+    document.getElementById('spRing').setAttribute('transform','translate('+OX+' '+OY+')');
+    const ringTxt=document.getElementById('spRingTxt'),ringTP=document.getElementById('spRingTP'),
+          ringLine=document.getElementById('spRingLine'),ringPath=document.getElementById('spRingPath');
+    const ring={h:'Expand the circle of leadership',
+      d:(document.querySelector('#spSteps li.sp-ring-step p')||{}).textContent||''};
+    ringTP.setAttribute('href','#spRingPath');ringTP.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href','#spRingPath');
+    ringTxt.setAttribute('aria-label',ring.h+'. '+ring.d.trim());
+    function drawRing(){
+      let L=0;try{L=ringTxt.getComputedTextLength();}catch(e){}
+      if(!L)L=RING_R*1.1;
+      const fs=parseFloat(getComputedStyle(ringTxt).fontSize)||19;
+      const air=fs*0.9/RING_R;                   /* a breath either side of the words, in radians */
+      const span=L/RING_R+2*air,aC=TEXT_A,a1=aC-span/2;
+      ringGeo.a1=a1;ringGeo.span=span;
+      const P=a=>(RING_R*Math.cos(a)).toFixed(1)+' '+(RING_R*Math.sin(a)).toFixed(1);
+      /* the words ride a half-circle centred on their own midpoint, so text-anchor:middle lands them there */
+      ringPath.setAttribute('d','M '+P(aC-Math.PI/2)+' A '+RING_R+' '+RING_R+' 0 0 1 '+P(aC+Math.PI/2));
+      document.getElementById('spRingHit').setAttribute('d','M '+P(a1)+' A '+RING_R+' '+RING_R+' 0 0 1 '+P(a1+span));
+      ringLine.setAttribute('d','M '+P(a1+span)+' A '+RING_R+' '+RING_R+' 0 1 1 '+P(a1));
+    }
 
     /* At phone sizes the markers have to carry the diagram on their own — the chips are gone.
        Set in script rather than CSS because `r` on an SVG circle is only an attribute here. */
@@ -1775,8 +1947,11 @@
       });
     }
     sizeNodes();window.addEventListener('resize',sizeNodes);
+    placeChips();drawRing();
+    window.addEventListener('resize',()=>{placeChips();drawRing();});
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawRing);
 
-    let open=-1;
+    let open=-1;const RING=nodes.length;
     function show(i){
       if(i===open)return;open=i;
       stage.classList.toggle('armed',i>=0);
@@ -1788,15 +1963,20 @@
         nd.chip.classList.toggle('on',on);
         nd.chip.setAttribute('aria-pressed',on?'true':'false');
         nd.tick.classList.toggle('on',on);
+        nd.lead.classList.toggle('on',on);
         if(nd.num)nd.num.classList.toggle('on',on);
       });
       sizeNodes();
-      trail.style.strokeDashoffset=i<0?1:(1-nodes[i].frac).toFixed(4);
+      /* the circle (index RING) lights the ring and the whole path — every turn, not one step */
+      const isRing=i===RING;
+      stage.classList.toggle('ring-on',isRing);
+      ringTxt.setAttribute('aria-pressed',isRing?'true':'false');
+      trail.style.strokeDashoffset=i<0?1:isRing?0:(1-nodes[i].frac).toFixed(4);
       panel.classList.toggle('open',i>=0);
       if(i>=0){
-        detail.querySelector('.sp-detail-n').textContent='0'+(i+1);
-        detail.querySelector('h3').textContent=steps[i].h;
-        detail.querySelector('p').textContent=steps[i].d;
+        const it=isRing?ring:steps[i];
+        detail.querySelector('h3').textContent=it.h;
+        detail.querySelector('p').textContent=it.d;
       }
     }
 
@@ -1812,6 +1992,13 @@
       nd.tick.addEventListener('focus',open);
       nd.tick.addEventListener('click',open);
     });
+
+    {const openRing=()=>{settle();show(RING);};
+     ringTxt.addEventListener('mouseenter',openRing);
+     {const hit=document.getElementById('spRingHit');hit.addEventListener('mouseenter',openRing);hit.addEventListener('click',openRing);}
+     ringTxt.addEventListener('focus',openRing);
+     ringTxt.addEventListener('click',openRing);
+     ringTxt.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRing();}});}
 
     const m=location.hash.match(/^#step-([1-6])$/);if(m){settle();show(+m[1]-1);}
     /* leaving the diagram clears it, but only if focus has not landed on a step */
