@@ -1066,3 +1066,26 @@ sweep's end); spiral ~7% smaller against the circle and offset, so the circle is
 desktop / 33 phone to stay the same on-screen size; `.ap-panel` no longer pushed right — flush with
 the headline. Rechecked: no oval collisions, no letters under ovals, nothing off-screen, one screen
 at 1440x900 and 1280x720.
+
+---
+
+## 17 · Performance and accessibility pass (Oct 7)
+
+Lighthouse on production, mobile, before: **performance 50, LCP 6.4s, TBT 850ms, accessibility 96**.
+
+- **LCP.** The opening photograph shared a slow connection with ~600KB of pictures nobody can see
+  on arrival. `face.avif` is preloaded at `fetchpriority=high`; the book's later pages and the four
+  life-course photos carry `data-bg` and get their background after `load` (or on first scroll).
+- **Forced layout every frame.** `inView()` measured with getBoundingClientRect right after tickWhy's
+  style writes, then `stickyH()` and `scrollY` did the same once that was fixed. Now: visibility
+  from an IntersectionObserver, the sticky height from a ResizeObserver, and **tickWhy is skipped
+  entirely while the page is at rest** (no scroll event, easing landed, logo not mid-dissolve) —
+  `whyIdle()`. Any resize or `layoutWhy` marks it dirty.
+- `fitWhy` halves instead of stepping 0.5px (≤48 forced layouts -> ~6); same sizes to within 0.4px.
+- The Act orbit and the spiral current no longer draw while off screen.
+- **Accessibility:** nav "Get Involved" #009169 -> #007A58 (cream on it 3.7 -> 5.0:1); footer
+  line .6 -> .88 opacity (3.1 -> ~5:1); `#spTicks` role tablist -> group (its buttons are not tabs).
+  Both pages. The other contrast flags were text caught mid-fade by the reveal animation.
+
+Local A/B, three runs each, mobile: performance 66-76 -> **89-93**, LCP 5.6-6.7s -> **2.7-2.8s**,
+accessibility 96 -> **100**.

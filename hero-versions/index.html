@@ -26,6 +26,8 @@
 <meta name="twitter:title" content="Self-Healing Communities Fund" />
 <meta name="twitter:description" content="The Self-Healing Communities Fund is building a new model that helps communities and public systems align people, funding, and practices around the common causes of lifelong wellbeing." />
 <meta name="twitter:image" content="https://hero-versions.vercel.app/assets/share-card.jpg" />
+<!-- the opening photograph is the page's largest paint: fetch it ahead of the book's other pages -->
+<link rel="preload" as="image" href="assets/face.avif" type="image/avif" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..800&family=Fraunces:ital,opsz,wght,SOFT,WONK@1,9..144,300..600,0..100,0..1&display=swap">
@@ -84,7 +86,7 @@
   .nav-links{display:flex;align-items:center;gap:2px}
   .nav-links a{font-size:13.5px;font-weight:500;color:var(--ink-soft);text-decoration:none;padding:8px 14px;border-radius:999px;transition:all .2s}
   .nav-links a:hover{color:var(--ink);background:rgba(0,145,105,.08)}
-  .nav-links a.cta{background:var(--emerald);color:var(--cream);margin-left:8px}
+  .nav-links a.cta{background:#007A58;color:var(--cream);margin-left:8px}   /* not --emerald: cream on it is 3.7:1, this is 5:1 */
   .nav-links a.cta:hover{background:var(--emerald-deep)}
   .nav-preview{max-width:1280px;margin:0 auto;height:0;overflow:hidden;transition:height .3s}
   .nav-preview.open{height:36px}
@@ -429,7 +431,7 @@
   .foot-links a{white-space:nowrap}
   .foot-links a{color:rgba(251,246,234,.7);text-decoration:none;transition:color .2s}
   .foot-links a:hover{color:var(--cream)}
-  footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.6)}
+  footer .copy{width:100%;margin-top:26px;padding-top:22px;border-top:1px solid rgba(164,214,198,.12);font-size:12px;color:rgba(164,214,198,.88)}   /* .6 was 3.1:1 on the deep green */
 
   /* ============================================================
      THE CYCLE — one screen in the landing sequence, not a page of its own.
@@ -785,7 +787,7 @@
           <span class="edge left"></span><span class="edge right"></span>
           <div class="book-base">
             <div class="page page-left"><div class="photo-face" style="background-image:url('assets/face.jpg');background-image:image-set(url('assets/face.avif') type('image/avif'),url('assets/face.jpg') type('image/jpeg'));background-position:center 30%"></div></div>
-            <div class="page page-right"><div class="photo-face" style="background-image:url('assets/community.jpg');background-image:image-set(url('assets/community.avif') type('image/avif'),url('assets/community.jpg') type('image/jpeg'))"></div></div>
+            <div class="page page-right"><div class="photo-face" data-bg="background-image:url('assets/community.jpg');background-image:image-set(url('assets/community.avif') type('image/avif'),url('assets/community.jpg') type('image/jpeg'))"></div></div>
           </div>
           <div class="leaves" id="why-leaves">
             <div class="leaf" data-i="0">
@@ -801,7 +803,7 @@
               </div>
             </div>
             <div class="leaf" data-i="1">
-              <div class="face recto" style="background-image:url('assets/cascade.jpg');background-image:image-set(url('assets/cascade.avif') type('image/avif'),url('assets/cascade.jpg') type('image/jpeg'))"></div>
+              <div class="face recto" data-bg="background-image:url('assets/cascade.jpg');background-image:image-set(url('assets/cascade.avif') type('image/avif'),url('assets/cascade.jpg') type('image/jpeg'))"></div>
               <div class="face verso qpage">
                 <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>The bills show up in one place, the savings show up somewhere else, and they don't happen until years later. Addressing the common causes will hold all of us accountable for breaking the cycle.</blockquote>
                 <div class="q-rule"></div>
@@ -809,7 +811,7 @@
               </div>
             </div>
             <div class="leaf" data-i="2">
-              <div class="face recto" style="background-image:url('assets/adversity.jpg');background-image:image-set(url('assets/adversity.avif') type('image/avif'),url('assets/adversity.jpg') type('image/jpeg'))"></div>
+              <div class="face recto" data-bg="background-image:url('assets/adversity.jpg');background-image:image-set(url('assets/adversity.avif') type('image/avif'),url('assets/adversity.jpg') type('image/jpeg'))"></div>
               <div class="face verso qpage">
                 <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>Success isn't just about money &mdash; it is about how we invest all our resources including people, place, stewardship, knowledge, and funds. Every public dollar we don't need to spend on a crisis is a dollar that can stay in the pocket of a taxpayer who really needs it.</blockquote>
                 <div class="q-rule"></div>
@@ -817,7 +819,7 @@
               </div>
             </div>
             <div class="leaf" data-i="3">
-              <div class="face recto" style="background-image:url('assets/gathering.jpg');background-image:image-set(url('assets/gathering.webp') type('image/webp'),url('assets/gathering.jpg') type('image/jpeg'));background-position:center 40%"></div>
+              <div class="face recto" data-bg="background-image:url('assets/gathering.jpg');background-image:image-set(url('assets/gathering.webp') type('image/webp'),url('assets/gathering.jpg') type('image/jpeg'));background-position:center 40%"></div>
               <div class="face verso qpage">
                 <blockquote class="q-text"><span class="qm" aria-hidden="true">&ldquo;</span>If we can weave the science through these different professions and get it into the hands of the general population, they will invent very wise actions.</blockquote>
                 <div class="q-rule"></div>
@@ -849,19 +851,19 @@
           <div class="lc-lead">Lives unfold</div>
           <div class="lc-rail">
           <figure class="lc-tile">
-            <div class="lc-shot" style="background-image:url('assets/infancy.jpg');background-image:image-set(url('assets/infancy.avif') type('image/avif'),url('assets/infancy.jpg') type('image/jpeg'))"></div>
+            <div class="lc-shot" data-bg="background-image:url('assets/infancy.jpg');background-image:image-set(url('assets/infancy.avif') type('image/avif'),url('assets/infancy.jpg') type('image/jpeg'))"></div>
             <figcaption>Infancy</figcaption>
           </figure>
           <figure class="lc-tile">
-            <div class="lc-shot" style="background-image:url('assets/childhood.jpg');background-image:image-set(url('assets/childhood.avif') type('image/avif'),url('assets/childhood.jpg') type('image/jpeg'))"></div>
+            <div class="lc-shot" data-bg="background-image:url('assets/childhood.jpg');background-image:image-set(url('assets/childhood.avif') type('image/avif'),url('assets/childhood.jpg') type('image/jpeg'))"></div>
             <figcaption>Childhood</figcaption>
           </figure>
           <figure class="lc-tile">
-            <div class="lc-shot" style="background-image:url('assets/adolescence.jpg');background-image:image-set(url('assets/adolescence.avif') type('image/avif'),url('assets/adolescence.jpg') type('image/jpeg'))"></div>
+            <div class="lc-shot" data-bg="background-image:url('assets/adolescence.jpg');background-image:image-set(url('assets/adolescence.avif') type('image/avif'),url('assets/adolescence.jpg') type('image/jpeg'))"></div>
             <figcaption>Adolescence</figcaption>
           </figure>
           <figure class="lc-tile">
-            <div class="lc-shot" style="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
+            <div class="lc-shot" data-bg="background-image:url('assets/adulthood.jpg');background-image:image-set(url('assets/adulthood.avif') type('image/avif'),url('assets/adulthood.jpg') type('image/jpeg'))"></div>
             <figcaption>Adulthood</figcaption>
           </figure>
           </div>
@@ -970,7 +972,7 @@
             <h3></h3>
             <p></p>
           </div>
-          <div class="sp-ticks" id="spTicks" role="tablist" aria-label="The five steps"></div>
+          <div class="sp-ticks" id="spTicks" role="group" aria-label="The five steps"></div>
         </div>
       </div>
 
@@ -1109,7 +1111,18 @@
      pass the measured sticky, because with 100svh it no longer equals window.innerHeight on iOS. */
   function progressOf(el,h){h=h||(el.firstElementChild&&el.firstElementChild.offsetHeight)||window.innerHeight;
     const r=el.getBoundingClientRect(),total=el.offsetHeight-h,passed=Math.min(Math.max(-r.top,0),total);return total>0?passed/total:0;}
-  function inView(el){const r=el.getBoundingClientRect();return r.bottom>-200&&r.top<window.innerHeight+200;}
+  /* Whether a section is on screen (with 200px to spare) is cached from an IntersectionObserver.
+     It used to be getBoundingClientRect every frame, called right after tickWhy had written styles,
+     which forced a full synchronous layout each frame: ~500ms of a phone's first five seconds
+     (Lighthouse, Oct 7). The first ask still measures, so the answer is right before the
+     observer has reported. */
+  const _vis=new Map(),_io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>_vis.set(e.target,e.isIntersecting)),{rootMargin:'200px 0px'}):null;
+  function inView(el){
+    if(_io&&_vis.has(el))return _vis.get(el);
+    const r=el.getBoundingClientRect(),v=r.bottom>-200&&r.top<window.innerHeight+200;
+    if(_io){_vis.set(el,v);_io.observe(el);}
+    return v;
+  }
   function lerp(a,b,t){return a+(b-a)*t}
   function easeOut(t){return 1-Math.pow(1-t,3)}
 
@@ -1124,7 +1137,16 @@
   /* The frame everything in the opening is placed inside. Measured, never window.innerHeight:
      on iOS those are two different numbers and mixing them is what put the intro paragraph
      over the photograph. */
-  function stickyH(){return (whySticky&&whySticky.offsetHeight)||window.innerHeight;}
+  /* Still the element's own height, never innerHeight — but cached, and refreshed by a
+     ResizeObserver, since reading offsetHeight every frame after tickWhy's style writes forced a
+     full layout each time (~440ms of a phone's first five seconds). The observer fires on every
+     real change, including the iOS URL bar resizing the svh box. */
+  let _stickyH=0;
+  if(whySticky&&'ResizeObserver' in window)new ResizeObserver(es=>{_stickyH=es[0].target.offsetHeight;}).observe(whySticky);
+  function stickyH(){
+    if(!_stickyH||!('ResizeObserver' in window))_stickyH=(whySticky&&whySticky.offsetHeight)||0;
+    return _stickyH||window.innerHeight;
+  }
   const OPEN=0.18;   /* 0 → OPEN: the wide box opens out to the full frame */
   const SETTLE=0.36; /* OPEN → SETTLE: the same face settles from the zoom into the open book */
   const SHIFT=0.44;  /* SETTLE → SHIFT: the book slides aside (right; up on phones) and the copy fades in */
@@ -1145,7 +1167,21 @@
   function curBox(){const m=window.innerWidth<=720;return m?{t:heroBoxT??42,r:6,b:12,l:6,rad:20}:{t:heroBoxT??38,r:16,b:13,l:16,rad:44};}
   /* where the book ends up once it has slid aside, and the room that leaves for the copy */
   let whyLay={tx:0,ty:0,s:1};
+  /* tickWhy rewrites a dozen transforms, clip-paths and opacities, and so costs a full layout,
+     every frame. While nobody is scrolling and the easing has landed, every one of those writes
+     is the value already there, so the frame is skipped. Anything that changes the layout
+     without scrolling (resize, fonts arriving) marks it dirty again. */
+  /* A scroll is noticed by an event flag, not by reading scrollY: any layout read here pays for
+     the frame's whole style and layout pass, which is the very cost being skipped. */
+  let whyRest=false,whyDirty=true;
+  function whyIdle(){
+    if(whyDirty||!whyRest){whyDirty=false;return false;}
+    return true;
+  }
+  window.addEventListener('scroll',()=>{whyDirty=true;},{passive:true});
+  window.addEventListener('resize',()=>{whyDirty=true;});
   function layoutWhy(){
+    whyDirty=true;
     if(!bookEl||!whyCopy)return;
     const vw=window.innerWidth,vh=stickyH(),bw=bookEl.offsetWidth,bh=bw*2/3;
     const navH=(document.querySelector('nav')||{}).offsetHeight||0;  /* the fixed nav overlaps the sticky frame */
@@ -1168,12 +1204,14 @@
   /* one quote size for every page and one copy size for every state: the largest at which the longest still fits */
   function fitWhy(){
     const pages=bookEl.querySelectorAll('.qpage');
-    let q=Math.min(34,bookEl.offsetWidth*0.037);
-    const set=v=>bookEl.style.setProperty('--q-fs',v+'px');
-    set(q);while(q>10&&[...pages].some(pg=>pg.scrollHeight>pg.clientHeight+1)){q-=0.5;set(q);}
-    let f=window.innerWidth<=720?16:20;
-    whyCopy.style.fontSize=f+'px';
-    while(f>12&&whyCopy.scrollHeight>whyCopy.clientHeight+1){f-=0.5;whyCopy.style.fontSize=f+'px';}
+    /* Halving, not stepping down half a pixel at a time: each try is a forced layout, and the
+       step-down took up to 48 of them on a narrow screen. Same answer in ~6. */
+    const fit=(lo,hi,apply,over)=>{apply(hi);if(!over())return;
+      while(hi-lo>0.5){const mid=Math.round((lo+hi))/2;apply(mid);if(over())hi=mid;else lo=mid;}apply(lo);};
+    fit(10,Math.min(34,bookEl.offsetWidth*0.037),v=>bookEl.style.setProperty('--q-fs',v+'px'),
+        ()=>[...pages].some(pg=>pg.scrollHeight>pg.clientHeight+1));
+    fit(12,window.innerWidth<=720?16:20,v=>{whyCopy.style.fontSize=v+'px';},
+        ()=>whyCopy.scrollHeight>whyCopy.clientHeight+1);
   }
   let whySmooth=0;
   function easeInOut(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
@@ -1190,6 +1228,9 @@
     const BOX=curBox();
     /* phase A — the wide box opens out; the title dissolves into dots */
     const pc=Math.min(1,p/OPEN),ec=easeInOut(pc);
+    /* at rest = the easing has arrived and nothing in view moves on its own (the logo's dots
+       drift with time only while 0.08 < pc < 0.64) — see whyIdle() */
+    whyRest=Math.abs(whySmooth-target)<0.0004&&!(pc>0.08&&pc<0.64);
     if(clipWin){
       const vw=window.innerWidth,vh=stickyH();
       const it=BOX.t*(1-ec)/100*vh,ib=BOX.b*(1-ec)/100*vh,il=BOX.l*(1-ec)/100*vw,rad=BOX.rad*(1-ec);
@@ -1569,6 +1610,7 @@
       measureKeep();
     }
     function draw(){
+      if(!inView(cv)){requestAnimationFrame(draw);return;}   /* nothing to draw while it is off screen */
       const t=Date.now()*0.001,cx=W/2,cy=H/2;ctx.clearRect(0,0,W,H);
       dots.forEach(d=>{const ang=d.ang+t*d.sp,wob=Math.sin(t*0.45+d.ph)*6;
         const x=cx+Math.cos(ang)*(d.r+wob),y=cy+Math.sin(ang)*(d.r+wob);
@@ -1583,12 +1625,25 @@
     requestAnimationFrame(draw);
   })();
 
+  /* Pictures nobody can see on arrival — the book's later pages and the life-course strip —
+     carry their background in data-bg and get it once the page has loaded, so on a slow phone
+     connection the opening photograph is not sharing the line with ~600KB it does not need yet
+     (Lighthouse, Oct 7: LCP 6.4s). The first scroll also releases them, in case it comes first. */
+  (function(){
+    let done=false;
+    const go=()=>{if(done)return;done=true;
+      document.querySelectorAll('[data-bg]').forEach(el=>{el.style.cssText+=';'+el.getAttribute('data-bg');el.removeAttribute('data-bg');});};
+    const soon=()=>('requestIdleCallback' in window)?requestIdleCallback(go,{timeout:1500}):setTimeout(go,200);
+    if(document.readyState==='complete')soon();else window.addEventListener('load',soon,{once:true});
+    window.addEventListener('scroll',go,{once:true,passive:true});
+  })();
+
   /* master loop */
   /* tickWhy only runs while the opening is on screen, so a deep link that lands further down
      (index.html#act from the approach page, say) would otherwise leave the brand frozen at the
      blown-up size placeBrand gave it on the first frame. Put it back in the bar instead. */
   function loop(){
-    if(inView(whySection)){tickWhy();drawGlow();}
+    if(inView(whySection)){if(!whyIdle())tickWhy();drawGlow();}
     else{placeBrand(1);}
     tickWf();requestAnimationFrame(loop);
   }
@@ -1754,7 +1809,7 @@
          centre instead of colliding with the label */
       const core=r=>Math.max(0,Math.min(1,(r-31)/(123-31)));
 
-      let armed=0,seen=true,t0=performance.now();
+      let armed=0,seen=false,t0=performance.now();
       new IntersectionObserver(es=>{seen=es[0].isIntersecting;},{threshold:0}).observe(stage);
 
       /* THE SWELL. The old pulse was its own set of SVG bands riding the line; with the
